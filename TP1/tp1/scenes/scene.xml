@@ -47,4 +47,10 @@
       <scale x="1.0" y="1.0" z="1.0" />
     </transformation>
   </transformations>
+
+  <primitives>
+    <primitive id="square">
+      <rectangle x1="0.0" y1="0.0" x2="1.0" y2="1.0" />
+    </primitive>
+  </primitives>
 </yas>

@@ -98,7 +98,7 @@ class MySceneGraph {
                 this.onXMLMinorError("tag <scene> out of order");
 
             //Parse scene block
-            if ((error = this.parseInitials(nodes[index])) != null)
+            if ((error = this.parseScene(nodes[index])) != null)
                 return error;
         }
 
@@ -110,7 +110,7 @@ class MySceneGraph {
                 this.onXMLMinorError("tag <views> out of order");
 
             //Parse views block
-            if ((error = this.parseIllumination(nodes[index])) != null)
+            if ((error = this.parseViews(nodes[index])) != null)
                 return error;
         }
 
@@ -138,131 +138,132 @@ class MySceneGraph {
                 return error;
         }
 
-        // <MATERIALS>
-        if ((index = nodeNames.indexOf("MATERIALS")) == -1)
-            return "tag <MATERIALS> missing";
+        // <textures>
+        if ((index = nodeNames.indexOf("textures")) == -1)
+            return "tag <textures> missing";
         else {
-            if (index != MATERIALS_INDEX)
-                this.onXMLMinorError("tag <MATERIALS> out of order");
+            if (index != TEXTURES_INDEX)
+                this.onXMLMinorError("tag <textures> out of order");
 
-            //Parse MATERIALS block
+            //Parse textures block
             if ((error = this.parseMaterials(nodes[index])) != null)
                 return error;
         }
 
-        // <NODES>
-        if ((index = nodeNames.indexOf("NODES")) == -1)
-            return "tag <NODES> missing";
+        // <materials>
+        if ((index = nodeNames.indexOf("materials")) == -1)
+            return "tag <materials> missing";
         else {
-            if (index != NODES_INDEX)
-                this.onXMLMinorError("tag <NODES> out of order");
+            if (index != MATERIALS_INDEX)
+                this.onXMLMinorError("tag <materials> out of order");
 
-            //Parse NODES block
+            //Parse materials block
+            if ((error = this.parseNodes(nodes[index])) != null)
+                return error;
+        }
+
+        // <transformations>
+        if ((index = nodeNames.indexOf("transformations")) == -1)
+            return "tag <transformations> missing";
+        else {
+            if (index != TRANSFORMATIONS_INDEX)
+                this.onXMLMinorError("tag <transformations> out of order");
+
+            //Parse transformations block
+            if ((error = this.parseNodes(nodes[index])) != null)
+                return error;
+        }
+
+        // <primitives>
+        if ((index = nodeNames.indexOf("primitives")) == -1)
+            return "tag <primitives> missing";
+        else {
+            if (index != PRIMITIVES_INDEX)
+                this.onXMLMinorError("tag <primitives> out of order");
+
+            //Parse primitives block
             if ((error = this.parseNodes(nodes[index])) != null)
                 return error;
         }
     }
 
     /**
-     * Parses the <INITIALS> block.
-     */
-    parseInitials(initialsNode) {
+    * Parses the <scene> block.
+    */
+    parseScene(sceneNode) {
 
-        var children = initialsNode.children;
+      this.root = this.reader.getString(sceneNode, "root");
+      this.axis_length = this.reader.getFloat(sceneNode, "axis_length");
 
-        var nodeNames = [];
+      this.log("Parsed scene");
 
-        for (var i = 0; i < children.length; i++)
-            nodeNames.push(children[i].nodeName);
-
-        // Frustum planes
-        // (default values)
-        this.near = 0.1;
-        this.far = 500;
-        var indexFrustum = nodeNames.indexOf("frustum");
-        if (indexFrustum == -1) {
-            this.onXMLMinorError("frustum planes missing; assuming 'near = 0.1' and 'far = 500'");
-        }
-        else {
-            this.near = this.reader.getFloat(children[indexFrustum], 'near');
-            this.far = this.reader.getFloat(children[indexFrustum], 'far');
-
-            if (!(this.near != null && !isNaN(this.near))) {
-                this.near = 0.1;
-                this.onXMLMinorError("unable to parse value for near plane; assuming 'near = 0.1'");
-            }
-            else if (!(this.far != null && !isNaN(this.far))) {
-                this.far = 500;
-                this.onXMLMinorError("unable to parse value for far plane; assuming 'far = 500'");
-            }
-
-            if (this.near >= this.far)
-                return "'near' must be smaller than 'far'";
-        }
-
-        // Checks if at most one translation, three rotations, and one scaling are defined.
-        if (initialsNode.getElementsByTagName('translation').length > 1)
-            return "no more than one initial translation may be defined";
-
-        if (initialsNode.getElementsByTagName('rotation').length > 3)
-            return "no more than three initial rotations may be defined";
-
-        if (initialsNode.getElementsByTagName('scale').length > 1)
-            return "no more than one scaling may be defined";
-
-        // Initial transforms.
-        this.initialTranslate = [];
-        this.initialScaling = [];
-        this.initialRotations = [];
-
-        // Gets indices of each element.
-        var translationIndex = nodeNames.indexOf("translation");
-        var thirdRotationIndex = nodeNames.indexOf("rotation");
-        var secondRotationIndex = nodeNames.indexOf("rotation", thirdRotationIndex + 1);
-        var firstRotationIndex = nodeNames.lastIndexOf("rotation");
-        var scalingIndex = nodeNames.indexOf("scale");
-
-        // Checks if the indices are valid and in the expected order.
-        // Translation.
-        this.initialTransforms = mat4.create();
-        mat4.identity(this.initialTransforms);
-
-        if (translationIndex == -1)
-            this.onXMLMinorError("initial translation undefined; assuming T = (0, 0, 0)");
-        else {
-            var tx = this.reader.getFloat(children[translationIndex], 'x');
-            var ty = this.reader.getFloat(children[translationIndex], 'y');
-            var tz = this.reader.getFloat(children[translationIndex], 'z');
-
-            if (tx == null || ty == null || tz == null) {
-                tx = 0;
-                ty = 0;
-                tz = 0;
-                this.onXMLMinorError("failed to parse coordinates of initial translation; assuming zero");
-            }
-
-            //TODO: Save translation data
-        }
-
-        //TODO: Parse Rotations
-
-        //TODO: Parse Scaling
-
-        //TODO: Parse Reference length
-
-        this.log("Parsed initials");
-
-        return null;
+      return null;
     }
 
     /**
-     * Parses the <ILLUMINATION> block.
-     * @param {illumination block element} illuminationNode
+     * Parses the <views> block.
+     * @param {views block element} viewsNode
      */
-    parseIllumination(illuminationNode) {
-        // TODO: Parse Illumination node
+    parseViews(viewsNode) {
+        this.default_view = this.reader.getString(viewsNode, 'default');
+        this.views = [];
 
-        this.log("Parsed illumination");
+        var children = viewsNode.children;
+        var grandChildren = [];
+        var nodeNames = [];
+
+        for (var i = 0; i < children.length; i++) {
+          if (children[i].nodeName != "perspective" && children[i].nodeName != "ortho") {
+            this.onXMLMinorError("unknown tag <"+children[i].nodeName+">");
+            continue;
+          }
+
+          var viewId = this.reader.getString(children[i], 'id');
+          if (viewId == null) {
+            return "no ID defined for <"+children[i]+">"
+          }
+          if (this.views[viewId] != null) {
+            return "ID must be unique for each view (conflict: ID = "+viewId+")";
+          }
+
+          if (children[i].nodeName == "perspective") {
+            grandChildren = children[i].children;
+
+            for (var j = 0; j < grandChildren.length; j++) {
+              if (grandChildren[j].nodeName != "from" && grandChildren[j].nodeName != "to") {
+                this.onXMLMinorError("unknown tag <"+grandChildren[j].nodeName+">");
+                continue;
+              }
+              if (grandChildren[j].nodeName == "from") {
+                var from = {
+                  x: this.reader.getFloat(grandChildren[j], 'x'),
+                  y: this.reader.getFloat(grandChildren[j], 'y'),
+                  z: this.reader.getFloat(grandChildren[j], 'z')
+                }
+              }
+              else{
+                var to = {
+                  x: this.reader.getFloat(grandChildren[j], 'x'),
+                  y: this.reader.getFloat(grandChildren[j], 'y'),
+                  z: this.reader.getFloat(grandChildren[j], 'z')
+                }
+              }
+            }
+
+            this.views[viewId] = {
+              near: this.reader.getFloat(children[i], 'near'),
+              far: this.reader.getFloat(children[i], 'far'),
+              angle: this.reader.getFloat(children[i], 'angle'),
+              from: from,
+              to: to
+            };
+          }
+          else if (children[i].nodeName == "ortho") {
+
+          }
+        }
+
+        this.log("Parsed views");
 
         return null;
     }
