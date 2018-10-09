@@ -51,6 +51,7 @@ class MySceneGraph {
     }
 
 
+
     /*
      * Callback to be executed after successful reading
      */
@@ -214,6 +215,29 @@ class MySceneGraph {
 
 
 
+    //validade RGB COLOR_BUFFER_BIT
+
+    validateRGBColor(c,id,comp){
+
+      if (!(c != null && !isNaN(c) && c >= 0 && c <= 1))
+          return "unable to parse " +comp +" color  component for ID = " + id;
+      else{
+        return null;
+      }
+    }
+
+    // validate a componet COLOR_BUFFER_BIT
+
+    validateAComponent(a,id){
+
+      if (!(a != null && !isNaN(a) && a >= 0 && a <= 1))
+          return "unable to parse A color component  for ID = " + id;
+      else{
+        return null;
+      }
+
+    }
+
     /**
     * Parses the <scene> block.
     */
@@ -322,6 +346,7 @@ class MySceneGraph {
 
       var children=ambienNode.children;
       var nodeName=[];
+      var aux;
 
 
       this.ambientValues=[0,0,0,1];
@@ -342,72 +367,31 @@ class MySceneGraph {
 
         //red values
         var r=this.reader.getFloat(children[i],'r');
-        if(r!=null){
+        aux=this.validateRGBColor(r,"ambient","r");
 
-          if(isNaN(r)){
-            return "component r in ambiente is not a numerical value ";
-
-          }else if(r>1||r<0){
-            return "the component r in ambient must be a value between 0 and 1";
-          }else{
-            this.ambientValues[0]=r;
-          }
-        }else{
-          this.onXMLMinorError("unable to parse r component of the ambient,defaul value=0");
-        }
+        if(aux!=null) return aux;
+        this.ambientValues[0]=r;
 
         //green value
         var g=this.reader.getFloat(children[i],'g');
+        aux=this.validateRGBColor(g,"ambient","g");
 
-        if(g!=null){
-
-          if(isNaN(g)){
-            return "component g in ambiente is not a numerical value ";
-
-          }else if(g>1||g<0){
-            return "the component g in ambient must be a value between 0 and 1";
-          }else{
-            this.ambientValues[1]=g;
-          }
-        }else{
-          this.onXMLMinorError("unable to parse g component of the ambient,defaul value=0");
-        }
-
+        if(aux!=null) return aux;
+        this.ambientValues[1]=g;
 
         //blue value
         var b=this.reader.getFloat(children[i],'b');
+        aux=this.validateRGBColor(b,"ambient","b");
 
-        if(b!=null){
-
-          if(isNaN(b)){
-            return "component b in ambiente is not a numerical value ";
-
-          }else if(b>1||b<0){
-            return "the component b in ambient must be a value between 0 and 1";
-          }else{
-            this.ambientValues[2]=b;
-          }
-        }else{
-          this.onXMLMinorError("unable to parse b component of the ambient,defaul value=0");
-        }
-
+        if(aux!=null) return aux;
+        this.ambientValues[2]=b;
 
         //a value
         var a=this.reader.getFloat(children[i],'a');
+        aux=this.validateAComponent(a,"ambient");
 
-        if(a!=null){
-
-          if(isNaN(a)){
-            return "component a in ambiente is not a numerical value ";
-
-          }else if(a>1||a<0){
-            return "the component r in ambient must be a value between 0 and 1";
-          }else{
-            this.ambientValues[3]=a;
-          }
-        }else{
-          this.onXMLMinorError("unable to parse a component of the ambient,defaul value=0");
-        }
+        if(aux!=null) return aux;
+        this.ambientValues[3]=a;
       }
 
 
@@ -415,73 +399,32 @@ class MySceneGraph {
 
         if(children[i].nodeName=="background"){
           //red values
-          var r=this.reader.getFloat(children[i],'r')
-          if(r!=null){
+          var r=this.reader.getFloat(children[i],'r');
+          aux=this.validateRGBColor(r,"ambient","r");
 
-            if(isNaN(r)){
-              return "component r in background is not a numerical value ";
-
-            }else if(r>1||r<0){
-              return "the component r in background must be a value between 0 and 1";
-            }else{
-              this.backgroundValues[0]=r;
-            }
-          }else{
-            this.onXMLMinorError("unable to parse r component of the background,defaul value=0");
-          }
+          if(aux!=null) return aux;
+          this.backgroundValues[0]=r;
 
           //green value
           var g=this.reader.getFloat(children[i],'g');
+          aux=this.validateRGBColor(g,"ambient","g");
 
-          if(g!=null){
-
-            if(isNaN(g)){
-              return "component g in background is not a numerical value ";
-
-            }else if(g>1||g<0){
-              return "the component g in background must be a value between 0 and 1";
-            }else{
-              this.backgroundValues[1]=g;
-            }
-          }else{
-            this.onXMLMinorError("unable to parse g component of the background,defaul value=0");
-          }
-
+          if(aux!=null) return aux;
+          this.backgroundValues[1]=g;
 
           //blue value
           var b=this.reader.getFloat(children[i],'b');
+          aux=this.validateRGBColor(b,"ambient","b");
 
-          if(b!=null){
-
-            if(isNaN(b)){
-              return "component b in background is not a numerical value ";
-
-            }else if(b>1||b<0){
-              return "the component b in background must be a value between 0 and 1";
-            }else{
-              this.backgroundValues[2]=b;
-            }
-          }else{
-            this.onXMLMinorError("unable to parse b component of the background,defaul value=0");
-          }
-
+          if(aux!=null) return aux;
+          this.backgroundValues[2]=b;
 
           //a value
           var a=this.reader.getFloat(children[i],'a');
+          aux=this.validateAComponent(a,"ambient");
 
-          if(a!=null){
-
-            if(isNaN(a)){
-              return "component a in background is not a numerical value ";
-
-            }else if(a>1||a<0){
-              return "the component r in background must be a value between 0 and 1";
-            }else{
-              this.backgroundValues[3]=a;
-            }
-          }else{
-            this.onXMLMinorError("unable to parse a component of the background,defaul value=0");
-          }
+          if(aux!=null) return aux;
+          this.backgroundValues[3]=a;
       }
     }
 
@@ -490,10 +433,6 @@ class MySceneGraph {
 
       return null;
     }
-
-
-
-
 
 
 
@@ -511,6 +450,8 @@ class MySceneGraph {
         var numLights =0
         var spotLight=[];
         var omniLight=[];
+
+        var aux;
 
 
         var grandChildren = [];
@@ -577,6 +518,8 @@ class MySceneGraph {
             var diffuseIndex = nodeNames.indexOf("diffuse");
             var specularIndex = nodeNames.indexOf("specular");
 
+            //this.log(specularIndex);
+
 
 
 
@@ -619,33 +562,70 @@ class MySceneGraph {
             // Retrieves the ambient component.
             var ambientIllumination = [];
             if (ambientIndex != -1) {
+
                 // R
                 var r = this.reader.getFloat(grandChildren[ambientIndex], 'r');
-                if (!(r != null && !isNaN(r) && r >= 0 && r <= 1))
-                    return "unable to parse R component of the ambient illumination for ID = " + lightId;
-                else
-                    ambientIllumination.push(r);
+                aux=this.validateRGBColor(r,lightId,"r");
+
+                if(aux!=null) return aux;
+                ambientIllumination.push(r);
 
                 // G
                 var g = this.reader.getFloat(grandChildren[ambientIndex], 'g');
-                if (!(g != null && !isNaN(g) && g >= 0 && g <= 1))
-                    return "unable to parse G component of the ambient illumination for ID = " + lightId;
-                else
-                    ambientIllumination.push(g);
+                aux=this.validateRGBColor(g,lightId,"g");
+
+                if(aux!=null) return aux;
+                ambientIllumination.push(g);
 
                 // B
                 var b = this.reader.getFloat(grandChildren[ambientIndex], 'b');
-                if (!(b != null && !isNaN(b) && b >= 0 && b <= 1))
-                    return "unable to parse B component of the ambient illumination for ID = " + lightId;
-                else
-                    ambientIllumination.push(b);
+                aux=this.validateRGBColor(b,lightId,"b");
+
+                if(aux!=null) return aux;
+                ambientIllumination.push(b);
 
                 // A
                 var a = this.reader.getFloat(grandChildren[ambientIndex], 'a');
-                if (!(a != null && !isNaN(a) && a >= 0 && a <= 1))
-                    return "unable to parse A component of the ambient illumination for ID = " + lightId;
-                else
-                    ambientIllumination.push(a);
+                aux=this.validateAComponent(a,lightId);
+
+                if(aux!=null) return aux;
+                ambientIllumination.push(a);;
+            }
+            else{
+              return "ambient component undefined for ID = " + lightId;
+            }
+
+            var diffuseIllumination = [];
+
+            if (diffuseIndex != -1) {
+                // R
+                var r = this.reader.getFloat(grandChildren[diffuseIndex], 'r');
+                aux=this.validateRGBColor(r,lightId,"r");
+
+                if(aux!=null) return aux;
+                diffuseIllumination.push(r);
+
+                // G
+                var g = this.reader.getFloat(grandChildren[diffuseIndex], 'g');
+                aux=this.validateRGBColor(g,lightId,"g");
+
+                if(aux!=null) return aux;
+                diffuseIllumination.push(g);
+
+                // B
+                var b = this.reader.getFloat(grandChildren[diffuseIndex], 'b');
+                aux=this.validateRGBColor(b,lightId,"b");
+
+                if(aux!=null) return aux;
+                diffuseIllumination.push(b);
+
+                // A
+                var a = this.reader.getFloat(grandChildren[diffuseIndex], 'a');
+                aux=this.validateAComponent(a,lightId);
+
+                if(aux!=null) return aux;
+                diffuseIllumination.push(a);
+
             }
             else{
               return "ambient component undefined for ID = " + lightId;
@@ -656,68 +636,31 @@ class MySceneGraph {
 
             if (specularIndex != -1) {
                 // R
-                var r = this.reader.getFloat(grandChildren[diffuseIndex], 'r');
-                if (!(r != null && !isNaN(r) && r >= 0 && r <= 1))
-                    return "unable to parse R component of the ambient illumination for ID = " + lightId;
-                else
-                  specularIllumination.push(r);
+                var r = this.reader.getFloat(grandChildren[specularIndex], 'r');
+                aux=this.validateRGBColor(r,lightId,"r");
 
+                if(aux!=null) return aux;
+                specularIllumination.push(r);
                 // G
                 var g = this.reader.getFloat(grandChildren[specularIndex], 'g');
-                if (!(g != null && !isNaN(g) && g >= 0 && g <= 1))
-                    return "unable to parse G component of the ambient illumination for ID = " + lightId;
-                else
-                    specularIllumination.push(g);
+                aux=this.validateRGBColor(g,lightId,"g");
+
+                if(aux!=null) return aux;
+                specularIllumination.push(g);
 
                 // B
                 var b = this.reader.getFloat(grandChildren[specularIndex], 'b');
-                if (!(b != null && !isNaN(b) && b >= 0 && b <= 1))
-                    return "unable to parse B component of the ambient illumination for ID = " + lightId;
-                else
-                  specularIllumination.push(b);
+                aux=this.validateRGBColor(b,lightId,"b");
+
+                if(aux!=null) return aux;
+                specularIllumination.push(b);
 
                 // A
                 var a = this.reader.getFloat(grandChildren[specularIndex], 'a');
-                if (!(a != null && !isNaN(a) && a >= 0 && a <= 1))
-                    return "unable to parse A component of the ambient illumination for ID = " + lightId;
-                else
-                  specularIllumination.push(a);
-            }
-            else{
-              return "ambient component undefined for ID = " + lightId;
-            }
+                aux=this.validateAComponent(a,lightId);
 
-
-            var diffuseIllumination = [];
-
-            if (diffuseIndex != -1) {
-                // R
-                var r = this.reader.getFloat(grandChildren[diffuseIndex], 'r');
-                if (!(r != null && !isNaN(r) && r >= 0 && r <= 1))
-                    return "unable to parse R component of the ambient illumination for ID = " + lightId;
-                else
-                  diffuseIllumination.push(r);
-
-                // G
-                var g = this.reader.getFloat(grandChildren[diffuseIndex], 'g');
-                if (!(g != null && !isNaN(g) && g >= 0 && g <= 1))
-                    return "unable to parse G component of the ambient illumination for ID = " + lightId;
-                else
-                    diffuseIllumination.push(g);
-
-                // B
-                var b = this.reader.getFloat(grandChildren[diffuseIndex], 'b');
-                if (!(b != null && !isNaN(b) && b >= 0 && b <= 1))
-                    return "unable to parse B component of the ambient illumination for ID = " + lightId;
-                else
-                  diffuseIllumination.push(b);
-
-                // A
-                var a = this.reader.getFloat(grandChildren[diffuseIndex], 'a');
-                if (!(a != null && !isNaN(a) && a >= 0 && a <= 1))
-                    return "unable to parse A component of the ambient illumination for ID = " + lightId;
-                else
-                  diffuseIllumination.push(a);
+                if(aux!=null) return aux;
+                specularIllumination.push(a);
             }
             else{
               return "ambient component undefined for ID = " + lightId;

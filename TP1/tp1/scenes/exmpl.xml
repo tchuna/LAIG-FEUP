@@ -15,6 +15,7 @@
     <lights>
         <!-- Deve existir um ou mais blocos "omni" ou "spot" -->
         <!-- Os identificadores "id" nao podem ser repetidos -->
+
         <omni id="room_top2" enabled="f" >
             <location x="5" y="5" z="3.5" w="1" />
             <ambient r="0" g="0" b="0" a="1" />
