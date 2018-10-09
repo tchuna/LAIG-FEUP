@@ -126,16 +126,16 @@ class MySceneGraph {
         }
 
         // <ambient>
-      /*  if ((index = nodeNames.indexOf("ambient")) == -1)
+       if ((index = nodeNames.indexOf("ambient")) == -1)
             return "tag <ambient> missing";
         else {
             if (index != AMBIENT_INDEX)
                 this.onXMLMinorError("tag <ambient> out of order");
 
             //Parse ambient block
-            if ((error = this.parseLights(nodes[index])) != null)
+            if ((error = this.parseAmbient(nodes[index])) != null)
                 return error;
-        }*/
+        }
 
         // <lights>
         /*if ((index = nodeNames.indexOf("lights")) == -1)
@@ -227,6 +227,8 @@ class MySceneGraph {
       return null;
     }
 
+
+
     /**
      * Parses the <views> block.
      * @param {views block element} viewsNode
@@ -306,6 +308,192 @@ class MySceneGraph {
 
         return null;
     }
+
+
+
+
+
+    /**
+    * Parses the <viewe> block.
+    */
+    parseAmbient(ambienNode) {
+
+      var children=ambienNode.children;
+      var nodeName=[];
+
+
+      this.ambientValues=[0,0,0,1];
+      this.backgroundValues=[0,0,0,1];
+
+      for (var i = 0; i < children.length; i++) {
+        if (children[i].nodeName != "ambient" && children[i].nodeName != "background") {
+          this.onXMLMinorError("unknown tag <"+children[i].nodeName+">");
+          continue;
+      }else{
+          nodeName.push(children[i]);
+      }
+    }
+
+    for(var i=0;i<children.length;i++){
+
+      if(children[i].nodeName=="ambient"){
+
+        //red values
+        var r=this.reader.getFloat(children[i],'r');
+        if(r!=null){
+
+          if(isNaN(r)){
+            return "component r in ambiente is not a numerical value ";
+
+          }else if(r>1||r<0){
+            return "the component r in ambient must be a value between 0 and 1";
+          }else{
+            this.ambientValues[0]=r;
+          }
+        }else{
+          this.onXMLMinorError("unable to parse r component of the ambient,defaul value=0");
+        }
+
+        //green value
+        var g=this.reader.getFloat(children[i],'g');
+
+        if(g!=null){
+
+          if(isNaN(g)){
+            return "component g in ambiente is not a numerical value ";
+
+          }else if(g>1||g<0){
+            return "the component g in ambient must be a value between 0 and 1";
+          }else{
+            this.ambientValues[1]=g;
+          }
+        }else{
+          this.onXMLMinorError("unable to parse g component of the ambient,defaul value=0");
+        }
+
+
+        //blue value
+        var b=this.reader.getFloat(children[i],'b');
+
+        if(b!=null){
+
+          if(isNaN(b)){
+            return "component b in ambiente is not a numerical value ";
+
+          }else if(b>1||b<0){
+            return "the component b in ambient must be a value between 0 and 1";
+          }else{
+            this.ambientValues[2]=b;
+          }
+        }else{
+          this.onXMLMinorError("unable to parse b component of the ambient,defaul value=0");
+        }
+
+
+        //a value
+        var a=this.reader.getFloat(children[i],'a');
+
+        if(a!=null){
+
+          if(isNaN(a)){
+            return "component a in ambiente is not a numerical value ";
+
+          }else if(a>1||a<0){
+            return "the component r in ambient must be a value between 0 and 1";
+          }else{
+            this.ambientValues[3]=a;
+          }
+        }else{
+          this.onXMLMinorError("unable to parse a component of the ambient,defaul value=0");
+        }
+      }
+
+
+        //background
+
+        if(children[i].nodeName=="background"){
+          //red values
+          var r=this.reader.getFloat(children[i],'r')
+          if(r!=null){
+
+            if(isNaN(r)){
+              return "component r in background is not a numerical value ";
+
+            }else if(r>1||r<0){
+              return "the component r in background must be a value between 0 and 1";
+            }else{
+              this.backgroundValues[0]=r;
+            }
+          }else{
+            this.onXMLMinorError("unable to parse r component of the background,defaul value=0");
+          }
+
+          //green value
+          var g=this.reader.getFloat(children[i],'g');
+
+          if(g!=null){
+
+            if(isNaN(g)){
+              return "component g in background is not a numerical value ";
+
+            }else if(g>1||g<0){
+              return "the component g in background must be a value between 0 and 1";
+            }else{
+              this.backgroundValues[1]=g;
+            }
+          }else{
+            this.onXMLMinorError("unable to parse g component of the background,defaul value=0");
+          }
+
+
+          //blue value
+          var b=this.reader.getFloat(children[i],'b');
+
+          if(b!=null){
+
+            if(isNaN(b)){
+              return "component b in background is not a numerical value ";
+
+            }else if(b>1||b<0){
+              return "the component b in background must be a value between 0 and 1";
+            }else{
+              this.backgroundValues[2]=b;
+            }
+          }else{
+            this.onXMLMinorError("unable to parse b component of the background,defaul value=0");
+          }
+
+
+          //a value
+          var a=this.reader.getFloat(children[i],'a');
+
+          if(a!=null){
+
+            if(isNaN(a)){
+              return "component a in background is not a numerical value ";
+
+            }else if(a>1||a<0){
+              return "the component r in background must be a value between 0 and 1";
+            }else{
+              this.backgroundValues[3]=a;
+            }
+          }else{
+            this.onXMLMinorError("unable to parse a component of the background,defaul value=0");
+          }
+      }
+    }
+
+      this.log("Parsed ambient");
+
+
+      return null;
+    }
+
+
+
+
+
+
 
 
     /**
