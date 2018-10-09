@@ -508,7 +508,9 @@ class MySceneGraph {
         var enableLight=true;
 
         this.lights = [];
-        var numLights =children.length;
+        var numLights =0
+        var spotLight=[];
+        var omniLight=[];
 
 
         var grandChildren = [];
@@ -520,6 +522,20 @@ class MySceneGraph {
             if (children[i].nodeName != "omni"  && children[i].nodeName!="spot") {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
                 continue;
+            }
+
+            if(children[i].nodeName=="spot"){
+              var angleId=this.reader.getString(children[i], 'angle');
+              var exponentId=this.reader.getString(children[i], 'exponent');
+              if(angleId==null){
+                return "no angle  defined for spot light";
+              }
+
+              if(exponentId==null){
+                return "no exponent defined for light";
+              }
+
+
             }
 
             // Get id of the current light.
@@ -636,117 +652,76 @@ class MySceneGraph {
             }
 
 
+            var specularIllumination = [];
+
+            if (specularIndex != -1) {
+                // R
+                var r = this.reader.getFloat(grandChildren[diffuseIndex], 'r');
+                if (!(r != null && !isNaN(r) && r >= 0 && r <= 1))
+                    return "unable to parse R component of the ambient illumination for ID = " + lightId;
+                else
+                  specularIllumination.push(r);
+
+                // G
+                var g = this.reader.getFloat(grandChildren[specularIndex], 'g');
+                if (!(g != null && !isNaN(g) && g >= 0 && g <= 1))
+                    return "unable to parse G component of the ambient illumination for ID = " + lightId;
+                else
+                    specularIllumination.push(g);
+
+                // B
+                var b = this.reader.getFloat(grandChildren[specularIndex], 'b');
+                if (!(b != null && !isNaN(b) && b >= 0 && b <= 1))
+                    return "unable to parse B component of the ambient illumination for ID = " + lightId;
+                else
+                  specularIllumination.push(b);
+
+                // A
+                var a = this.reader.getFloat(grandChildren[specularIndex], 'a');
+                if (!(a != null && !isNaN(a) && a >= 0 && a <= 1))
+                    return "unable to parse A component of the ambient illumination for ID = " + lightId;
+                else
+                  specularIllumination.push(a);
+            }
+            else{
+              return "ambient component undefined for ID = " + lightId;
+            }
+
 
             var diffuseIllumination = [];
 
             if (diffuseIndex != -1) {
-            // R
-            var r = this.reader.getFloat(grandChildren[diffuseIndex], 'r');
-            if (r != null) {
-                if (isNaN(r))
-                    return "diffuse 'r' is a non numeric value on the LIGHTS block";
-                else if (r < 0 || r > 1)
-                    return "diffuse 'r' must be a value between 0 and 1 on the LIGHTS block"
+                // R
+                var r = this.reader.getFloat(grandChildren[diffuseIndex], 'r');
+                if (!(r != null && !isNaN(r) && r >= 0 && r <= 1))
+                    return "unable to parse R component of the ambient illumination for ID = " + lightId;
                 else
-                    diffuseIllumination.push(r);
-            } else
-                return "unable to parse R component of the diffuse illumination for ID = " + lightId;
+                  diffuseIllumination.push(r);
 
-            // G
-            var g = this.reader.getFloat(grandChildren[diffuseIndex], 'g');
-            if (g != null) {
-                if (isNaN(g))
-                    return "diffuse 'g' is a non numeric value on the LIGHTS block";
-                else if (g < 0 || g > 1)
-                    return "diffuse 'g' must be a value between 0 and 1 on the LIGHTS block"
+                // G
+                var g = this.reader.getFloat(grandChildren[diffuseIndex], 'g');
+                if (!(g != null && !isNaN(g) && g >= 0 && g <= 1))
+                    return "unable to parse G component of the ambient illumination for ID = " + lightId;
                 else
                     diffuseIllumination.push(g);
-            } else
-                return "unable to parse G component of the diffuse illumination for ID = " + lightId;
 
-            // B
-            var b = this.reader.getFloat(grandChildren[diffuseIndex], 'b');
-            if (b != null) {
-                if (isNaN(b))
-                    return "diffuse 'b' is a non numeric value on the LIGHTS block";
-                else if (b < 0 || b > 1)
-                    return "diffuse 'b' must be a value between 0 and 1 on the LIGHTS block"
+                // B
+                var b = this.reader.getFloat(grandChildren[diffuseIndex], 'b');
+                if (!(b != null && !isNaN(b) && b >= 0 && b <= 1))
+                    return "unable to parse B component of the ambient illumination for ID = " + lightId;
                 else
-                    diffuseIllumination.push(b);
-            } else
-                return "unable to parse B component of the diffuse illumination for ID = " + lightId;
+                  diffuseIllumination.push(b);
 
-            // A
-            var a = this.reader.getFloat(grandChildren[diffuseIndex], 'a');
-            if (a != null) {
-                if (isNaN(a))
-                    return "diffuse 'a' is a non numeric value on the LIGHTS block";
-                else if (a < 0 || a > 1)
-                    return "diffuse 'a' must be a value between 0 and 1 on the LIGHTS block"
+                // A
+                var a = this.reader.getFloat(grandChildren[diffuseIndex], 'a');
+                if (!(a != null && !isNaN(a) && a >= 0 && a <= 1))
+                    return "unable to parse A component of the ambient illumination for ID = " + lightId;
                 else
-                    diffuseIllumination.push(a);
-            } else
-                return "unable to parse A component of the diffuse illumination for ID = " + lightId;
-        }
-        else{
-          return "diffuse component undefined for ID = " + lightId;
-        }
-
-
-        var specularIllumination = [];
-        if (specularIndex != -1) {
-            // R
-            var r = this.reader.getFloat(grandChildren[specularIndex], 'r');
-            if (r != null) {
-                if (isNaN(r))
-                    return "specular 'r' is a non numeric value on the LIGHTS block";
-                else if (r < 0 || r > 1)
-                    return "specular 'r' must be a value between 0 and 1 on the LIGHTS block"
-                else
-                    specularIllumination.push(r);
-            } else
-                return "unable to parse R component of the specular illumination for ID = " + lightId;
-
-            // G
-            var g = this.reader.getFloat(grandChildren[specularIndex], 'g');
-            if (g != null) {
-                if (isNaN(g))
-                    return "specular 'g' is a non numeric value on the LIGHTS block";
-                else if (g < 0 || g > 1)
-                    return "specular 'g' must be a value between 0 and 1 on the LIGHTS block"
-                else
-                    specularIllumination.push(g);
-            } else
-                return "unable to parse G component of the specular illumination for ID = " + lightId;
-
-            // B
-            var b = this.reader.getFloat(grandChildren[specularIndex], 'b');
-            if (b != null) {
-                if (isNaN(b))
-                    return "specular 'b' is a non numeric value on the LIGHTS block";
-                else if (b < 0 || b > 1)
-                    return "specular 'b' must be a value between 0 and 1 on the LIGHTS block"
-                else
-                    specularIllumination.push(b);
-            } else
-                return "unable to parse B component of the specular illumination for ID = " + lightId;
-
-            // A
-            var a = this.reader.getFloat(grandChildren[specularIndex], 'a');
-            if (a != null) {
-                if (isNaN(a))
-                    return "specular 'a' is a non numeric value on the LIGHTS block";
-                else if (a < 0 || a > 1)
-                    return "specular 'a' must be a value between 0 and 1 on the LIGHTS block"
-                else
-                    specularIllumination.push(a);
-            } else
-                return "unable to parse A component of the specular illumination for ID = " + lightId;
-        }
-        else{
-          return "specular component undefined for ID = " + lightId;
-        }
-
+                  diffuseIllumination.push(a);
+            }
+            else{
+              return "ambient component undefined for ID = " + lightId;
+            }
 
         this.lights[lightId] = [enableLight, positionLight, ambientIllumination, diffuseIllumination, specularIllumination];
         numLights++;
