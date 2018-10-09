@@ -6,7 +6,7 @@ var DEGREE_TO_RAD = Math.PI / 180;
 class XMLscene extends CGFscene {
     /**
      * @constructor
-     * @param {MyInterface} myinterface 
+     * @param {MyInterface} myinterface
      */
     constructor(myinterface) {
         super();
@@ -34,6 +34,8 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.axis = new CGFaxis(this);
+        this.materialDefault = new CGFappearance(this);
+
     }
 
     /**
@@ -50,44 +52,75 @@ class XMLscene extends CGFscene {
         // Lights index.
 
         // Reads the lights from the scene graph.
+        // for (var key in this.graph.lights) {
+        //     if (i >= 8)
+        //         break;              // Only eight lights allowed by WebGL.
+        //
+        //     if (this.graph.lights.hasOwnProperty(key)) {
+        //         var light = this.graph.lights[key];
+        //
+        //         //lights are predefined in cgfscene
+        //         this.lights[i].setPosition(light[1][0], light[1][1], light[1][2], light[1][3]);
+        //         this.lights[i].setAmbient(light[2][0], light[2][1], light[2][2], light[2][3]);
+        //         this.lights[i].setDiffuse(light[3][0], light[3][1], light[3][2], light[3][3]);
+        //         this.lights[i].setSpecular(light[4][0], light[4][1], light[4][2], light[4][3]);
+        //
+        //         this.lights[i].setVisible(true);
+        //         if (light[0])
+        //             this.lights[i].enable();
+        //         else
+        //             this.lights[i].disable();
+        //
+        //         this.lights[i].update();
+        //
+        //         i++;
+        //     }
+        // }
+
+
         for (var key in this.graph.lights) {
-            if (i >= 8)
-                break;              // Only eight lights allowed by WebGL.
+          if(i >= 8){
+            break;
+          }
 
-            if (this.graph.lights.hasOwnProperty(key)) {
-                var light = this.graph.lights[key];
+          if (this.graph.lights.hasOwnProperty(key)) {
+            var light = this.graph.lights[key];
 
-                //lights are predefined in cgfscene
-                this.lights[i].setPosition(light[1][0], light[1][1], light[1][2], light[1][3]);
-                this.lights[i].setAmbient(light[2][0], light[2][1], light[2][2], light[2][3]);
-                this.lights[i].setDiffuse(light[3][0], light[3][1], light[3][2], light[3][3]);
-                this.lights[i].setSpecular(light[4][0], light[4][1], light[4][2], light[4][3]);
+            this.lights[i].setPosition(light.location.x, light.location.y, light.location.z, light.location.w);
+            this.lights[i].setAmbient(light.ambient.red, light.ambient.green, light.ambient.blue, light.ambient.alpha);
+            this.lights[i].setDiffuse(light.diffuse.red, light.diffuse.green, light.diffuse.blue, light.diffuse.alpha);
+            this.lights[i].setSpecular(light.specular.red, light.specular.green, light.specular.blue, light.specular.alpha);
+            this.lights[i].setVisible(true);
 
-                this.lights[i].setVisible(true);
-                if (light[0])
-                    this.lights[i].enable();
-                else
-                    this.lights[i].disable();
-
-                this.lights[i].update();
-
-                i++;
+            if (light.enabled) {
+              this.lights[i].enable();
             }
+            else {
+              this.lights[i].disable();
+            }
+
+            this.lights[i].update();
+            i++;
+          }
         }
     }
 
 
-    /* Handler called when the graph is finally loaded. 
+    /* Handler called when the graph is finally loaded.
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
-        this.camera.near = this.graph.near;
-        this.camera.far = this.graph.far;
+        this.camera.near = this.graph.views[this.graph.default_view].near;
+        this.camera.far = this.graph.views[this.graph.default_view].far;
 
-        //TODO: Change reference length according to parsed graph
-        //this.axis = new CGFaxis(this, this.graph.referenceLength);
+        // Change reference length according to parsed graph
+        this.axis = new CGFaxis(this, this.graph.axis_length);
 
         // TODO: Change ambient and background details according to parsed graph
+        this.setGlobalAmbientLight(this.graph.ambient.ambient.red,
+                                   this.graph.ambient.ambient.green,
+                                   this.graph.ambient.ambient.blue,
+                                   this.graph.ambient.ambient.alpha);
 
         this.initLights();
 
@@ -114,6 +147,8 @@ class XMLscene extends CGFscene {
 
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
+
+        this.materialDefault.apply();
 
         this.pushMatrix();
 
