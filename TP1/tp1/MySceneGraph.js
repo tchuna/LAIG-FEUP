@@ -468,6 +468,10 @@ class MySceneGraph {
             if(children[i].nodeName=="spot"){
               var angleId=this.reader.getString(children[i], 'angle');
               var exponentId=this.reader.getString(children[i], 'exponent');
+
+              //this.log(angleId);
+              //this.log(exponentId);
+
               if(angleId==null){
                 return "no angle  defined for spot light";
               }
@@ -475,7 +479,6 @@ class MySceneGraph {
               if(exponentId==null){
                 return "no exponent defined for light";
               }
-
 
             }
 
@@ -511,16 +514,42 @@ class MySceneGraph {
                 nodeNames.push(grandChildren[j].nodeName);
             }
 
-            // Gets indices of each element.
-            //var enableIndex = nodeNames.indexOf("enable");
             var positionIndex = nodeNames.indexOf("location");
             var ambientIndex = nodeNames.indexOf("ambient");
             var diffuseIndex = nodeNames.indexOf("diffuse");
             var specularIndex = nodeNames.indexOf("specular");
 
-            //this.log(specularIndex);
+            // Gets indices of each element.
+            if(children[i].nodeName=="spot"){
 
+              var targetIndex=nodeNames.indexOf("target");
+              var targetPositions=[];
 
+              if(targetIndex!=-1){
+
+                var x = this.reader.getFloat(grandChildren[targetIndex], 'x');
+                if (!(x != null && !isNaN(x)))
+                    return "unable to parse x-coordinate of the target position for ID = " + lightId;
+                else
+                    targetPositions.push(x);
+
+                // y
+                var y = this.reader.getFloat(grandChildren[targetIndex], 'y');
+                if (!(y != null && !isNaN(y)))
+                    return "unable to parse y-coordinate of the target position for ID = " + lightId;
+                else
+                    targetPositions.push(y);
+
+                // z
+                var z = this.reader.getFloat(grandChildren[targetIndex], 'z');
+                if (!(z != null && !isNaN(z)))
+                    return "unable to parse z-coordinate of the target position for ID = " + lightId;
+                else
+                    targetPositions.push(z);
+
+              }
+            
+            }
 
 
             // Retrieves the light position.
