@@ -23,7 +23,7 @@ MyTriangle.prototype.initBuffers=function(){
                  ];
 
 
-  this.vertices=[this.point_1[0],this.point_1[1]this.point_1[2],
+  this.vertices=[this.point_1[0],this.point_1[1],this.point_1[2],
                  this.point_2[0],this.point_2[1],this.point_2[2],
                  this.point_3[0].this.point_3[1],this.point_3[2]
                 ];

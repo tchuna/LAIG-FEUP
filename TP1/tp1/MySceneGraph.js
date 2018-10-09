@@ -24,8 +24,12 @@ class MySceneGraph {
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
         scene.graph = this;
+        this.near=null;
+        this.far=null;
 
         this.nodes = [];
+        this.viewsId=[];
+
 
         this.idRoot = null;                    // The id of the root element.
 
@@ -64,8 +68,9 @@ class MySceneGraph {
 
         this.loadedOk = true;
 
+
         // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
-        this.scene.onGraphLoaded();
+       this.scene.onGraphLoaded();
     }
 
     /**
@@ -85,12 +90,15 @@ class MySceneGraph {
             nodeNames.push(nodes[i].nodeName);
         }
 
+
+
         var error;
 
         // Processes each node, verifying errors.
 
         // <scene>
         var index;
+
         if ((index = nodeNames.indexOf("scene")) == -1)
             return "tag <scene> missing";
         else {
@@ -99,8 +107,11 @@ class MySceneGraph {
 
             //Parse scene block
             if ((error = this.parseScene(nodes[index])) != null)
+
                 return error;
         }
+
+
 
         // <views>
         if ((index = nodeNames.indexOf("views")) == -1)
@@ -115,7 +126,7 @@ class MySceneGraph {
         }
 
         // <ambient>
-        if ((index = nodeNames.indexOf("ambient")) == -1)
+      /*  if ((index = nodeNames.indexOf("ambient")) == -1)
             return "tag <ambient> missing";
         else {
             if (index != AMBIENT_INDEX)
@@ -124,10 +135,10 @@ class MySceneGraph {
             //Parse ambient block
             if ((error = this.parseLights(nodes[index])) != null)
                 return error;
-        }
+        }*/
 
         // <lights>
-        if ((index = nodeNames.indexOf("lights")) == -1)
+        /*if ((index = nodeNames.indexOf("lights")) == -1)
             return "tag <lights> missing";
         else {
             if (index != LIGHTS_INDEX)
@@ -136,10 +147,10 @@ class MySceneGraph {
             //Parse lights block
             if ((error = this.parseTextures(nodes[index])) != null)
                 return error;
-        }
+        }*/
 
         // <textures>
-        if ((index = nodeNames.indexOf("textures")) == -1)
+        /*if ((index = nodeNames.indexOf("textures")) == -1)
             return "tag <textures> missing";
         else {
             if (index != TEXTURES_INDEX)
@@ -148,10 +159,10 @@ class MySceneGraph {
             //Parse textures block
             if ((error = this.parseMaterials(nodes[index])) != null)
                 return error;
-        }
+        }*/
 
         // <materials>
-        if ((index = nodeNames.indexOf("materials")) == -1)
+        /*if ((index = nodeNames.indexOf("materials")) == -1)
             return "tag <materials> missing";
         else {
             if (index != MATERIALS_INDEX)
@@ -160,10 +171,10 @@ class MySceneGraph {
             //Parse materials block
             if ((error = this.parseNodes(nodes[index])) != null)
                 return error;
-        }
+        }*/
 
         // <transformations>
-        if ((index = nodeNames.indexOf("transformations")) == -1)
+        /*if ((index = nodeNames.indexOf("transformations")) == -1)
             return "tag <transformations> missing";
         else {
             if (index != TRANSFORMATIONS_INDEX)
@@ -172,10 +183,10 @@ class MySceneGraph {
             //Parse transformations block
             if ((error = this.parseNodes(nodes[index])) != null)
                 return error;
-        }
+        }*/
 
         // <primitives>
-        if ((index = nodeNames.indexOf("primitives")) == -1)
+        /*if ((index = nodeNames.indexOf("primitives")) == -1)
             return "tag <primitives> missing";
         else {
             if (index != PRIMITIVES_INDEX)
@@ -184,8 +195,24 @@ class MySceneGraph {
             //Parse primitives block
             if ((error = this.parseNodes(nodes[index])) != null)
                 return error;
-        }
+        }*/
+
+        //component block
+        /*if ((index = nodeNames.indexOf("components")) == -1)
+            return "tag <primitives> missing";
+        else {
+            if (index != COMPONENTS_INDEX)
+                this.onXMLMinorError("tag <components> out of order");
+
+            //Parse component block
+            if ((error = this.parseNodes(nodes[index])) != null)
+                return error;
+        }*/
+
+
     }
+
+
 
     /**
     * Parses the <scene> block.
@@ -208,9 +235,11 @@ class MySceneGraph {
         this.default_view = this.reader.getString(viewsNode, 'default');
         this.views = [];
 
+
         var children = viewsNode.children;
         var grandChildren = [];
         var nodeNames = [];
+
 
         for (var i = 0; i < children.length; i++) {
           if (children[i].nodeName != "perspective" && children[i].nodeName != "ortho") {
@@ -218,10 +247,13 @@ class MySceneGraph {
             continue;
           }
 
+
           var viewId = this.reader.getString(children[i], 'id');
+
           if (viewId == null) {
             return "no ID defined for <"+children[i]+">"
           }
+
           if (this.views[viewId] != null) {
             return "ID must be unique for each view (conflict: ID = "+viewId+")";
           }
@@ -234,6 +266,7 @@ class MySceneGraph {
                 this.onXMLMinorError("unknown tag <"+grandChildren[j].nodeName+">");
                 continue;
               }
+
               if (grandChildren[j].nodeName == "from") {
                 var from = {
                   x: this.reader.getFloat(grandChildren[j], 'x'),
@@ -250,6 +283,7 @@ class MySceneGraph {
               }
             }
 
+
             this.views[viewId] = {
               near: this.reader.getFloat(children[i], 'near'),
               far: this.reader.getFloat(children[i], 'far'),
@@ -257,11 +291,16 @@ class MySceneGraph {
               from: from,
               to: to
             };
+            this.viewsId.push(viewId);
           }
           else if (children[i].nodeName == "ortho") {
 
           }
         }
+
+
+        this.near=this.views[viewId].near;
+        this.far=this.views[viewId].far;
 
         this.log("Parsed views");
 
