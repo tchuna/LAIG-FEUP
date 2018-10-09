@@ -34,7 +34,6 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.axis = new CGFaxis(this);
-        this.materialDefault = new CGFappearance(this);
 
     }
 
@@ -116,11 +115,15 @@ class XMLscene extends CGFscene {
         // Change reference length according to parsed graph
         this.axis = new CGFaxis(this, this.graph.axis_length);
 
-        // TODO: Change ambient and background details according to parsed graph
+        // Change ambient and background details according to parsed graph
         this.setGlobalAmbientLight(this.graph.ambient.ambient.red,
                                    this.graph.ambient.ambient.green,
                                    this.graph.ambient.ambient.blue,
                                    this.graph.ambient.ambient.alpha);
+        this.gl.clearColor(this.graph.ambient.background.red,
+                           this.graph.ambient.background.green,
+                           this.graph.ambient.background.blue,
+                           this.graph.ambient.background.alpha);
 
         this.initLights();
 
@@ -147,8 +150,6 @@ class XMLscene extends CGFscene {
 
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
-
-        this.materialDefault.apply();
 
         this.pushMatrix();
 
