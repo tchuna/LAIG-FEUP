@@ -49,34 +49,6 @@ class XMLscene extends CGFscene {
     initLights() {
         var i = 0;
         // Lights index.
-
-        // Reads the lights from the scene graph.
-        // for (var key in this.graph.lights) {
-        //     if (i >= 8)
-        //         break;              // Only eight lights allowed by WebGL.
-        //
-        //     if (this.graph.lights.hasOwnProperty(key)) {
-        //         var light = this.graph.lights[key];
-        //
-        //         //lights are predefined in cgfscene
-        //         this.lights[i].setPosition(light[1][0], light[1][1], light[1][2], light[1][3]);
-        //         this.lights[i].setAmbient(light[2][0], light[2][1], light[2][2], light[2][3]);
-        //         this.lights[i].setDiffuse(light[3][0], light[3][1], light[3][2], light[3][3]);
-        //         this.lights[i].setSpecular(light[4][0], light[4][1], light[4][2], light[4][3]);
-        //
-        //         this.lights[i].setVisible(true);
-        //         if (light[0])
-        //             this.lights[i].enable();
-        //         else
-        //             this.lights[i].disable();
-        //
-        //         this.lights[i].update();
-        //
-        //         i++;
-        //     }
-        // }
-
-
         for (var key in this.graph.lights) {
           if(i >= 8){
             break;
@@ -129,6 +101,7 @@ class XMLscene extends CGFscene {
 
         // Adds lights group.
         this.interface.addLightsGroup(this.graph.lights);
+        //this.interface.addViewssGroup(this.graph.views);
 
         this.sceneInited = true;
     }
@@ -153,8 +126,9 @@ class XMLscene extends CGFscene {
 
         this.pushMatrix();
 
-        if (this.sceneInited) {
+        if (this.graph.loadedOk) {
             // Draw axis
+
             this.axis.display();
 
             var i = 0;
@@ -174,7 +148,7 @@ class XMLscene extends CGFscene {
             }
 
             // Displays the scene (MySceneGraph function).
-            this.graph.displayScene();
+           this.graph.displayScene();
         }
         else {
             // Draw axis

@@ -26,6 +26,8 @@ class MySceneGraph {
         scene.graph = this;
 
         this.nodes = [];
+        this.viewsId = [];
+
 
         this.idRoot = null;                    // The id of the root element.
 
@@ -46,7 +48,6 @@ class MySceneGraph {
         this.reader.open('scenes/' + filename, this);
     }
 
-
     /*
      * Callback to be executed after successful reading
      */
@@ -64,8 +65,9 @@ class MySceneGraph {
 
         this.loadedOk = true;
 
+
         // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
-        this.scene.onGraphLoaded();
+       this.scene.onGraphLoaded();
     }
 
     /**
@@ -85,6 +87,8 @@ class MySceneGraph {
             nodeNames.push(nodes[i].nodeName);
         }
 
+
+
         var error;
 
         // Processes each node, verifying errors.
@@ -102,6 +106,8 @@ class MySceneGraph {
                 return error;
         }
 
+
+
         // <views>
         if ((index = nodeNames.indexOf("views")) == -1)
             return "tag <views> missing";
@@ -115,7 +121,7 @@ class MySceneGraph {
         }
 
         // <ambient>
-        if ((index = nodeNames.indexOf("ambient")) == -1)
+       if ((index = nodeNames.indexOf("ambient")) == -1)
             return "tag <ambient> missing";
         else {
             if (index != AMBIENT_INDEX)
@@ -199,6 +205,27 @@ class MySceneGraph {
         }
     }
 
+    //vvalidade RGB COLOR_BUFFER_BIT
+    validateRGBColor(c,id,comp){
+
+      if (!(c != null && !isNaN(c) && c >= 0 && c <= 1))
+          return "unable to parse " +comp +" color  component for ID = " + id;
+      else{
+        return null;
+      }
+    }
+
+    // validate a componet COLOR_BUFFER_BIT
+    validateAComponent(a,id){
+
+      if (!(a != null && !isNaN(a) && a >= 0 && a <= 1))
+          return "unable to parse A color component  for ID = " + id;
+      else{
+        return null;
+      }
+
+    }
+
     /**
     * Parses the <scene> block.
     * @param {scene block element} sceneNode
@@ -226,7 +253,7 @@ class MySceneGraph {
         var grandChildren = [];
         var nodeNames = [];
 
-        //
+
         for (var i = 0; i < children.length; i++) {
           if (children[i].nodeName != "perspective" && children[i].nodeName != "ortho") {
             this.onXMLMinorError("unknown tag <"+children[i].nodeName+">");
@@ -237,6 +264,7 @@ class MySceneGraph {
           if (viewId == null) {
             return "no ID defined for <"+children[i]+">"
           }
+
           if (this.views[viewId] != null) {
             return "ID must be unique for each view (conflict: ID = "+viewId+")";
           }
@@ -250,6 +278,7 @@ class MySceneGraph {
                 this.onXMLMinorError("unknown tag <"+grandChildren[j].nodeName+">");
                 continue;
               }
+
               if (grandChildren[j].nodeName == "from") {
                 var from = {
                   x: this.reader.getFloat(grandChildren[j], 'x'),
@@ -265,6 +294,7 @@ class MySceneGraph {
                 }
               }
             }
+
 
             this.views[viewId] = {
               near: this.reader.getFloat(children[i], 'near'),
@@ -283,8 +313,9 @@ class MySceneGraph {
               right: this.reader.getFloat(children[i], 'right'),
               top: this.reader.getFloat(children[i], 'top'),
               bottom: this.reader.getFloat(children[i], 'bottom')
-            }
+            };
           }
+          this.viewsId.push(viewId);
         }
 
         this.log("Parsed views");
@@ -827,7 +858,6 @@ class MySceneGraph {
     onXMLMinorError(message) {
         console.warn("Warning: " + message);
     }
-
 
     /**
      * Callback to be executed on any message.
