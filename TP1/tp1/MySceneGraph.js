@@ -193,7 +193,7 @@ class MySceneGraph {
         }
 
         // <components>
-        if ((index = nodeNames.indexOf("components")) == -1)
+        /*if ((index = nodeNames.indexOf("components")) == -1)
             return "tag <components> missing";
         else {
             if (index != COMPONENTS_INDEX)
@@ -202,27 +202,28 @@ class MySceneGraph {
             //Parse components block
             if ((error = this.parseComponents(nodes[index])) != null)
                 return error;
-        }
+        }*/
     }
 
-    //vvalidade RGB COLOR_BUFFER_BIT
-    validateRGBColor(c,id,comp){
-
-      if (!(c != null && !isNaN(c) && c >= 0 && c <= 1))
-          return "unable to parse " +comp +" color  component for ID = " + id;
-      else{
-        return null;
+    //Validate COLOR
+    validateColor(components,id){
+      if (!(components.red!= null && !isNaN(components.red) && components.red >= 0 && components.red <= 1)){
+        return "unable to parse red color  component for ID = " + id;
       }
-    }
 
-    // validate a component COLOR_BUFFER_BIT
-    validateAComponent(a,id){
-
-      if (!(a != null && !isNaN(a) && a >= 0 && a <= 1))
-          return "unable to parse A color component  for ID = " + id;
-      else{
-        return null;
+      if (!(components.green!= null && !isNaN(components.green) && components.green >= 0 && components.green <= 1)){
+        return "unable to parse green color  component for ID = " + id;
       }
+
+      if (!(components.blue!= null && !isNaN(components.blue) && components.blue >= 0 && components.blue <= 1)){
+        return "unable to parse blue color  component for ID = " + id;
+      }
+
+      if (!(components.alpha!= null && !isNaN(components.alpha) && components.alpha >= 0 && components.alpha <= 1)){
+        return "unable to parse alpha color  component for ID = " + id;
+      }
+
+      return null;
 
     }
 
@@ -259,6 +260,7 @@ class MySceneGraph {
             this.onXMLMinorError("unknown tag <"+children[i].nodeName+">");
             continue;
           }
+
           // get ID of current view
           var viewId = this.reader.getString(children[i], 'id');
           if (viewId == null) {
@@ -303,6 +305,7 @@ class MySceneGraph {
               from: from,
               to: to
             };
+
           }
           // Ortho view
           else if (children[i].nodeName == "ortho") {
@@ -318,7 +321,7 @@ class MySceneGraph {
           this.viewsId.push(viewId);
         }
 
-        this.log("Parsed views");
+
 
         return null;
     }
@@ -343,6 +346,9 @@ class MySceneGraph {
             blue: this.reader.getFloat(children[i], 'b'),
             alpha: this.reader.getFloat(children[i], 'a')
           }
+
+          var aux=this.validateColor(ambient,"ambient");
+          if(aux!=null) return aux;
         }
         else {
           var background = {
@@ -351,6 +357,8 @@ class MySceneGraph {
             blue: this.reader.getFloat(children[i], 'b'),
             alpha: this.reader.getFloat(children[i], 'a')
           }
+          var aux=this.validateColor(background,"background");
+          if(aux!=null) return aux;
         }
       }
 
@@ -433,6 +441,9 @@ class MySceneGraph {
                   blue: this.reader.getFloat(grandChildren[j], 'b'),
                   alpha: this.reader.getFloat(grandChildren[j], 'a')
                 }
+
+                var aux=this.validateColor(ambient,lightId+" in Light (Ambient component)");
+                if(aux!=null) return aux;
               }
               else if (grandChildren[j].nodeName == "diffuse") {
                 var diffuse = {
@@ -441,6 +452,8 @@ class MySceneGraph {
                   blue: this.reader.getFloat(grandChildren[j], 'b'),
                   alpha: this.reader.getFloat(grandChildren[j], 'a')
                 }
+                var aux=this.validateColor(diffuse,lightId+" in Light (Diffuse component)");
+                if(aux!=null) return aux;
               }
               else if (grandChildren[j].nodeName == "specular") {
                 var specular = {
@@ -449,6 +462,8 @@ class MySceneGraph {
                   blue: this.reader.getFloat(grandChildren[j], 'b'),
                   alpha: this.reader.getFloat(grandChildren[j], 'a')
                 }
+                var aux=this.validateColor(specular,lightId+" in Light (Specular component)");
+                if(aux!=null) return aux;
               }
               else if (grandChildren[j].nodeName == "target") {
                 var target = {
@@ -581,6 +596,9 @@ class MySceneGraph {
                 blue: this.reader.getFloat(grandChildren[j], 'b'),
                 alpha: this.reader.getFloat(grandChildren[j], 'a')
               }
+
+              var aux=this.validateColor(emission,materialId+" in Material (Emission component)");
+              if(aux!=null) return aux;
             }
             else if (grandChildren[j].nodeName == "ambient"){
               var ambient = {
@@ -589,14 +607,19 @@ class MySceneGraph {
                 blue: this.reader.getFloat(grandChildren[j], 'b'),
                 alpha: this.reader.getFloat(grandChildren[j], 'a')
               }
+
+              var aux=this.validateColor(ambient,materialId+" in Material (Ambient component)");
+              if(aux!=null) return aux;
             }
-            else if (grandChildren[j].nodeName){
+            else if (grandChildren[j].nodeName=="diffuse"){
               var diffuse = {
                 red: this.reader.getFloat(grandChildren[j], 'r'),
                 green: this.reader.getFloat(grandChildren[j], 'g'),
                 blue: this.reader.getFloat(grandChildren[j], 'b'),
                 alpha: this.reader.getFloat(grandChildren[j], 'a')
               }
+              var aux=this.validateColor(diffuse,materialId+" in Material (Diffuse component)");
+              if(aux!=null) return aux;
             }
             else if (grandChildren[j].nodeName == "specular"){
               var specular = {
@@ -605,6 +628,9 @@ class MySceneGraph {
                 blue: this.reader.getFloat(grandChildren[j], 'b'),
                 alpha: this.reader.getFloat(grandChildren[j], 'a')
               }
+
+              var aux=this.validateColor(specular,materialId+" in Material (Specular component)");
+              if(aux!=null) return aux;
             }
             else{
               this.onXMLMinorError("unknown tag <"+grandChildren[i].nodeName+">");
@@ -924,6 +950,7 @@ class MySceneGraph {
               if (greatGrandChildren.length == 0) {
                 return "at least one reference to a primitive or a component must be assigned to component '"+compId+"'";
               }
+
               for (var k = 0; k < greatGrandChildren.length; k++) {
                 if (greatGrandChildren[k].nodeName == "componentref") {
                   var refId = this.reader.getString(greatGrandChildren[k], 'id');

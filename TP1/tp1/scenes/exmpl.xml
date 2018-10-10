@@ -1,7 +1,7 @@
 
 <!-- ficheiro teste pego num dos trabalhos de um grupo submetido no moodle  -->
 <yas>
-    <scene root="root" axis_length="4" />
+    <scene root="root" axis_length="1" />
     <views default="room_overview" >
         <perspective id="room_closer" near="0.1" far="500" angle="72">
             <from x="7" y="6" z="7" />
