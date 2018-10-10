@@ -781,7 +781,7 @@ class MySceneGraph {
                 };
               break;
             default:
-              return "unknow primitive <"+grandChildren.nodeName+">";
+              return "unknow primitive <"+grandChildren[0].nodeName+">";
           }
 
         }
@@ -848,9 +848,6 @@ class MySceneGraph {
           switch (grandChildren[j].nodeName) {
             case "transformation":
               greatGrandChildren = grandChildren[j].children;
-              if (greatGrandChildren.length == 0) {
-                return "at least one transformation must be assigned to component '"+compId+"'";
-              }
               for (var k = 0; k < greatGrandChildren.length; k++) {
                 if (greatGrandChildren[k].nodeName == "transformationref") {
                   var transfId = this.reader.getString(greatGrandChildren[k], 'id');
@@ -904,10 +901,15 @@ class MySceneGraph {
                 if (materialId.length == 0) {
                   return "an existing material id must be defined in order to be referenced";
                 }
-                if (this.materials[materialId] == null) {
+                if (materialId != "inherit" && this.materials[materialId] == null) {
                   return "material '"+materialId+"' does not exist";
                 }
-                this.components[compId].materials.push(this.reader.getString(greatGrandChildren[k], 'id'));
+                if (materialId == "inherit") {
+                  this.components[compId].materials.push(materialId);
+                }
+                else {
+                  this.components[compId].materials.push(this.materials[materialId]);
+                }
               }
               break;
             case "texture":
@@ -918,10 +920,24 @@ class MySceneGraph {
               }
               break;
             case "children":
-              // TODO: children case
+              greatGrandChildren = grandChildren[j].children;
+              if (greatGrandChildren.length == 0) {
+                return "at least one reference to a primitive or a component must be assigned to component '"+compId+"'";
+              }
+              for (var k = 0; k < greatGrandChildren.length; k++) {
+                if (greatGrandChildren[k].nodeName == "componentref") {
+                  // TODO: finish assigning componentref
+                }
+                else if (greatGrandChildren[k].nodeName == "primitiveref") {
+                  // TODO: finish assigning primitiveref
+                }
+                else {
+                  return "unknown tag <"+greatGrandChildren[k].nodeName+">";
+                }
+              }
               break;
             default:
-              return "unknow primitive <"+grandChildren.nodeName+">";
+              return "unknow primitive <"+grandChildren[j].nodeName+">";
           }
         }
       }
