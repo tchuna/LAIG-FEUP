@@ -215,7 +215,7 @@ class MySceneGraph {
       }
     }
 
-    // validate a componet COLOR_BUFFER_BIT
+    // validate a component COLOR_BUFFER_BIT
     validateAComponent(a,id){
 
       if (!(a != null && !isNaN(a) && a >= 0 && a <= 1))
@@ -818,16 +818,104 @@ class MySceneGraph {
           return "at least one component must be defined";
         }
 
+        this.components[compId] = {
+          transformations: [],
+          materials: [],
+          texture: null,
+          children: []
+        }
+
+        var nodes = [];
+
         for (var j = 0; j < grandChildren.length; j++) {
+          for (var k = 0; k < grandChildren.length; k++) {
+            nodes.push(grandChildren[k].nodeName);
+          }
+
+          if (nodes.indexOf("transformation") < 0) {
+            return "missing <transformation> tag";
+          }
+          if (nodes.indexOf("materials") < 0) {
+            return "missing <materials> tag";
+          }
+          if (nodes.indexOf("texture") < 0) {
+            return "missing <texture> tag";
+          }
+          if (nodes.indexOf("children") < 0) {
+            return "missing <children> tag";
+          }
+
           switch (grandChildren[j].nodeName) {
             case "transformation":
-              // TODO: transformation case
+              greatGrandChildren = grandChildren[j].children;
+              if (greatGrandChildren.length == 0) {
+                return "at least one transformation must be assigned to component '"+compId+"'";
+              }
+              for (var k = 0; k < greatGrandChildren.length; k++) {
+                if (greatGrandChildren[k].nodeName == "transformationref") {
+                  var transfId = this.reader.getString(greatGrandChildren[k], 'id');
+                  if (transfId.length == 0) {
+                    return "an existing transformation id must be defined in order to be referenced";
+                  }
+                  if (this.transformations[transfId] == null) {
+                    return "transformation '"+transfId+"' does not exist";
+                  }
+                  this.components[compId].transformations.push(this.transformations[transfId]);
+                }
+                else if (greatGrandChildren[k].nodeName == "translate") {
+                  var translate = {
+                    type: "translate",
+                    x: this.reader.getFloat(greatGrandChildren[k], 'x'),
+                    y: this.reader.getFloat(greatGrandChildren[k], 'y'),
+                    z: this.reader.getFloat(greatGrandChildren[k], 'z')
+                  }
+                  this.components[compId].transformations.push(translate);
+                }
+                else if (greatGrandChildren[k].nodeName == "rotate") {
+                  var rotate = {
+                    type: "rotate",
+                    axis: this.reader.getString(greatGrandChildren[k], 'axis'),
+                    angle: this.reader.getFloat(greatGrandChildren[k], 'angle')
+                  }
+                  this.components[compId].transformations.push(rotate);
+                }
+                else if (greatGrandChildren[k].nodeName == "scale") {
+                  var scale = {
+                    type: "scale",
+                    x: this.reader.getFloat(greatGrandChildren[k], 'x'),
+                    y: this.reader.getFloat(greatGrandChildren[k], 'y'),
+                    z: this.reader.getFloat(greatGrandChildren[k], 'z')
+                  }
+                  this.components[compId].transformations.push(scale);
+                }
+                else {
+                  this.onXMLMinorError("unknown tag <"+greatGrandChildren[i].nodeName+">");
+                  continue;
+                }
+              }
               break;
             case "materials":
-              // TODO: materials case
+              greatGrandChildren = grandChildren[j].children;
+              if (greatGrandChildren.length == 0) {
+                return "at least one material must be assigned to component '"+compId+"'";
+              }
+              for (var k = 0; k < greatGrandChildren.length; k++) {
+                var materialId = this.reader.getString(greatGrandChildren[k], 'id');
+                if (materialId.length == 0) {
+                  return "an existing material id must be defined in order to be referenced";
+                }
+                if (this.materials[materialId] == null) {
+                  return "material '"+materialId+"' does not exist";
+                }
+                this.components[compId].materials.push(this.reader.getString(greatGrandChildren[k], 'id'));
+              }
               break;
             case "texture":
-              // TODO: texture case
+              this.components[compId].texture = {
+                id: this.reader.getString(grandChildren[j], 'id'),
+                length_s: this.reader.getFloat(grandChildren[j], 'length_s'),
+                length_t: this.reader.getFloat(grandChildren[j], 'length_t')
+              }
               break;
             case "children":
               // TODO: children case
