@@ -926,10 +926,24 @@ class MySceneGraph {
               }
               for (var k = 0; k < greatGrandChildren.length; k++) {
                 if (greatGrandChildren[k].nodeName == "componentref") {
-                  // TODO: finish assigning componentref
+                  var refId = this.reader.getString(greatGrandChildren[k], 'id');
+                  if (this.components[refId] == null) {
+                    return "component '"+refId+"' not defined";
+                  }
+                  this.components[compId].children.push({
+                    type: "component",
+                    component: this.components[refId]
+                  });
                 }
                 else if (greatGrandChildren[k].nodeName == "primitiveref") {
-                  // TODO: finish assigning primitiveref
+                  var refId = this.reader.getString(greatGrandChildren[k], 'id');
+                  if (this.primitives[refId] == null) {
+                    return "primitive '"+refId+"' not defined";
+                  }
+                  this.components[compId].children.push({
+                    type: "primitive",
+                    primitive: this.primitives[refId]
+                  });
                 }
                 else {
                   return "unknown tag <"+greatGrandChildren[k].nodeName+">";
