@@ -1,7 +1,12 @@
 
 
-function MyTriangle(scene,points){
+function MyTriangle(scene,references){
   CGFobject.call(this,scene);
+
+  var points=[[references.x1,references.y1,references.z1],
+          [references.x2,references.y2,references.z2],
+          [references.x3,references.y3,references.z3]
+        ];
 
   this.point_1=points[0];
   this.point_2=points[1];
@@ -25,11 +30,11 @@ MyTriangle.prototype.initBuffers=function(){
 
   this.vertices=[this.point_1[0],this.point_1[1],this.point_1[2],
                  this.point_2[0],this.point_2[1],this.point_2[2],
-                 this.point_3[0].this.point_3[1],this.point_3[2]
+                 this.point_3[0],this.point_3[1],this.point_3[2]
                 ];
 
 
-  this.indeces=[0,1,2];
+  this.indices=[0,1,2];
 
   //vector point_1 to point_2
   var v_2_1=[this.point_2[0]-this.point_1[0],
@@ -55,6 +60,7 @@ MyTriangle.prototype.initBuffers=function(){
                ];
 
   this.primitiveType=this.scene.gl.TRIANGLES;
+  this.initGLBuffers();
 
 };
 

@@ -14,8 +14,8 @@
   </views>
 
   <ambient>
-    <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
-    <background r="1.0" g="1.0" b="1.0" a="1.0" />
+    <ambient r="0.7" g="0.4" b="0.3" a="1.0" />
+    <background r="0.2" g="0.6" b="0.5" a="1.0" />
   </ambient>
 
   <lights>
@@ -50,32 +50,37 @@
 
   <transformations>
     <transformation id="transform0">
-      <scale x="1.9" y="1.5" z="2.0" />
+      <translate x="0" y="0" z="8"/>
+      <rotate axis="y" angle="-180"/>
+      <scale x="8" y="5" z="1"/>
     </transformation>
   </transformations>
 
   <primitives>
     <primitive id="square">
-      <rectangle x1="0.5" y1="0.5" x2="0.5" y2="0.5" />
+      <rectangle x1="12" y1="12" x2="21" y2="12" />
+    </primitive>
+    <primitive id="triangle">
+        <triangle x1="1" y1="0" z1="0"
+                x2="-0.5" y2="0.866" z2="0"
+                x3="-0.5" y3="-0.866" z3="0"/>
     </primitive>
   </primitives>
 
   <components>
-    <component id="bed">
-      <transformation>
-        <transformationref id="transform0" />
-      </transformation>
-
-      <materials>
-        <material id="material0" />
-      </materials>
-
-      <texture id="leaves" length_s="5.0" length_t="5.0" />
-
-      <children>
-        <primitiveref id="square" />
-      </children>
-
+    <component id="floor">
+        <transformation>
+            <rotate axis="y" angle="90"/>
+            <translate x="0" y="0" z="0.5"/>
+        </transformation>
+        <materials>
+            <material id ="material0"/>
+        </materials>
+        <texture id="leaves" length_s="1" length_t="1"/>
+        <children>
+            <primitiveref id="square"/>
+        </children>
     </component>
+
   </components>
 </yas>

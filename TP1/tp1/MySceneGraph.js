@@ -193,7 +193,7 @@ class MySceneGraph {
         }
 
         // <components>
-        /*if ((index = nodeNames.indexOf("components")) == -1)
+        if ((index = nodeNames.indexOf("components")) == -1)
             return "tag <components> missing";
         else {
             if (index != COMPONENTS_INDEX)
@@ -202,7 +202,7 @@ class MySceneGraph {
             //Parse components block
             if ((error = this.parseComponents(nodes[index])) != null)
                 return error;
-        }*/
+        }
     }
 
     //Validate COLOR
@@ -762,15 +762,19 @@ class MySceneGraph {
 
           switch (grandChildren[0].nodeName) {
             case "rectangle":
-                this.primitives[primId] = {
+               var aux={};
+                aux= {
                   x1: this.reader.getFloat(grandChildren[0], 'x1'),
                   y1: this.reader.getFloat(grandChildren[0], 'y1'),
                   x2: this.reader.getFloat(grandChildren[0], 'x2'),
                   y2: this.reader.getFloat(grandChildren[0], 'y2')
                 };
+                this.primitives[primId]=new MyRectangle(this.scene,aux);
               break;
             case "triangle":
-                this.primitives[primId] = {
+                var aux={};
+
+                aux= {
                   x1: this.reader.getFloat(grandChildren[0], 'x1'),
                   y1: this.reader.getFloat(grandChildren[0], 'y1'),
                   z1: this.reader.getFloat(grandChildren[0], 'z1'),
@@ -781,6 +785,8 @@ class MySceneGraph {
                   y3: this.reader.getFloat(grandChildren[0], 'y3'),
                   z3: this.reader.getFloat(grandChildren[0], 'z3')
                 };
+                  this.primitives[primId]=new MyTriangle(this.scene,aux);
+
               break;
             case "cylinder":
                 this.primitives[primId] = {
@@ -984,6 +990,7 @@ class MySceneGraph {
       }
 
         this.log("Parsed components");
+
         return null;
     }
 
@@ -1016,6 +1023,9 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
+      //this.log(this.primitives);
+
+      this.primitives["triangle"].display();
         // entry point for graph rendering
         //TODO: Render loop starting at root of graph
     }
