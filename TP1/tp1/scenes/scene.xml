@@ -60,6 +60,9 @@
     <primitive id="square">
       <rectangle x1="12" y1="12" x2="21" y2="12" />
     </primitive>
+    <primitive id="circle">
+      <circle slices="10" />
+    </primitive>
     <primitive id="triangle">
         <triangle x1="1" y1="0" z1="0"
                 x2="-0.5" y2="0.866" z2="0"

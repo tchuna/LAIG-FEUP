@@ -788,6 +788,13 @@ class MySceneGraph {
                   this.primitives[primId]=new MyTriangle(this.scene,aux);
 
               break;
+            case "circle":
+               var aux={};
+                aux = {
+                    slices: this.reader.getInteger(grandChildren[0], 'slices')
+                  };
+                   this.primitives[primId]=new MyCircle(this.scene,aux);
+              break;
             case "cylinder":
                 this.primitives[primId] = {
                   base: this.reader.getFloat(grandChildren[0], 'base'),
@@ -1025,7 +1032,7 @@ class MySceneGraph {
     displayScene() {
       //this.log(this.primitives);
 
-      this.primitives["triangle"].display();
+      this.primitives["circle"].display();
         // entry point for graph rendering
         //TODO: Render loop starting at root of graph
     }
