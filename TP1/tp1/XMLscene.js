@@ -81,10 +81,8 @@ class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
-
-        this.camera.near =this.graph.views[this.graph.viewsId[0]].near;
-        this.camera.far =this.graph.views[this.graph.viewsId[0]].far;
-
+        this.camera.near =this.graph.views[this.graph.default_view].near;
+        this.camera.far =this.graph.views[this.graph.default_view].far;
 
         // Change reference length according to parsed graph
         this.axis = new CGFaxis(this, this.graph.axis_length);
@@ -154,7 +152,7 @@ class XMLscene extends CGFscene {
         }
         else {
             // Draw axis
-            //this.axis.display();
+            this.axis.display();
         }
 
         this.popMatrix();
