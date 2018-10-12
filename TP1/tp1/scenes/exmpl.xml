@@ -153,7 +153,7 @@
             <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
         </primitive>
         <primitive id="simpson_donut">
-            <torus inner="0.06" outer="0.12" slices="20" loops="20" />
+            <torus inner="0.16" outer="0.12" slices="20" loops="20" />
         </primitive>
         <primitive id="donut_plate">
             <cylinder base="0.26" top="0.26" height="0.015" slices="30" stacks="3" />

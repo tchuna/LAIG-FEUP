@@ -58,15 +58,24 @@
 
   <primitives>
     <primitive id="square">
-      <rectangle x1="12" y1="12" x2="21" y2="12" />
+      <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
     </primitive>
     <primitive id="circle">
-      <circle slices="10" />
+      <circle slices="30" />
+    </primitive>
+    <primitive id="sphere">
+      <sphere  radius="0.5" slices="30" stacks="30" />
+    </primitive>
+    <primitive id="donut">
+        <torus inner="0.1" outer="0.3" slices="30" loops="30" />
     </primitive>
     <primitive id="triangle">
         <triangle x1="1" y1="0" z1="0"
                 x2="-0.5" y2="0.866" z2="0"
                 x3="-0.5" y3="-0.866" z3="0"/>
+    </primitive>
+    <primitive id="cylinder">
+        <cylinder base="1" top="1" height="5" slices="250" stacks="250"/>
     </primitive>
   </primitives>
 

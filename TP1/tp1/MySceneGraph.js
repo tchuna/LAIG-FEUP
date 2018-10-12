@@ -796,28 +796,36 @@ class MySceneGraph {
                    this.primitives[primId]=new MyCircle(this.scene,aux);
               break;
             case "cylinder":
-                this.primitives[primId] = {
+                aux={};
+
+                aux= {
                   base: this.reader.getFloat(grandChildren[0], 'base'),
                   top: this.reader.getFloat(grandChildren[0], 'top'),
                   height: this.reader.getFloat(grandChildren[0], 'height'),
                   slices: this.reader.getInteger(grandChildren[0], 'slices'),
                   stacks: this.reader.getInteger(grandChildren[0], 'stacks')
                 };
+                this.primitives[primId] =new MyCylinder(this.scene,aux);
               break;
             case "sphere":
-                this.primitives[primId] = {
+               var aux={};
+                aux= {
                   radius: this.reader.getFloat(grandChildren[0], 'radius'),
                   slices: this.reader.getInteger(grandChildren[0], 'slices'),
                   stacks: this.reader.getInteger(grandChildren[0], 'stacks')
                 };
+                this.primitives[primId]=new MySphere(this.scene,aux);
               break;
             case "torus":
-                this.primitives[primId] = {
+                var aux={};
+
+                aux = {
                   inner: this.reader.getFloat(grandChildren[0], 'inner'),
                   outer: this.reader.getFloat(grandChildren[0], 'outer'),
                   slices: this.reader.getInteger(grandChildren[0], 'slices'),
                   loops: this.reader.getInteger(grandChildren[0], 'loops')
                 };
+                this.primitives[primId]=new MyTorus(this.scene,aux);
               break;
             default:
               return "unknow primitive <"+grandChildren[0].nodeName+">";
@@ -1031,8 +1039,28 @@ class MySceneGraph {
      */
     displayScene() {
       //this.log(this.primitives);
+      this.scene.translate(0,2,3);
+      this.primitives["cylinder"].display();
 
+      this.scene.translate(2,5,1);
       this.primitives["circle"].display();
+
+      this.scene.translate(4,2,1);
+      this.primitives["triangle"].display();
+
+      this.scene.translate(-2,1,3);
+      this.primitives["square"].display();
+
+      this.scene.translate(2,-4,2);
+      this.primitives["sphere"].display();
+
+      this.scene.translate(3,2,-3);
+      this.primitives["donut"].display();
+
+
+
+
+
         // entry point for graph rendering
         //TODO: Render loop starting at root of graph
     }

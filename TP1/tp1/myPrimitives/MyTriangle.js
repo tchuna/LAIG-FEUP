@@ -65,7 +65,7 @@ MyTriangle.prototype.initBuffers=function(){
 };
 
 
-MyTriangle.updateTexCoords = function (ampliFactorS, ampliFactorT){
+MyTriangle.updateTexCoords = function (l_s, l_t){
 
   this.disp1_p2=Math.sqrt( Math.pow((this.point_2[0] - this.point_1[0]), 2) +
                       Math.pow((this.point_2[1] - this.point_1[1]), 2) +
@@ -83,11 +83,11 @@ MyTriangle.updateTexCoords = function (ampliFactorS, ampliFactorT){
 
   var aux = disp2_p3 * Math.sin(angBt);
 
-  this.texCoords = [0, aux/ampliFactorT,
-                    disp1_p2/ampliFactorS, aux/ampliFactorT,
-                    (disp1_p2-disp2_p3*Math.cos(angBt))/afS,(aux-disp2_p3*Math.sin(angBt))/ampliFactorT
+  this.texCoords = [0, aux/l_t,
+                    disp1_p2/l_s, aux/l_t,
+                    (disp1_p2-disp2_p3*Math.cos(angBt))/afS,(aux-disp2_p3*Math.sin(angBt))/l_t
                    ];
 
-  this.updateTexCoords();
+  this.updateTexCoordsGLBuffers();
 
 };
