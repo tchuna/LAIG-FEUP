@@ -43,7 +43,7 @@ class XMLscene extends CGFscene {
      * Initializes the scene cameras.
      */
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(20, 20, 20), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(50, 50, 50), vec3.fromValues(25, 0, 0));
     }
     /**
      * Initializes the scene lights with the values read from the XML file.
@@ -125,6 +125,12 @@ class XMLscene extends CGFscene {
     }
 
 
+    changeCamera(){
+      var camera= new CGFcamera(0.4, 0.1, 500, vec3.fromValues(5, 5, 20), vec3.fromValues(0, 0, 0));
+      setActiveCamera(camera);
+    }
+
+
     /**
      * Displays the scene.
      */
@@ -154,6 +160,7 @@ class XMLscene extends CGFscene {
                 if (this.lightValues.hasOwnProperty(key)) {
                     if (this.lightValues[key]) {
                         this.lights[i].setVisible(true);
+                        //
                         this.lights[i].enable();
                     }
                     else {
@@ -167,6 +174,7 @@ class XMLscene extends CGFscene {
 
             // Displays the scene (MySceneGraph function).
            this.graph.displayScene();
+
         }
         else {
             // Draw axis
@@ -176,4 +184,8 @@ class XMLscene extends CGFscene {
         this.popMatrix();
         // ---- END Background, camera and axis setup
     }
+
+
+
+
 }

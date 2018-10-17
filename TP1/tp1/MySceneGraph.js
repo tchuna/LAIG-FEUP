@@ -322,6 +322,7 @@ class MySceneGraph {
         }
 
         this.log("Parsed views");
+      //  this.log(this.views["v1"].near);
 
         return null;
     }
