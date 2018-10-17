@@ -379,7 +379,7 @@ class MySceneGraph {
 
         var children = lightsNode.children;
 
-        this.lights = [];
+        this.lights=[];
         var numLights = 0;
 
         var grandChildren = [];
@@ -398,7 +398,7 @@ class MySceneGraph {
                 return "no ID defined for light";
 
             // Checks for repeated IDs.
-            if (this.lights[lightId] != null)
+            if (this.lights[lightId] != null )
                 return "ID must be unique for each light (conflict: ID = " + lightId + ")";
 
             grandChildren = children[i].children;
@@ -465,7 +465,7 @@ class MySceneGraph {
                 if(aux!=null) return aux;
               }
               else if (grandChildren[j].nodeName == "target") {
-                var target = {
+                 var target = {
                   x: this.reader.getFloat(grandChildren[j], 'x'),
                   y: this.reader.getFloat(grandChildren[j], 'y'),
                   z: this.reader.getFloat(grandChildren[j], 'z')
@@ -482,8 +482,10 @@ class MySceneGraph {
                   location: location,
                   ambient: ambient,
                   diffuse: diffuse,
-                  specular: specular
+                  specular: specular,
+                  type:"omni"
                 }
+
               }
               else{
                 this.lights[lightId] = {
@@ -494,7 +496,8 @@ class MySceneGraph {
                   target: target,
                   ambient: ambient,
                   diffuse: diffuse,
-                  specular: specular
+                  specular: specular,
+                  type:"spot"
                 }
               }
             }

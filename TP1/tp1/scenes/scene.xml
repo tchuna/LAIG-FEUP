@@ -27,7 +27,7 @@
     </omni>
 
     <spot id="light1" enabled="0" angle="14.0" exponent="20.0">
-      <location x="15.0" y="5.0" z="15.0" w="0.0" />
+      <location x="15.0" y="5.0" z="15.0" w="1" />
       <target x="0.0" y="0.0" z="0.0" />
       <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
       <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />

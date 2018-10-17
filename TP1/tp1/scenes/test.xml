@@ -14,18 +14,18 @@
 
     <lights>
         <omni id="g_light" enabled="1">
-            <location x="3.5" y="15" z="3.5" w="0" />
+            <location x="3.5" y="15" z="3.5" w="1" />
             <ambient r="0.1" g="0.1" b="0.1" a="1"/>
             <diffuse r="0.7" g="0.7" b="0.7" a="1"/>
             <specular r="0.7" g="0.7" b="0.7" a="1"/>
         </omni>
 
-        <spot id="s_light" enabled="0" angle="14" exponent="20">
-            <location x="15" y="5" z="15" w="0" />
-            <target x="0" y="0" z="0" />
-            <ambient r="0" g="0" b="0" a="0"/>
-            <diffuse r="0.5" g="0.5" b="0.5" a="0"/>
-            <specular r="0.5" g="0.5" b="0.5" a="0"/>
+        <spot id="spot_l" enabled="0" angle="60" exponent="1">
+            <location x="7" y="2" z="3" w="1" />
+            <target x="3" y="2" z="1" />
+            <ambient r="0.4" g="0.2" b="0.1" a="1"/>
+            <diffuse r="0.7" g="0.7" b="0.7" a="1"/>
+            <specular r="0.7" g="0.7" b="0.7" a="1"/>
         </spot>
 
     </lights>

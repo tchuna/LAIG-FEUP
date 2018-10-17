@@ -13,6 +13,8 @@ class XMLscene extends CGFscene {
 
         this.interface = myinterface;
         this.lightValues = {};
+        this.ex=[];
+
     }
 
     /**
@@ -46,7 +48,7 @@ class XMLscene extends CGFscene {
     /**
      * Initializes the scene lights with the values read from the XML file.
      */
-    initLights() {
+     initLights() {
         var i = 0;
         // Lights index.
         for (var key in this.graph.lights) {
@@ -56,6 +58,21 @@ class XMLscene extends CGFscene {
 
           if (this.graph.lights.hasOwnProperty(key)) {
             var light = this.graph.lights[key];
+
+            if(light.type=="spot"){
+              var xDirct;
+              var yDirct;
+              var zDirct;
+
+              this.lights[i].setSpotCutOff(light.angle);
+              this.lights[i].setSpotExponent(light.exponent);
+
+              xDirct=light.target.x-light.location.x;
+              yDirct=light.target.y-light.location.y;
+              zDirct=light.target.z-light.location.z;
+
+              this.lights[i].setSpotDirection(xDirct,yDirct,zDirct);
+            }
 
             this.lights[i].setPosition(light.location.x, light.location.y, light.location.z, light.location.w);
             this.lights[i].setAmbient(light.ambient.red, light.ambient.green, light.ambient.blue, light.ambient.alpha);
@@ -97,10 +114,11 @@ class XMLscene extends CGFscene {
                            this.graph.ambient.background.blue,
                            this.graph.ambient.background.alpha);
 
-        this.initLights();
+      this.initLights();
 
         // Adds lights group.
-        this.interface.addLightsGroup(this.graph.lights);
+      this.interface.addLightsGroup(this.graph.lights);
+
         //this.interface.addViewssGroup(this.graph.views);
 
         this.sceneInited = true;
