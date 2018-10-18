@@ -24,7 +24,7 @@
 
         this.scene.pushMatrix();
         this.scene.translate(0, 0, this.height);
-        this.top.display();
+        //this.top.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();

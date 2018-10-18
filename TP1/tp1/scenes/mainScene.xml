@@ -25,7 +25,19 @@
 
     <lights>
         <omni id="g_light" enabled="1">
-            <location x="3.5" y="15" z="3.5" w="1" />
+            <location x="45" y="15" z="3.5" w="1" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1"/>
+            <diffuse r="0.7" g="0.7" b="0.7" a="1"/>
+            <specular r="0.7" g="0.7" b="0.7" a="1"/>
+        </omni>
+        <omni id="g_light_1" enabled="1">
+            <location x="30" y="15" z="3.5" w="1" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1"/>
+            <diffuse r="0.7" g="0.7" b="0.7" a="1"/>
+            <specular r="0.7" g="0.7" b="0.7" a="1"/>
+        </omni>
+        <omni id="g_light_2" enabled="0">
+            <location x="35" y="15" z="20" w="1" />
             <ambient r="0.1" g="0.1" b="0.1" a="1"/>
             <diffuse r="0.7" g="0.7" b="0.7" a="1"/>
             <specular r="0.7" g="0.7" b="0.7" a="1"/>
@@ -139,9 +151,17 @@
         <primitive id="cylinder">
             <cylinder base="1" top="1" height="5" slices="250" stacks="250"/>
         </primitive>
+        <primitive id="cylinder_1">
+            <cylinder base="1" top="0.2" height="8" slices="50" stacks="50"/>
+        </primitive>
+
 
         <primitive id="cut_cone">
-            <cylinder base="3" top="1" height="5" slices="250" stacks="250"/>
+            <cylinder base="3" top="1.8" height="5" slices="250" stacks="250"/>
+        </primitive>
+
+        <primitive id="cut_cone_1">
+            <cylinder base="3" top="0" height="5" slices="250" stacks="250"/>
         </primitive>
 
         <primitive id="torus">
@@ -153,9 +173,9 @@
     <components>
         <component id="floor_right">
             <transformation>
-                <translate x="24" y="0" z="20"/>
+                <translate x="24" y="0" z="25"/>
                 <rotate axis="x" angle="-90"/>
-                <scale x="16" y="20" z="1"/>
+                <scale x="28" y="25" z="1"/>
             </transformation>
 
             <materials>
@@ -170,9 +190,9 @@
         </component>
         <component id="floor_left">
             <transformation>
-                <translate x="0" y="0" z="20"/>
+                <translate x="0" y="0" z="25"/>
                 <rotate axis="x" angle="-90"/>
-                <scale x="16" y="20" z="1"/>
+                <scale x="16" y="25" z="1"/>
             </transformation>
 
             <materials>
@@ -187,9 +207,9 @@
         </component>
         <component id="river">
             <transformation>
-                <translate x="16" y="0" z="20"/>
+                <translate x="16" y="0" z="25"/>
                 <rotate axis="x" angle="-90"/>
-                <scale x="8" y="20" z="1"/>
+                <scale x="8" y="25" z="1"/>
             </transformation>
 
             <materials>
@@ -878,8 +898,270 @@
                 <componentref id="suporte_ponte"/>
             </children>
         </component>
+        <component id="turbine_suporte_parte1">
+            <transformation>
+                <translate x="35" y="0" z="5"/>
+                <rotate axis="x" angle="-90"/>
+                <scale x="0.18" y="0.15" z="1.7"/>
+            </transformation>
+
+            <materials>
+                <material id ="light_orange"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <primitiveref id="cut_cone"/>
+            </children>
+        </component>
+        <component id="turbine_suporte_parte2">
+            <transformation>
+                <translate x="35" y="8.4" z="6"/>
+                <rotate axis="x" angle="-180"/>
+                <scale x="0.5" y="0.5" z="0.4"/>
+            </transformation>
+
+            <materials>
+                <material id ="light_orange"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <primitiveref id="cylinder"/>
+            </children>
+        </component>
+        <component id="turbine_helice_suport_part1">
+            <transformation>
+                <translate x="35" y="8.4" z="4"/>
+                <rotate axis="x" angle="-180"/>
+                <scale x="0.5" y="0.5" z="0.1"/>
+            </transformation>
+
+            <materials>
+                <material id ="light_orange"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <primitiveref id="cylinder_1"/>
+            </children>
+        </component>
+        <component id="turbine_helice_suport_part2">
+            <transformation>
+                <translate x="35" y="8.4" z="5.8"/>
+                <rotate axis="x" angle="-180"/>
+                <scale x="1.5" y="1.5" z="1.1"/>
+            </transformation>
+
+            <materials>
+                <material id ="light_orange"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <primitiveref id="torus"/>
+            </children>
+        </component>
+        <component id="turbine_helice_part3">
+            <transformation>
+                <translate x="35" y="11.2" z="6"/>
+                <rotate axis="x" angle="90"/>
+                <scale x="0.8" y="0.2" z="0.3"/>
+            </transformation>
+
+            <materials>
+                <material id ="light_orange"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <primitiveref id="cylinder_1"/>
+            </children>
+        </component>
+        <component id="turbine_helice_part4">
+            <transformation>
+                <translate x="35" y="11.2" z="6"/>
+                <rotate axis="x" angle="-90"/>
+                <scale x="0.8" y="0.2" z="0.4"/>
+            </transformation>
+
+            <materials>
+                <material id ="light_orange"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <primitiveref id="cylinder_1"/>
+            </children>
+        </component>
+        <component id="turbine_suporte">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="turbine_suporte_parte1"/>
+                <componentref id="turbine_suporte_parte2"/>
+            </children>
+        </component>
+        <component id="turbine_helice_suport">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+              <componentref id="turbine_helice_suport_part1"/>
+              <componentref id="turbine_helice_suport_part2"/>
+            </children>
+        </component>
+
+        <component id="turbine_helice_1">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="turbine_helice_part3"/>
+                <componentref id="turbine_helice_part4"/>
+            </children>
+        </component>
+        <component id="turbine_helice_2">
+            <transformation>
+              <translate x="24.7" y="43" z="12"/>
+              <rotate axis="x" angle="-180"/>
+              <rotate axis="z" angle="60"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="turbine_helice_1"/>
+            </children>
+        </component>
+        <component id="turbine_helice_3">
+            <transformation>
+              <translate x="59.9" y="-17.5" z="0"/>
+              <rotate axis="z" angle="120"/>
+
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="turbine_helice_2"/>
+            </children>
+        </component>
+
+        <component id="turbine_complete_helice">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+              <componentref id="turbine_helice_suport"/>
+              <componentref id="turbine_helice_1"/>
+                <componentref id="turbine_helice_2"/>
+                <componentref id="turbine_helice_3"/>
+            </children>
+        </component>
+
+        <component id="turbina">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="turbine_suporte"/>
+                <componentref id="turbine_complete_helice"/>
+
+            </children>
+        </component>
+
+        <component id="turbina_1">
+            <transformation>
+              <translate x="0" y="0" z="-3"/>
+              <scale x="1.3" y="1.3" z="1.3"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="turbine_suporte"/>
+                <componentref id="turbine_complete_helice"/>
+
+            </children>
+        </component>
+        <component id="turbina_2">
+            <transformation>
+              <translate x="4" y="0" z="5"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="turbine_suporte"/>
+                <componentref id="turbine_complete_helice"/>
+
+            </children>
+        </component>
+        <component id="turbina_3">
+            <transformation>
+              <translate x="18.5" y="0" z="12"/>
+              <scale x="0.85" y="0.85" z="0.85"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="turbine_suporte"/>
+                <componentref id="turbine_complete_helice"/>
+
+            </children>
+        </component>
         <component id="living_room">
             <transformation>
+
             </transformation>
 
             <materials>
@@ -893,6 +1175,9 @@
                 <componentref id="floor_left"/>
                 <componentref id="river"/>
                 <componentref id="ponte"/>
+                <componentref id="turbina_1"/>
+                <componentref id="turbina_2"/>
+                <componentref id="turbina_3"/>
             </children>
         </component>
 
