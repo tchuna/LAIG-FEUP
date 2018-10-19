@@ -43,7 +43,7 @@ class XMLscene extends CGFscene {
      * Initializes the scene cameras.
      */
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(50, 50, 50), vec3.fromValues(25, 0, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(30, 80, 70), vec3.fromValues(25, 5, 10));
     }
     /**
      * Initializes the scene lights with the values read from the XML file.

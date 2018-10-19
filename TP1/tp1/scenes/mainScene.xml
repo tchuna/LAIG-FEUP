@@ -42,7 +42,12 @@
             <diffuse r="0.7" g="0.7" b="0.7" a="1"/>
             <specular r="0.7" g="0.7" b="0.7" a="1"/>
         </omni>
-
+        <omni id="g_light_3" enabled="0">
+            <location x="-3" y="15" z="3" w="1" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1"/>
+            <diffuse r="0.7" g="0.7" b="0.7" a="1"/>
+            <specular r="0.7" g="0.7" b="0.7" a="1"/>
+        </omni>
         <spot id="spot_l" enabled="0" angle="60" exponent="1">
             <location x="7" y="2" z="1" w="1" />
             <target x="3" y="2" z="1" />
@@ -145,7 +150,7 @@
         </primitive>
 
         <primitive id="sphere">
-            <sphere radius="1" slices="20" stacks="20"/>
+            <sphere radius="1" slices="50" stacks="50"/>
         </primitive>
 
         <primitive id="cylinder">
@@ -1111,8 +1116,8 @@
 
         <component id="turbina_1">
             <transformation>
-              <translate x="0" y="0" z="-3"/>
-              <scale x="1.3" y="1.3" z="1.3"/>
+              <translate x="2" y="0" z="-3"/>
+              <scale x="1.2" y="1.2" z="1.2"/>
             </transformation>
             <materials>
                 <material id ="inherit"/>
@@ -1159,6 +1164,108 @@
 
             </children>
         </component>
+        <component id="torre_suporte">
+            <transformation>
+              <translate x="5" y="5" z="15"/>
+              <rotate axis="x" angle="-90"/>
+              <scale x="6" y="6" z="10"/>
+            </transformation>
+            <materials>
+                <material id ="table_wood"/>
+
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+        <component id="torre_suporte_1">
+            <transformation>
+              <translate x="5" y="11.5" z="15"/>
+              <rotate axis="x" angle="-90"/>
+              <scale x="10" y="10" z="3"/>
+            </transformation>
+            <materials>
+                <material id ="table_wood"/>
+
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+        <component id="torre_s_1">
+            <transformation>
+              <translate x="5" y="11.5" z="15"/>
+              <rotate axis="x" angle="-90"/>
+              <scale x="10" y="5" z="1"/>
+            </transformation>
+            <materials>
+                <material id ="table_wood"/>
+
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <primitiveref id="sphere"/>
+            </children>
+        </component>
+        <component id="torre_s_2">
+            <transformation>
+              <translate x="5" y="11.5" z="15"/>
+              <rotate axis="x" angle="90"/>
+              <rotate axis="z" angle="90"/>
+              <scale x="10" y="5" z="1"/>
+            </transformation>
+            <materials>
+                <material id ="table_wood"/>
+
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <primitiveref id="sphere"/>
+            </children>
+        </component>
+        <component id="torre_s_3">
+            <transformation>
+              <translate x="5" y="11.5" z="15"/>
+              <scale x="6" y="6" z="6"/>
+            </transformation>
+            <materials>
+                <material id ="table_wood"/>
+
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <primitiveref id="sphere"/>
+            </children>
+        </component>
+        <component id="torre">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="torre_suporte"/>
+                <componentref id="torre_suporte_1"/>
+                <componentref id="torre_s_1"/>
+                <componentref id="torre_s_2"/>
+                <componentref id="torre_s_3"/>
+            </children>
+        </component>
         <component id="living_room">
             <transformation>
 
@@ -1178,6 +1285,7 @@
                 <componentref id="turbina_1"/>
                 <componentref id="turbina_2"/>
                 <componentref id="turbina_3"/>
+                <componentref id="torre"/>
             </children>
         </component>
 
