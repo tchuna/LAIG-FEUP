@@ -19,6 +19,8 @@ class MyInterface extends CGFinterface {
         //  http://workshop.chromeexperiments.com/examples/gui
 
         this.gui = new dat.GUI();
+        //this.gui.add(text, 'message', [ 'pizza', 'chrome', 'hooray' ] );
+
 
         // add a group of controls (and open/expand by defult)
 
@@ -44,6 +46,15 @@ class MyInterface extends CGFinterface {
             }
         }
     }
+
+    addViews(){
+      var group = this.gui.addFolder("Views");
+      group.open();
+
+    this.gui.add(text, 'message', [ 'pizza', 'chrome', 'hooray' ] );
+
+    }
+
 
 
 

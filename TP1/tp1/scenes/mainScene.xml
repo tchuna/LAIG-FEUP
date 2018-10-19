@@ -48,6 +48,12 @@
             <diffuse r="0.7" g="0.7" b="0.7" a="1"/>
             <specular r="0.7" g="0.7" b="0.7" a="1"/>
         </omni>
+        <omni id="g_light_4" enabled="0">
+            <location x="-18" y="15" z="3" w="1" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1"/>
+            <diffuse r="0.7" g="0.7" b="0.7" a="1"/>
+            <specular r="0.7" g="0.7" b="0.7" a="1"/>
+        </omni>
         <spot id="spot_l" enabled="0" angle="60" exponent="1">
             <location x="7" y="2" z="1" w="1" />
             <target x="3" y="2" z="1" />
@@ -144,10 +150,8 @@
         </primitive>
 
         <primitive id="triangle">
-            <triangle x1="1" y1="1" z1="1"
-                    x2="-0.5" y2="0.866" z2="0"
-                    x3="-0.5" y3="-0.866" z3="0"/>
-        </primitive>
+            <triangle x1="0" y1="1" z1="0" x2="-0.5" y2="0" z2="0.5" x3="0.5" y3="0" z3="0.5" />
+        </primitive >
 
         <primitive id="sphere">
             <sphere radius="1" slices="50" stacks="50"/>
@@ -225,6 +229,126 @@
 
             <children>
                 <primitiveref id="square_at_zero"/>
+            </children>
+        </component>
+        <component id="piramede_lado1">
+
+            <transformation>
+                <scale x="1" y="1" z="1" />
+            </transformation>
+
+            <materials>
+                <material id="table_wood" />
+            </materials>
+              <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+        <component id="piramede_lado2">
+            <transformation>
+                <rotate axis="y" angle="90" />
+            </transformation>
+
+            <materials>
+                <material id="table_wood" />
+            </materials>
+              <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+        <component id="piramede_lado3">
+
+            <transformation>
+                <rotate axis="y" angle="-90" />
+            </transformation>
+
+            <materials>
+                <material id="table_wood" />
+            </materials>
+
+          <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+        <component id="piramede_lado4">
+
+            <transformation>
+                <rotate axis="y" angle="180" />
+            </transformation>
+
+            <materials>
+                <material id="table_wood" />
+            </materials>
+
+              <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+
+        </component>
+
+        <component id="lados_piramede">
+
+            <transformation>
+                <translate x="0" y="0" z="0" />
+                <rotate axis="x" angle="0" />
+                <scale x="1" y="1" z="1" />
+            </transformation>
+
+            <materials>
+                <material id="table_wood" />
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="piramede_lado1" />
+                <componentref id="piramede_lado2" />
+                <componentref id="piramede_lado3" />
+                <componentref id="piramede_lado4" />
+            </children>
+        </component>
+        <component id="base_piramede">
+
+            <transformation>
+                <rotate axis="x" angle="90" />
+            </transformation>
+
+            <materials>
+                <material id="table_wood" />
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <primitiveref id="square_at_zero" />
+            </children>
+        </component>
+
+        <component id="piramide">
+
+            <transformation>
+              <translate x="30" y="0" z="10" />
+              <scale x="0.3" y="0.8" z="0.8" />
+            </transformation>
+
+            <materials>
+                <material id="table_wood" />
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="lados_piramede" />
+                <componentref id="base_piramede" />
             </children>
         </component>
         <component id="frontal_face">
@@ -1093,8 +1217,8 @@
             <children>
               <componentref id="turbine_helice_suport"/>
               <componentref id="turbine_helice_1"/>
-                <componentref id="turbine_helice_2"/>
-                <componentref id="turbine_helice_3"/>
+              <componentref id="turbine_helice_2"/>
+              <componentref id="turbine_helice_3"/>
             </children>
         </component>
 
@@ -1249,6 +1373,136 @@
                 <primitiveref id="sphere"/>
             </children>
         </component>
+        <component id="escada_torre_part1">
+            <transformation>
+              <translate x="13" y="0" z="5"/>
+              <rotate axis="y" angle="270"/>
+              <scale x="0.7" y="0.7" z="0.4"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="escadote"/>
+            </children>
+        </component>
+        <component id="escada_torre_part2">
+            <transformation>
+              <translate x="13" y="0.8" z="6.5"/>
+              <rotate axis="y" angle="270"/>
+              <scale x="0.7" y="0.7" z="0.4"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="escadote"/>
+            </children>
+        </component>
+        <component id="escada_torre_part3">
+            <transformation>
+              <translate x="13" y="1.6" z="8"/>
+              <rotate axis="y" angle="270"/>
+              <scale x="0.7" y="0.7" z="0.4"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="escadote"/>
+            </children>
+        </component>
+        <component id="escada_torre_part4">
+            <transformation>
+              <translate x="13" y="2.4" z="9.5"/>
+              <rotate axis="y" angle="270"/>
+              <scale x="0.7" y="0.7" z="0.4"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="escadote"/>
+            </children>
+        </component>
+        <component id="escada_torre_part5">
+            <transformation>
+                <translate x="9.8" y="2.83" z="20"/>
+                <scale x="1.6" y="0.9" z="1"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+        <component id="escada_torre_part6">
+            <transformation>
+                <translate x="8.36" y="2.83" z="20.8"/>
+                <rotate axis="y" angle="90"/>
+                <scale x="2" y="0.9" z="4.5"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+        <component id="escada_torre_part7">
+            <transformation>
+                <translate x="5.5" y="2.82" z="20"/>
+                <rotate axis="y" angle="180"/>
+               <scale x="2" y="0.9" z="3.6"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+        <component id="escada_torre">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="escada_torre_part1"/>
+                <componentref id="escada_torre_part2"/>
+                <componentref id="escada_torre_part3"/>
+                <componentref id="escada_torre_part4"/>
+                <componentref id="escada_torre_part5"/>
+                <componentref id="escada_torre_part6"/>
+                <componentref id="escada_torre_part7"/>
+            </children>
+        </component>
         <component id="torre">
             <transformation>
             </transformation>
@@ -1264,6 +1518,8 @@
                 <componentref id="torre_s_1"/>
                 <componentref id="torre_s_2"/>
                 <componentref id="torre_s_3"/>
+                <componentref id="escada_torre"/>
+
             </children>
         </component>
         <component id="living_room">
@@ -1286,6 +1542,7 @@
                 <componentref id="turbina_2"/>
                 <componentref id="turbina_3"/>
                 <componentref id="torre"/>
+                  <componentref id="piramide"/>
             </children>
         </component>
 
