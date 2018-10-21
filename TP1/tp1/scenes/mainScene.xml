@@ -60,6 +60,7 @@
 
     <textures>
         <texture id="trunk" file="trunk-image.jpg"/>
+        <texture id="floor" file="wall.jpg"/>
     </textures>
 
     <materials>
@@ -191,7 +192,7 @@
                 <material id ="floor"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="floor" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square_at_zero"/>
