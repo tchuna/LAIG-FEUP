@@ -75,9 +75,9 @@ MyTriangle.prototype.updateTexCoords = function (l_s, l_t){
 			                Math.pow((this.point_1[1] - this.point_3[1]), 2) +
                       Math.pow((this.point_1[2] - this.point_3[2]), 2));
 
-	this.disp2_p3 = Math.sqrt( Math.pow((this.point_3[0] - this.point_2[0]), 2) +
-			                Math.pow((this.point_3[1] - this.point_2[1]), 2) +
-			                Math.pow((this.point_3[2] - this.point_2[2]), 2));
+	this.disp2_p3 = Math.sqrt( Math.pow((this.point_2[0] - this.point_3[0]), 2) +
+			                Math.pow((this.point_2[1] - this.point_3[1]), 2) +
+			                Math.pow((this.point_2[2] - this.point_3[2]), 2));
 
   var angBt = Math.acos((Math.pow(this.disp2_p3, 2) - Math.pow(this.disp3_p1, 2) + Math.pow(this.disp1_p2, 2)) / (2 * this.disp2_p3 * this.disp1_p2));
 

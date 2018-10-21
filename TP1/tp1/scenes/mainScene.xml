@@ -60,6 +60,7 @@
 
     <textures>
         <texture id="trunk" file="trunk-image.jpg"/>
+        <texture id="water" file="water.jpg"/>
     </textures>
 
     <materials>
@@ -225,7 +226,7 @@
                 <material id ="river"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="water" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square_at_zero"/>

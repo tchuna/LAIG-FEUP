@@ -59,10 +59,17 @@ MyRectangle.prototype.initBuffers = function() {
 };
 
 MyRectangle.prototype.updateTexCoords = function(l_s, l_t) {
-  for (let i = 0; i < this.initialTexCoords.length; i += 2) {
-    this.texCoords[i] = this.initialTexCoords[i] / l_s;
-    this.texCoords[i + 1] = this.initialTexCoords[i + 1] / l_t;
-  }
+  var minS = 0;
+  var minT = 0;
+  var maxS = (this.x2 - this.x1)/l_s;
+  var maxT = (this.y2 - this.y1)/l_t;
+
+  this.texCoords = [
+      maxS, minT,
+      maxS, maxT,
+      minS, minT,
+      minS, maxT
+  ];
 
   this.updateTexCoordsGLBuffers();
 };
