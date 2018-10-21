@@ -1,5 +1,5 @@
 <yas>
-    <scene root="living_room" axis_length="5"/>
+    <scene root="main_scene" axis_length="5"/>
     <views default="default">
         <perspective id="default" near="0.1" far="500" angle="0.4">
             <from x="30" y="80" z="80"/>
@@ -63,6 +63,9 @@
         <texture id="floor" file="wall.jpg"/>
         <texture id="river" file="agua.jpg"/>
         <texture id="cerca" file="cerca.jpg"/>
+        <texture id="door" file="door.jpg"/>
+        <texture id="piso_ponte" file="metal_piso..jpg"/>
+        <texture id="madeira" file="madeira.jpg"/>
     </textures>
 
     <materials>
@@ -360,7 +363,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square"/>
@@ -377,7 +380,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square"/>
@@ -395,7 +398,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square"/>
@@ -412,7 +415,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square"/>
@@ -429,7 +432,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square"/>
@@ -447,7 +450,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square"/>
@@ -462,7 +465,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="frontal_face"/>
@@ -483,7 +486,7 @@
             <materials>
                 <material id ="inherit"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cube"/>
             </children>
@@ -497,7 +500,7 @@
             <materials>
                 <material id ="inherit"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cube"/>
             </children>
@@ -511,7 +514,7 @@
             <materials>
                 <material id ="inherit"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cube"/>
             </children>
@@ -525,7 +528,7 @@
             <materials>
                 <material id ="inherit"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cube"/>
             </children>
@@ -537,7 +540,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="piso_ponte" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="degrau_1"/>
@@ -589,7 +592,7 @@
             <materials>
                 <material id ="inherit"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -604,7 +607,7 @@
             <materials>
                 <material id ="inherit"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -619,7 +622,7 @@
             <materials>
                 <material id ="inherit"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -634,7 +637,7 @@
             <materials>
                 <material id ="inherit"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -649,7 +652,7 @@
             <materials>
                 <material id ="inherit"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -664,7 +667,7 @@
             <materials>
                 <material id ="inherit"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -679,7 +682,7 @@
             <materials>
                 <material id ="inherit"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -694,7 +697,7 @@
             <materials>
                 <material id ="inherit"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -709,7 +712,7 @@
             <materials>
                 <material id ="inherit"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -724,7 +727,7 @@
             <materials>
                 <material id ="inherit"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -736,9 +739,9 @@
             </transformation>
 
             <materials>
-                <material id ="inherit"/>
+                <material id ="silver"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="piso_ponte" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="top_face_ponte_1"/>
@@ -766,7 +769,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -783,7 +786,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -800,7 +803,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -814,7 +817,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="suporte_1"/>
@@ -832,7 +835,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -848,7 +851,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -864,7 +867,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -880,7 +883,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -896,7 +899,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -912,7 +915,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -929,7 +932,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -946,7 +949,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -963,7 +966,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -980,7 +983,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -993,7 +996,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="piso_ponte" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="subida_1"/>
@@ -1368,7 +1371,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="escadote"/>
@@ -1384,7 +1387,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="escadote"/>
@@ -1400,7 +1403,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="escadote"/>
@@ -1416,7 +1419,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="escadote"/>
@@ -1431,7 +1434,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -1447,7 +1450,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -1462,7 +1465,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="piso_ponte" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="escada_torre_part1"/>
@@ -1480,10 +1483,10 @@
               <scale x="0.1" y="1.2" z="0.2"/>
             </transformation>
             <materials>
-                <material id ="silver"/>
+                <material id ="table_wood"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -1495,10 +1498,10 @@
               <scale x="0.1" y="1.2" z="0.2"/>
             </transformation>
             <materials>
-                <material id ="silver"/>
+                <material id ="table_wood"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -1510,10 +1513,10 @@
               <scale x="0.1" y="1.2" z="0.2"/>
             </transformation>
             <materials>
-                <material id ="silver"/>
+                <material id ="table_wood"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -1526,10 +1529,10 @@
             <scale x="0.1" y="1.2" z="0.2"/>
           </transformation>
           <materials>
-              <material id ="silver"/>
+              <material id ="table_wood"/>
           </materials>
 
-          <texture id="trunk" length_s="1" length_t="1"/>
+          <texture id="inherit" length_s="1" length_t="1"/>
 
           <children>
               <componentref id="cube"/>
@@ -1540,10 +1543,10 @@
           <translate x="-1" y="0" z="0"/>
         </transformation>
         <materials>
-            <material id ="silver"/>
+            <material id ="table_wood"/>
         </materials>
 
-        <texture id="trunk" length_s="1" length_t="1"/>
+        <texture id="inherit" length_s="1" length_t="1"/>
 
         <children>
             <componentref id="corimao_torre_par4"/>
@@ -1568,10 +1571,10 @@
       <translate x="-3" y="0" z="0"/>
     </transformation>
     <materials>
-        <material id ="silver"/>
+        <material id ="table_wood"/>
     </materials>
 
-    <texture id="trunk" length_s="1" length_t="1"/>
+    <texture id="inherit" length_s="1" length_t="1"/>
 
     <children>
         <componentref id="corimao_torre_par4"/>
@@ -1582,10 +1585,10 @@
       <translate x="-4" y="0" z="0"/>
     </transformation>
     <materials>
-        <material id ="silver"/>
+        <material id ="table_wood"/>
     </materials>
 
-    <texture id="trunk" length_s="1" length_t="1"/>
+    <texture id="inherit" length_s="1" length_t="1"/>
 
     <children>
         <componentref id="corimao_torre_par4"/>
@@ -1598,10 +1601,10 @@
       <scale x="0.1" y="1.2" z="0.2"/>
     </transformation>
     <materials>
-        <material id ="silver"/>
+        <material id ="table_wood"/>
     </materials>
 
-    <texture id="trunk" length_s="1" length_t="1"/>
+    <texture id="inherit" length_s="1" length_t="1"/>
 
     <children>
         <componentref id="cube"/>
@@ -1613,10 +1616,10 @@
       <scale x="5.2" y="0.1" z="0.3"/>
     </transformation>
     <materials>
-        <material id ="silver"/>
+        <material id ="table_wood"/>
     </materials>
 
-    <texture id="trunk" length_s="1" length_t="1"/>
+    <texture id="inherit" length_s="1" length_t="1"/>
 
     <children>
         <componentref id="cube"/>
@@ -1629,10 +1632,10 @@
       <scale x="2.5" y="0.1" z="0.3"/>
     </transformation>
     <materials>
-        <material id ="silver"/>
+        <material id ="table_wood"/>
     </materials>
 
-    <texture id="trunk" length_s="1" length_t="1"/>
+    <texture id="inherit" length_s="1" length_t="1"/>
 
     <children>
         <componentref id="cube"/>
@@ -1645,10 +1648,10 @@
       <scale x="2.5" y="0.1" z="0.3"/>
     </transformation>
     <materials>
-        <material id ="silver"/>
+        <material id ="table_wood"/>
     </materials>
 
-    <texture id="trunk" length_s="1" length_t="1"/>
+    <texture id="inherit" length_s="1" length_t="1"/>
 
     <children>
         <componentref id="cube"/>
@@ -1658,10 +1661,10 @@
     <transformation>
     </transformation>
     <materials>
-        <material id ="silver"/>
+        <material id ="table_wood"/>
     </materials>
 
-    <texture id="trunk" length_s="1" length_t="1"/>
+    <texture id="madeira" length_s="1" length_t="1"/>
 
     <children>
         <componentref id="corimao_torre_par10"/>
@@ -1678,7 +1681,7 @@
         <material id ="silver"/>
     </materials>
 
-    <texture id="trunk" length_s="1" length_t="1"/>
+    <texture id="door" length_s="1" length_t="1"/>
 
     <children>
         <primitiveref id="square_at_zero"/>
@@ -1763,7 +1766,7 @@
                 <material id ="default"/>
             </materials>
 
-            <texture id="cerca" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cerca_suporte_1"/>
@@ -1778,7 +1781,7 @@
             <materials>
                 <material id ="default"/>
             </materials>
-            <texture id="cerca" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cerca_part0"/>
             </children>
@@ -1791,7 +1794,7 @@
             <materials>
                 <material id ="default"/>
             </materials>
-            <texture id="cerca" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cerca_part0"/>
             </children>
@@ -1804,7 +1807,7 @@
             <materials>
                 <material id ="default"/>
             </materials>
-            <texture id="cerca" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cerca_part0"/>
             </children>
@@ -1817,7 +1820,7 @@
             <materials>
                 <material id ="default"/>
             </materials>
-            <texture id="cerca" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cerca_part0"/>
             </children>
@@ -1856,7 +1859,7 @@
             <materials>
                 <material id ="default"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cerca_part0"/>
             </children>
@@ -1869,7 +1872,7 @@
             <materials>
                 <material id ="default"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cerca_part0"/>
             </children>
@@ -1882,7 +1885,7 @@
             <materials>
                 <material id ="default"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cerca_part0"/>
             </children>
@@ -1895,7 +1898,7 @@
             <materials>
                 <material id ="default"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cerca_part0"/>
             </children>
@@ -1908,7 +1911,7 @@
             <materials>
                 <material id ="default"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cerca_part0"/>
             </children>
@@ -1921,7 +1924,7 @@
             <materials>
                 <material id ="default"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cube"/>
             </children>
@@ -1934,7 +1937,7 @@
             <materials>
                 <material id ="default"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cube"/>
             </children>
@@ -1947,7 +1950,7 @@
             <materials>
                 <material id ="default"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cube"/>
             </children>
@@ -1960,7 +1963,7 @@
             <materials>
                 <material id ="default"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cube"/>
             </children>
@@ -1972,7 +1975,7 @@
                 <material id ="default"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="cerca" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cerca_part_1"/>
                 <componentref id="cerca_part_2"/>
@@ -1999,7 +2002,7 @@
                 <material id ="default"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="cerca" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cerca_left"/>
             </children>
@@ -2011,14 +2014,14 @@
                 <material id ="default"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="cerca" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cerca_left"/>
                 <componentref id="cerca_right"/>
             </children>
         </component>
 
-        <component id="living_room">
+        <component id="main_scene">
             <transformation>
             </transformation>
 

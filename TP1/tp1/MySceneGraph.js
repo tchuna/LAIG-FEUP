@@ -1138,7 +1138,7 @@ class MySceneGraph {
       this.onXMLError('Perspective Views expected a float number on top.');
     }
     var aux=new CGFcameraOrtho(elements.left, elements.right, elements.bottom,elements.top,elements.near,elements.far,vec3.fromValues(elements.from.x, elements.from.y,elements.from.z), vec3.fromValues(elements.to.x, elements.to.y, elements.to.y),vec3.fromValues(0,1,0));
-    
+
     return aux;
 
   }
