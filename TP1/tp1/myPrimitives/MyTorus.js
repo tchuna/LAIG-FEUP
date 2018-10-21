@@ -19,7 +19,7 @@ MyTorus.prototype.initBuffers = function() {
     this.normals = [];
     this.indices = [];
     this.texCoords=[];
-    this.initTexCoords = [];
+    this.initialTexCoords = [];
 
     var c = (this.outer + this.inner) / 2;
     var verts = 0;
@@ -60,7 +60,7 @@ MyTorus.prototype.initBuffers = function() {
         }
     }
 
-    this.initTexCoords= this.texCoords;
+    this.initialTexCoords= this.texCoords;
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
 

@@ -59,7 +59,10 @@
     </lights>
 
     <textures>
-        <texture id="trunk" file="/scenes/images/trunk-image.jpg"/>
+        <texture id="trunk" file="trunk-image.jpg"/>
+        <texture id="vidral" file="vidral.jpg"/>
+        <texture id="rocks" file="rocks.jpg"/>
+        <texture id="water" file="water.jpg"/>
     </textures>
 
     <materials>
@@ -126,6 +129,7 @@
             <specular r="0.83" g="0.83" b="0.83" a="1"/>
         </material>
     </materials>
+
     <transformations >
         <transformation id="t1">
             <translate x="0" y="0" z="0"/>
@@ -176,6 +180,7 @@
     </primitives>
 
     <components>
+        <!-- Floor -->
         <component id="floor_right">
             <transformation>
                 <translate x="24" y="0" z="25"/>
@@ -210,6 +215,7 @@
                 <primitiveref id="square_at_zero"/>
             </children>
         </component>
+        <!-- River -->
         <component id="river">
             <transformation>
                 <translate x="16" y="0" z="25"/>
@@ -221,12 +227,13 @@
                 <material id ="river"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="water" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square_at_zero"/>
             </children>
         </component>
+        <!-- Cube -->
         <component id="frontal_face">
             <transformation>
                 <translate x="0" y="0" z="0.5"/>
@@ -242,7 +249,6 @@
                 <primitiveref id="square"/>
             </children>
         </component>
-
         <component id="back_face">
             <transformation>
                 <rotate axis="x" angle="180"/>
@@ -260,7 +266,6 @@
             </children>
 
         </component>
-
         <component id="top_face">
             <transformation>
                 <rotate axis="x" angle="-90"/>
@@ -271,13 +276,12 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="vidral" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square"/>
             </children>
         </component>
-
         <component id="bottom_face">
             <transformation>
                 <rotate axis="x" angle="90"/>
@@ -288,13 +292,12 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="vidral" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square"/>
             </children>
         </component>
-
         <component id="right_face">
             <transformation>
                  <rotate axis="y" angle="90"/>
@@ -305,14 +308,12 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="vidral" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square"/>
             </children>
         </component>
-
-
         <component id="left_face">
             <transformation>
                 <rotate axis="y" angle="-90"/>
@@ -323,13 +324,12 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="vidral" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square"/>
             </children>
         </component>
-
         <component id="cube">
             <transformation>
             </transformation>
@@ -349,22 +349,7 @@
                 <componentref id="top_face"/>
             </children>
         </component>
-        <component id="table_top">
-            <transformation>
-                <translate x="0" y="3.65" z="0.0"/>
-                <scale x="5" y="0.3" z="3"/>
-            </transformation>
-
-            <materials>
-                <material id ="inherit"/>
-            </materials>
-
-            <texture id="trunk" length_s="1" length_t="1"/>
-
-            <children>
-                <componentref id="cube"/>
-            </children>
-        </component>
+        <!-- Ponte -->
         <component id="degrau_1">
             <transformation>
               <translate x="12.2" y="0.15" z="8"/>
@@ -437,7 +422,6 @@
                   <componentref id="degrau_4"/>
             </children>
         </component>
-
         <component id="subida_1">
             <transformation>
 
@@ -453,7 +437,6 @@
                 <componentref id="escadote"/>
             </children>
         </component>
-
         <component id="subida_2">
             <transformation>
                 <rotate axis="y" angle="180"/>
@@ -469,8 +452,6 @@
                 <componentref id="escadote"/>
             </children>
         </component>
-
-
         <component id="top_face_ponte_1">
             <transformation>
                 <translate x="16.4" y="1.1" z="8"/>
@@ -621,7 +602,6 @@
                 <componentref id="cube"/>
             </children>
         </component>
-
         <component id="top_face_ponte">
             <transformation>
             </transformation>
@@ -645,7 +625,6 @@
 
             </children>
         </component>
-
         <component id="suporte_1">
             <transformation>
                 <translate x="20" y="1.1" z="8"/>
@@ -884,7 +863,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="rocks" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="subida_1"/>
@@ -903,6 +882,7 @@
                 <componentref id="suporte_ponte"/>
             </children>
         </component>
+        <!-- Turbines -->
         <component id="turbine_suporte_parte1">
             <transformation>
                 <translate x="35" y="0" z="5"/>
@@ -1033,7 +1013,6 @@
               <componentref id="turbine_helice_suport_part2"/>
             </children>
         </component>
-
         <component id="turbine_helice_1">
             <transformation>
             </transformation>
@@ -1080,7 +1059,6 @@
                 <componentref id="turbine_helice_2"/>
             </children>
         </component>
-
         <component id="turbine_complete_helice">
             <transformation>
             </transformation>
@@ -1097,7 +1075,6 @@
                 <componentref id="turbine_helice_3"/>
             </children>
         </component>
-
         <component id="turbina">
             <transformation>
             </transformation>
@@ -1113,7 +1090,6 @@
 
             </children>
         </component>
-
         <component id="turbina_1">
             <transformation>
               <translate x="2" y="0" z="-3"/>
@@ -1164,6 +1140,7 @@
 
             </children>
         </component>
+        <!-- Observatory -->
         <component id="torre_suporte">
             <transformation>
               <translate x="5" y="5" z="15"/>
@@ -1266,6 +1243,7 @@
                 <componentref id="torre_s_3"/>
             </children>
         </component>
+        <!-- Root -->
         <component id="living_room">
             <transformation>
 
@@ -1288,10 +1266,6 @@
                 <componentref id="torre"/>
             </children>
         </component>
-
-
-
     </components>
-
 
 </yas>
