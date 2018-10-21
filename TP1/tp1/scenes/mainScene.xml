@@ -59,7 +59,7 @@
     </lights>
 
     <textures>
-        <texture id="trunk" file="/scenes/images/trunk-image.jpg"/>
+        <texture id="trunk" file="trunk-image.jpg"/>
     </textures>
 
     <materials>
