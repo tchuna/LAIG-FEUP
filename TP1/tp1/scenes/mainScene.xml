@@ -2,25 +2,27 @@
     <scene root="living_room" axis_length="5"/>
     <views default="default">
         <perspective id="default" near="0.1" far="500" angle="0.4">
-            <from x="15" y="15" z="15"/>
-            <to x="0" y="0" z="0"/>
+            <from x="30" y="80" z="80"/>
+            <to x="25" y="10" z="10"/>
         </perspective>
-
         <perspective id="v1" near="0.1" far="500" angle="0.4">
-            <from x="15" y="15" z="15"/>
-            <to x="0" y="0" z="0"/>
+            <from x="100" y="5" z="40"/>
+            <to x="10" y="10" z="80"/>
         </perspective>
-
-        <perspective id="v2" near="0.1" far="500" angle="0.4">
-            <from x="15" y="15" z="15"/>
-            <to x="0" y="0" z="0"/>
+        <perspective id="v2" near="0.1" far="500" angle="0.12">
+            <from x="25" y="10" z="200"/>
+            <to x="10" y="10" z="20"/>
         </perspective>
+        <ortho id="ortho1" near="0.1" far="100.0" left="-30" right="30" top="10" bottom="-10">
+            <from x="15.0" y="15.0" z="15.0" />
+            <to x="0.0" y="0.0" z="0.0" />
+        </ortho>
 
     </views>
 
     <ambient>
         <ambient r="0" g="0" b="0" a="1"/>
-        <background r="0" g="0" b="0" a="1" />
+        <background r="0.3" g="0.5" b="0.5" a="1" />
     </ambient>
 
     <lights>
@@ -48,6 +50,12 @@
             <diffuse r="0.7" g="0.7" b="0.7" a="1"/>
             <specular r="0.7" g="0.7" b="0.7" a="1"/>
         </omni>
+        <omni id="g_light_4" enabled="0">
+            <location x="-18" y="15" z="3" w="1" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1"/>
+            <diffuse r="0.7" g="0.7" b="0.7" a="1"/>
+            <specular r="0.7" g="0.7" b="0.7" a="1"/>
+        </omni>
         <spot id="spot_l" enabled="0" angle="60" exponent="1">
             <location x="7" y="2" z="1" w="1" />
             <target x="3" y="2" z="1" />
@@ -60,12 +68,15 @@
 
     <textures>
         <texture id="trunk" file="trunk-image.jpg"/>
-        <texture id="vidral" file="vidral.jpg"/>
-        <texture id="rocks" file="rocks.jpg"/>
-        <texture id="water" file="water.jpg"/>
     </textures>
 
     <materials>
+       <material id="default" shininess="0.1">
+          <emission r="0" g="0" b="0" a="0"/>
+          <ambient r="1" g="1" b="1" a="1"/>
+          <diffuse r="1" g="1" b="1" a="1"/>
+          <specular r="1" g="1" b="1" a="1"/>
+       </material>
         <material id="m1" shininess="0.1">
             <emission r="0" g="0" b="0" a="0"/>
             <ambient r="0.3" g="0.3" b="0.3" a="1"/>
@@ -129,7 +140,6 @@
             <specular r="0.83" g="0.83" b="0.83" a="1"/>
         </material>
     </materials>
-
     <transformations >
         <transformation id="t1">
             <translate x="0" y="0" z="0"/>
@@ -148,10 +158,8 @@
         </primitive>
 
         <primitive id="triangle">
-            <triangle x1="1" y1="1" z1="1"
-                    x2="-0.5" y2="0.866" z2="0"
-                    x3="-0.5" y3="-0.866" z3="0"/>
-        </primitive>
+            <triangle x1="0" y1="1" z1="0" x2="-0.5" y2="0" z2="0.5" x3="0.5" y3="0" z3="0.5" />
+        </primitive >
 
         <primitive id="sphere">
             <sphere radius="1" slices="50" stacks="50"/>
@@ -180,7 +188,6 @@
     </primitives>
 
     <components>
-        <!-- Floor -->
         <component id="floor_right">
             <transformation>
                 <translate x="24" y="0" z="25"/>
@@ -215,7 +222,6 @@
                 <primitiveref id="square_at_zero"/>
             </children>
         </component>
-        <!-- River -->
         <component id="river">
             <transformation>
                 <translate x="16" y="0" z="25"/>
@@ -227,13 +233,131 @@
                 <material id ="river"/>
             </materials>
 
-            <texture id="water" length_s="1" length_t="1"/>
+            <texture id="trunk" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square_at_zero"/>
             </children>
         </component>
-        <!-- Cube -->
+        <component id="piramede_lado1">
+
+            <transformation>
+                <scale x="1" y="1" z="1" />
+            </transformation>
+
+            <materials>
+                <material id="inherit" />
+            </materials>
+              <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+        <component id="piramede_lado2">
+            <transformation>
+                <rotate axis="y" angle="90" />
+            </transformation>
+
+            <materials>
+                <material id="inherit" />
+            </materials>
+              <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+        <component id="piramede_lado3">
+
+            <transformation>
+                <rotate axis="y" angle="-90" />
+            </transformation>
+
+            <materials>
+                <material id="inherit" />
+            </materials>
+
+          <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+        <component id="piramede_lado4">
+
+            <transformation>
+                <rotate axis="y" angle="180" />
+            </transformation>
+
+            <materials>
+                <material id="inherit" />
+            </materials>
+
+              <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+
+        </component>
+
+        <component id="lados_piramede">
+
+            <transformation>
+                <translate x="0" y="0" z="0" />
+                <rotate axis="x" angle="0" />
+                <scale x="1" y="1" z="1" />
+            </transformation>
+
+            <materials>
+                <material id="inherit" />
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="piramede_lado1" />
+                <componentref id="piramede_lado2" />
+                <componentref id="piramede_lado3" />
+                <componentref id="piramede_lado4" />
+            </children>
+        </component>
+        <component id="base_piramede">
+
+            <transformation>
+                <rotate axis="x" angle="90" />
+            </transformation>
+
+            <materials>
+                <material id="inherit" />
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <primitiveref id="square_at_zero" />
+            </children>
+        </component>
+
+        <component id="piramide">
+
+            <transformation>
+                <scale x="1.2" y="1.2" z="1.2" />
+            </transformation>
+
+            <materials>
+                <material id="inherit" />
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="lados_piramede" />
+
+            </children>
+        </component>
         <component id="frontal_face">
             <transformation>
                 <translate x="0" y="0" z="0.5"/>
@@ -249,6 +373,7 @@
                 <primitiveref id="square"/>
             </children>
         </component>
+
         <component id="back_face">
             <transformation>
                 <rotate axis="x" angle="180"/>
@@ -266,6 +391,7 @@
             </children>
 
         </component>
+
         <component id="top_face">
             <transformation>
                 <rotate axis="x" angle="-90"/>
@@ -276,12 +402,13 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="vidral" length_s="1" length_t="1"/>
+            <texture id="trunk" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square"/>
             </children>
         </component>
+
         <component id="bottom_face">
             <transformation>
                 <rotate axis="x" angle="90"/>
@@ -292,12 +419,13 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="vidral" length_s="1" length_t="1"/>
+            <texture id="trunk" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square"/>
             </children>
         </component>
+
         <component id="right_face">
             <transformation>
                  <rotate axis="y" angle="90"/>
@@ -308,12 +436,14 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="vidral" length_s="1" length_t="1"/>
+            <texture id="trunk" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square"/>
             </children>
         </component>
+
+
         <component id="left_face">
             <transformation>
                 <rotate axis="y" angle="-90"/>
@@ -324,12 +454,13 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="vidral" length_s="1" length_t="1"/>
+            <texture id="trunk" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square"/>
             </children>
         </component>
+
         <component id="cube">
             <transformation>
             </transformation>
@@ -349,7 +480,22 @@
                 <componentref id="top_face"/>
             </children>
         </component>
-        <!-- Ponte -->
+        <component id="table_top">
+            <transformation>
+                <translate x="0" y="3.65" z="0.0"/>
+                <scale x="5" y="0.3" z="3"/>
+            </transformation>
+
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
         <component id="degrau_1">
             <transformation>
               <translate x="12.2" y="0.15" z="8"/>
@@ -422,6 +568,7 @@
                   <componentref id="degrau_4"/>
             </children>
         </component>
+
         <component id="subida_1">
             <transformation>
 
@@ -437,6 +584,7 @@
                 <componentref id="escadote"/>
             </children>
         </component>
+
         <component id="subida_2">
             <transformation>
                 <rotate axis="y" angle="180"/>
@@ -452,6 +600,8 @@
                 <componentref id="escadote"/>
             </children>
         </component>
+
+
         <component id="top_face_ponte_1">
             <transformation>
                 <translate x="16.4" y="1.1" z="8"/>
@@ -602,6 +752,7 @@
                 <componentref id="cube"/>
             </children>
         </component>
+
         <component id="top_face_ponte">
             <transformation>
             </transformation>
@@ -625,6 +776,7 @@
 
             </children>
         </component>
+
         <component id="suporte_1">
             <transformation>
                 <translate x="20" y="1.1" z="8"/>
@@ -863,7 +1015,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="rocks" length_s="1" length_t="1"/>
+            <texture id="trunk" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="subida_1"/>
@@ -882,7 +1034,6 @@
                 <componentref id="suporte_ponte"/>
             </children>
         </component>
-        <!-- Turbines -->
         <component id="turbine_suporte_parte1">
             <transformation>
                 <translate x="35" y="0" z="5"/>
@@ -1013,6 +1164,7 @@
               <componentref id="turbine_helice_suport_part2"/>
             </children>
         </component>
+
         <component id="turbine_helice_1">
             <transformation>
             </transformation>
@@ -1059,6 +1211,7 @@
                 <componentref id="turbine_helice_2"/>
             </children>
         </component>
+
         <component id="turbine_complete_helice">
             <transformation>
             </transformation>
@@ -1071,10 +1224,11 @@
             <children>
               <componentref id="turbine_helice_suport"/>
               <componentref id="turbine_helice_1"/>
-                <componentref id="turbine_helice_2"/>
-                <componentref id="turbine_helice_3"/>
+              <componentref id="turbine_helice_2"/>
+              <componentref id="turbine_helice_3"/>
             </children>
         </component>
+
         <component id="turbina">
             <transformation>
             </transformation>
@@ -1090,6 +1244,7 @@
 
             </children>
         </component>
+
         <component id="turbina_1">
             <transformation>
               <translate x="2" y="0" z="-3"/>
@@ -1140,7 +1295,6 @@
 
             </children>
         </component>
-        <!-- Observatory -->
         <component id="torre_suporte">
             <transformation>
               <translate x="5" y="5" z="15"/>
@@ -1226,6 +1380,355 @@
                 <primitiveref id="sphere"/>
             </children>
         </component>
+        <component id="escada_torre_part1">
+            <transformation>
+              <translate x="13" y="0" z="5"/>
+              <rotate axis="y" angle="270"/>
+              <scale x="0.7" y="0.7" z="0.4"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="escadote"/>
+            </children>
+        </component>
+        <component id="escada_torre_part2">
+            <transformation>
+              <translate x="13" y="0.8" z="6.5"/>
+              <rotate axis="y" angle="270"/>
+              <scale x="0.7" y="0.7" z="0.4"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="escadote"/>
+            </children>
+        </component>
+        <component id="escada_torre_part3">
+            <transformation>
+              <translate x="13" y="1.6" z="8"/>
+              <rotate axis="y" angle="270"/>
+              <scale x="0.7" y="0.7" z="0.4"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="escadote"/>
+            </children>
+        </component>
+        <component id="escada_torre_part4">
+            <transformation>
+              <translate x="13" y="2.4" z="9.5"/>
+              <rotate axis="y" angle="270"/>
+              <scale x="0.7" y="0.7" z="0.4"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="escadote"/>
+            </children>
+        </component>
+        <component id="escada_torre_part5">
+            <transformation>
+                <translate x="9.8" y="2.83" z="20"/>
+                <scale x="1.6" y="0.9" z="1"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+        <component id="escada_torre_part6">
+            <transformation>
+                <translate x="8.1" y="2.83" z="20.8"/>
+                <rotate axis="y" angle="90"/>
+                <scale x="2.5" y="0.9" z="5"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+
+        <component id="escada_torre">
+            <transformation>
+            <translate x="-1" y="0" z="-1.8"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="escada_torre_part1"/>
+                <componentref id="escada_torre_part2"/>
+                <componentref id="escada_torre_part3"/>
+                <componentref id="escada_torre_part4"/>
+                <componentref id="escada_torre_part5"/>
+                <componentref id="escada_torre_part6"/>
+
+            </children>
+        </component>
+        <component id="corimao_torre_par1">
+            <transformation>
+              <translate x="9.53" y="3.9" z="17.8"/>
+              <scale x="0.1" y="1.2" z="0.2"/>
+            </transformation>
+            <materials>
+                <material id ="silver"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+        <component id="corimao_torre_par2">
+            <transformation>
+              <translate x="9.53" y="3.9" z="18.8"/>
+              <scale x="0.1" y="1.2" z="0.2"/>
+            </transformation>
+            <materials>
+                <material id ="silver"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+        <component id="corimao_torre_par3">
+            <transformation>
+              <translate x="9.53" y="3.9" z="19.8"/>
+              <scale x="0.1" y="1.2" z="0.2"/>
+            </transformation>
+            <materials>
+                <material id ="silver"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+        <component id="corimao_torre_par4">
+          <transformation>
+            <translate x="9" y="3.9" z="20.2"/>
+            <rotate axis="y" angle="90"/>
+            <scale x="0.1" y="1.2" z="0.2"/>
+          </transformation>
+          <materials>
+              <material id ="silver"/>
+          </materials>
+
+          <texture id="trunk" length_s="1" length_t="1"/>
+
+          <children>
+              <componentref id="cube"/>
+          </children>
+      </component>
+      <component id="corimao_torre_par5">
+        <transformation>
+          <translate x="-1" y="0" z="0"/>
+        </transformation>
+        <materials>
+            <material id ="silver"/>
+        </materials>
+
+        <texture id="trunk" length_s="1" length_t="1"/>
+
+        <children>
+            <componentref id="corimao_torre_par4"/>
+        </children>
+    </component>
+    <component id="corimao_torre_par6">
+      <transformation>
+        <translate x="-2" y="0" z="0"/>
+      </transformation>
+      <materials>
+          <material id ="silver"/>
+      </materials>
+
+      <texture id="trunk" length_s="1" length_t="1"/>
+
+      <children>
+          <componentref id="corimao_torre_par4"/>
+      </children>
+  </component>
+  <component id="corimao_torre_par7">
+    <transformation>
+      <translate x="-3" y="0" z="0"/>
+    </transformation>
+    <materials>
+        <material id ="silver"/>
+    </materials>
+
+    <texture id="trunk" length_s="1" length_t="1"/>
+
+    <children>
+        <componentref id="corimao_torre_par4"/>
+    </children>
+  </component>
+  <component id="corimao_torre_par8">
+    <transformation>
+      <translate x="-4" y="0" z="0"/>
+    </transformation>
+    <materials>
+        <material id ="silver"/>
+    </materials>
+
+    <texture id="trunk" length_s="1" length_t="1"/>
+
+    <children>
+        <componentref id="corimao_torre_par4"/>
+    </children>
+</component>
+
+<component id="corimao_torre_par9">
+    <transformation>
+      <translate x="4.65" y="3.9" z="19.5"/>
+      <scale x="0.1" y="1.2" z="0.2"/>
+    </transformation>
+    <materials>
+        <material id ="silver"/>
+    </materials>
+
+    <texture id="trunk" length_s="1" length_t="1"/>
+
+    <children>
+        <componentref id="cube"/>
+    </children>
+</component>
+<component id="corimao_torre_par10">
+    <transformation>
+      <translate x="7.1" y="4.5" z="20.2"/>
+      <scale x="5.2" y="0.1" z="0.3"/>
+    </transformation>
+    <materials>
+        <material id ="silver"/>
+    </materials>
+
+    <texture id="trunk" length_s="1" length_t="1"/>
+
+    <children>
+        <componentref id="cube"/>
+    </children>
+</component>
+<component id="corimao_torre_par11">
+    <transformation>
+      <translate x="4.65" y="4.5" z="18.8"/>
+      <rotate axis="y" angle="90"/>
+      <scale x="2.5" y="0.1" z="0.3"/>
+    </transformation>
+    <materials>
+        <material id ="silver"/>
+    </materials>
+
+    <texture id="trunk" length_s="1" length_t="1"/>
+
+    <children>
+        <componentref id="cube"/>
+    </children>
+</component>
+<component id="corimao_torre_par12">
+    <transformation>
+      <translate x="9.55" y="4.5" z="18.8"/>
+      <rotate axis="y" angle="90"/>
+      <scale x="2.5" y="0.1" z="0.3"/>
+    </transformation>
+    <materials>
+        <material id ="silver"/>
+    </materials>
+
+    <texture id="trunk" length_s="1" length_t="1"/>
+
+    <children>
+        <componentref id="cube"/>
+    </children>
+</component>
+<component id="corimao_torre_top">
+    <transformation>
+    </transformation>
+    <materials>
+        <material id ="silver"/>
+    </materials>
+
+    <texture id="trunk" length_s="1" length_t="1"/>
+
+    <children>
+        <componentref id="corimao_torre_par10"/>
+        <componentref id="corimao_torre_par11"/>
+        <componentref id="corimao_torre_par12"/>
+    </children>
+</component>
+<component id="porta_torre">
+    <transformation>
+      <translate x="5.5" y="3" z="18.1"/>
+      <scale x="1.6" y="3.3" z="0"/>
+    </transformation>
+    <materials>
+        <material id ="silver"/>
+    </materials>
+
+    <texture id="trunk" length_s="1" length_t="1"/>
+
+    <children>
+        <primitiveref id="square_at_zero"/>
+    </children>
+</component>
+        <component id="corimao_torre">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="corimao_torre_par1"/>
+                <componentref id="corimao_torre_par2"/>
+                <componentref id="corimao_torre_par3"/>
+                <componentref id="corimao_torre_par4"/>
+                <componentref id="corimao_torre_par5"/>
+                <componentref id="corimao_torre_par6"/>
+                <componentref id="corimao_torre_par7"/>
+                <componentref id="corimao_torre_par8"/>
+                <componentref id="corimao_torre_par9"/>
+                <componentref id="corimao_torre_top"/>
+                <componentref id="porta_torre"/>
+            </children>
+        </component>
         <component id="torre">
             <transformation>
             </transformation>
@@ -1241,12 +1744,304 @@
                 <componentref id="torre_s_1"/>
                 <componentref id="torre_s_2"/>
                 <componentref id="torre_s_3"/>
+                <componentref id="escada_torre"/>
+                <componentref id="corimao_torre"/>
             </children>
         </component>
-        <!-- Root -->
+        <component id="cerca_suporte_1">
+            <transformation>
+              <translate x="0" y="3" z="0"/>
+             <scale x="6" y="6" z="6"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+        <component id="cerca_suporte_2">
+            <transformation>
+              <translate x="0" y="6" z="0"/>
+             <scale x="5" y="4" z="5"/>
+            </transformation>
+            <materials>
+                <material id ="inherit"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="piramide"/>
+            </children>
+        </component>
+        <component id="cerca_part0">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id ="default"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+
+            <children>
+                <componentref id="cerca_suporte_1"/>
+                <componentref id="cerca_suporte_2"/>
+            </children>
+        </component>
+        <component id="cerca_part_1">
+            <transformation>
+              <translate x="15.8" y="0" z="24.5"/>
+               <scale x="0.03" y="0.2" z="0.1"/>
+            </transformation>
+            <materials>
+                <material id ="default"/>
+            </materials>
+            <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cerca_part0"/>
+            </children>
+        </component>
+        <component id="cerca_part_2">
+            <transformation>
+              <translate x="15.8" y="0" z="22.5"/>
+               <scale x="0.03" y="0.2" z="0.1"/>
+            </transformation>
+            <materials>
+                <material id ="default"/>
+            </materials>
+            <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cerca_part0"/>
+            </children>
+        </component>
+        <component id="cerca_part_3">
+            <transformation>
+              <translate x="15.8" y="0" z="20.5"/>
+               <scale x="0.03" y="0.2" z="0.1"/>
+            </transformation>
+            <materials>
+                <material id ="default"/>
+            </materials>
+            <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cerca_part0"/>
+            </children>
+        </component>
+        <component id="cerca_part_4">
+            <transformation>
+              <translate x="15.8" y="0" z="18.5"/>
+               <scale x="0.03" y="0.2" z="0.1"/>
+            </transformation>
+            <materials>
+                <material id ="default"/>
+            </materials>
+            <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cerca_part0"/>
+            </children>
+        </component>
+        <component id="cerca_part_5">
+            <transformation>
+              <translate x="15.8" y="0" z="16.5"/>
+               <scale x="0.03" y="0.2" z="0.1"/>
+            </transformation>
+            <materials>
+                <material id ="default"/>
+            </materials>
+            <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cerca_part0"/>
+            </children>
+        </component>
+        <component id="cerca_part_6">
+            <transformation>
+              <translate x="15.8" y="0" z="14.5"/>
+               <scale x="0.03" y="0.2" z="0.1"/>
+            </transformation>
+            <materials>
+                <material id ="default"/>
+            </materials>
+            <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cerca_part0"/>
+            </children>
+        </component>
+        <component id="cerca_part_7">
+            <transformation>
+              <translate x="15.8" y="0" z="12.5"/>
+               <scale x="0.03" y="0.2" z="0.1"/>
+            </transformation>
+            <materials>
+                <material id ="default"/>
+            </materials>
+            <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cerca_part0"/>
+            </children>
+        </component>
+        <component id="cerca_part_8">
+            <transformation>
+              <translate x="15.8" y="0" z="10.9"/>
+               <scale x="0.03" y="0.2" z="0.1"/>
+            </transformation>
+            <materials>
+                <material id ="default"/>
+            </materials>
+            <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cerca_part0"/>
+            </children>
+        </component>
+        <component id="cerca_part_9">
+            <transformation>
+              <translate x="15.8" y="0" z="5"/>
+               <scale x="0.03" y="0.2" z="0.1"/>
+            </transformation>
+            <materials>
+                <material id ="default"/>
+            </materials>
+            <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cerca_part0"/>
+            </children>
+        </component>
+        <component id="cerca_part_10">
+            <transformation>
+              <translate x="15.8" y="0" z="3"/>
+               <scale x="0.03" y="0.2" z="0.1"/>
+            </transformation>
+            <materials>
+                <material id ="default"/>
+            </materials>
+            <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cerca_part0"/>
+            </children>
+        </component>
+        <component id="cerca_part_11">
+            <transformation>
+              <translate x="15.8" y="0" z="1"/>
+               <scale x="0.03" y="0.2" z="0.1"/>
+            </transformation>
+            <materials>
+                <material id ="default"/>
+            </materials>
+            <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cerca_part0"/>
+            </children>
+        </component>
+        <component id="cerca_part_12">
+            <transformation>
+              <translate x="15.8" y="0.4" z="17.8"/>
+               <scale x="0.06" y="0.3" z="15.5"/>
+            </transformation>
+            <materials>
+                <material id ="default"/>
+            </materials>
+            <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+        <component id="cerca_part_13">
+            <transformation>
+              <translate x="15.8" y="1" z="17.8"/>
+               <scale x="0.06" y="0.3" z="15.5"/>
+            </transformation>
+            <materials>
+                <material id ="default"/>
+            </materials>
+            <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+        <component id="cerca_part_14">
+            <transformation>
+              <translate x="15.8" y="1" z="3"/>
+               <scale x="0.06" y="0.3" z="5.5"/>
+            </transformation>
+            <materials>
+                <material id ="default"/>
+            </materials>
+            <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+        <component id="cerca_part_15">
+            <transformation>
+              <translate x="15.8" y="0.4" z="3"/>
+               <scale x="0.06" y="0.3" z="5.5"/>
+            </transformation>
+            <materials>
+                <material id ="default"/>
+            </materials>
+            <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cube"/>
+            </children>
+        </component>
+        <component id="cerca_left">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id ="default"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cerca_part_1"/>
+                <componentref id="cerca_part_2"/>
+                <componentref id="cerca_part_3"/>
+                <componentref id="cerca_part_4"/>
+                <componentref id="cerca_part_5"/>
+                <componentref id="cerca_part_6"/>
+                <componentref id="cerca_part_7"/>
+                <componentref id="cerca_part_8"/>
+                <componentref id="cerca_part_9"/>
+                <componentref id="cerca_part_10"/>
+                <componentref id="cerca_part_11"/>
+                <componentref id="cerca_part_12"/>
+                <componentref id="cerca_part_13"/>
+                <componentref id="cerca_part_14"/>
+                <componentref id="cerca_part_15"/>
+            </children>
+        </component>
+        <component id="cerca_right">
+            <transformation>
+            <translate x="8.3" y="0" z="0"/>
+            </transformation>
+            <materials>
+                <material id ="default"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cerca_left"/>
+            </children>
+        </component>
+        <component id="cerca">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id ="default"/>
+            </materials>
+
+            <texture id="trunk" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cerca_left"/>
+                <componentref id="cerca_right"/>
+            </children>
+        </component>
+
         <component id="living_room">
             <transformation>
-
             </transformation>
 
             <materials>
@@ -1264,8 +2059,13 @@
                 <componentref id="turbina_2"/>
                 <componentref id="turbina_3"/>
                 <componentref id="torre"/>
+                <componentref id="cerca"/>
             </children>
         </component>
+
+
+
     </components>
+
 
 </yas>

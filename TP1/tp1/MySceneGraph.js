@@ -283,6 +283,41 @@ class MySceneGraph {
               x: this.reader.getFloat(grandChildren[j], 'x'),
               y: this.reader.getFloat(grandChildren[j], 'y'),
               z: this.reader.getFloat(grandChildren[j], 'z')
+            };
+          }
+          else{
+            var to = {
+              x: this.reader.getFloat(grandChildren[j], 'x'),
+              y: this.reader.getFloat(grandChildren[j], 'y'),
+              z: this.reader.getFloat(grandChildren[j], 'z')
+            };
+          }
+        }
+        var aux= {
+          near: this.reader.getFloat(children[i], 'near'),
+          far: this.reader.getFloat(children[i], 'far'),
+          angle: this.reader.getFloat(children[i], 'angle'),
+          from: from,
+          to: to
+        };
+
+        var auxCamera=this.createPersCamera(aux);
+        this.views[viewId]=auxCamera;
+        this.viewsId.push(viewId);
+      }
+      // Ortho view
+      else if (children[i].nodeName == "ortho") {
+        for (var j = 0; j < grandChildren.length; j++) {
+          if (grandChildren[j].nodeName != "from" && grandChildren[j].nodeName != "to") {
+            this.onXMLMinorError("unknown tag <"+grandChildren[j].nodeName+">");
+            continue;
+          }
+
+          if (grandChildren[j].nodeName == "from") {
+            var from = {
+              x: this.reader.getFloat(grandChildren[j], 'x'),
+              y: this.reader.getFloat(grandChildren[j], 'y'),
+              z: this.reader.getFloat(grandChildren[j], 'z')
             }
           }
           else{
@@ -293,29 +328,21 @@ class MySceneGraph {
             }
           }
         }
-
-
-        this.views[viewId] = {
-          near: this.reader.getFloat(children[i], 'near'),
-          far: this.reader.getFloat(children[i], 'far'),
-          angle: this.reader.getFloat(children[i], 'angle'),
-          from: from,
-          to: to
-        };
-
-      }
-      // Ortho view
-      else if (children[i].nodeName == "ortho") {
-        this.views[viewId] = {
+        var aux= {
           near: this.reader.getFloat(children[i], 'near'),
           far: this.reader.getFloat(children[i], 'far'),
           left: this.reader.getFloat(children[i], 'left'),
           right: this.reader.getFloat(children[i], 'right'),
           top: this.reader.getFloat(children[i], 'top'),
-          bottom: this.reader.getFloat(children[i], 'bottom')
+          bottom: this.reader.getFloat(children[i], 'bottom'),
+          from:from,
+          to:to
         };
+
+        var auxCamera=this.createOrtCamera(aux);
+        this.views[viewId]=auxCamera;
+        this.viewsId.push(viewId);
       }
-      this.viewsId.push(viewId);
     }
 
     this.log("Parsed views");
@@ -1038,6 +1065,84 @@ class MySceneGraph {
     }
   }
 
+  createPersCamera(elements){
+    if(isNaN(elements.near)){
+      this.onXMLError('Perspective Views expected a float number on near.');
+    }
+    if(isNaN(elements.far)){
+      this.onXMLError('Perspective Views expected a float number on far.');
+    }
+    if(isNaN(elements.angle)){
+      this.onXMLError('Perspective Views expected a float number on angle.');
+    }
+    if(isNaN(elements.from.x)){
+      this.onXMLError('Perspective Views expected a float number o from(x)');
+    }
+    if(isNaN(elements.from.y)){
+      this.onXMLError('Perspective Views expected a float number o from(y)');
+    }
+    if(isNaN(elements.from.z)){
+      this.onXMLError('Perspective Views expected a float number o from(z)');
+    }
+    if(isNaN(elements.to.x)){
+      this.onXMLError('Perspective Views expected a float number o to(x)');
+    }
+    if(isNaN(elements.to.y)){
+      this.onXMLError('Perspective Views expected a float number o to(y)');
+    }
+    if(isNaN(elements.to.z)){
+      this.onXMLError('Perspective Views expected a float number o to(z)');
+    }
+    var aux=new CGFcamera(elements.angle, elements.near, elements.far, vec3.fromValues(elements.from.x, elements.from.y,elements.from.z), vec3.fromValues(elements.to.x, elements.to.y, elements.to.y));
+
+    return aux;
+
+  }
+
+  createOrtCamera(elements){
+    if(isNaN(elements.near)){
+      this.onXMLError('Perspective Views expected a float number on near.');
+    }
+    if(isNaN(elements.far)){
+      this.onXMLError('Perspective Views expected a float number on far.');
+    }
+    if(isNaN(elements.from.x)){
+      this.onXMLError('Perspective Views expected a float number o from(x)');
+    }
+    if(isNaN(elements.from.y)){
+      this.onXMLError('Perspective Views expected a float number o from(y)');
+    }
+    if(isNaN(elements.from.z)){
+      this.onXMLError('Perspective Views expected a float number o from(z)');
+    }
+    if(isNaN(elements.to.x)){
+      this.onXMLError('Perspective Views expected a float number o to(x)');
+    }
+    if(isNaN(elements.to.y)){
+      this.onXMLError('Perspective Views expected a float number o to(y)');
+    }
+    if(isNaN(elements.to.z)){
+      this.onXMLError('Perspective Views expected a float number o to(z)');
+    }
+    if(isNaN(elements.left)){
+      this.onXMLError('Perspective Views expected a float number on left.');
+    }
+    if(isNaN(elements.right)){
+      this.onXMLError('Perspective Views expected a float number on right.');
+    }
+    if(isNaN(elements.bottom)){
+      this.onXMLError('Perspective Views expected a float number on bottom.');
+    }
+    if(isNaN(elements.top)){
+      this.onXMLError('Perspective Views expected a float number on top.');
+    }
+    //var aux=new CGFcameraOrtho(elements.left, elements.right, elements.bottom,elements.top,vec3.fromValues(elements.from.x, elements.from.y,elements.from.z), vec3.fromValues(elements.to.x, elements.to.y, elements.to.y),vec3.fromValues(0,1,0));
+
+    var aux=new CGFcameraOrtho( -30,30,10,10, 0.4, 100, vec3.fromValues(15,15,15), vec3.fromValues(0,0,0),  vec3.fromValues(0,0,1));
+    return aux;
+
+  }
+
   /*
   * Callback to be executed on any read error, showing an error on the console.
   * @param {string} message
@@ -1070,7 +1175,7 @@ class MySceneGraph {
     for (var i = 0; i < node.children.length; i++) {
       if (node.children[i].type == 'primitive') {
         if (node.texture.texture != 'none') {
-          node.children[i].primitive.updateTexCoords(node.texture.length_s, node.texture.length_t);
+          // node.children[i].primitive.updateTexCoords(node.texture.length_s, node.texture.length_t);
           node.texture.texture.bind();
         }
         node.children[i].primitive.display();
