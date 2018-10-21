@@ -252,6 +252,7 @@ class MySceneGraph {
 
         var children = viewsNode.children;
         var grandChildren = [];
+        var grandChildrenO = [];
         var nodeNames = [];
 
 
@@ -308,29 +309,27 @@ class MySceneGraph {
             var auxCamera=this.createPersCamera(aux);
             this.views[viewId]=auxCamera;
             this.viewsId.push(viewId);
-
-
           }
-          // Ortho view
           else if (children[i].nodeName == "ortho") {
-            for (var j = 0; j < grandChildren.length; j++) {
-              if (grandChildren[j].nodeName != "from" && grandChildren[j].nodeName != "to") {
-                this.onXMLMinorError("unknown tag <"+grandChildren[j].nodeName+">");
+            grandChildren = children[i].children;
+            for (var a = 0; a < grandChildren.length; a++) {
+              if (grandChildren[a].nodeName != "from" && grandChildren[a].nodeName != "to") {
+                this.onXMLMinorError("unknown tag <"+grandChildren[a].nodeName+">");
                 continue;
               }
 
-              if (grandChildren[j].nodeName == "from") {
+              if (grandChildren[a].nodeName == "from") {
                 var from = {
-                  x: this.reader.getFloat(grandChildren[j], 'x'),
-                  y: this.reader.getFloat(grandChildren[j], 'y'),
-                  z: this.reader.getFloat(grandChildren[j], 'z')
+                  x: this.reader.getFloat(grandChildren[a], 'x'),
+                  y: this.reader.getFloat(grandChildren[a], 'y'),
+                  z: this.reader.getFloat(grandChildren[a], 'z')
                 }
               }
               else{
-                var to = {
-                  x: this.reader.getFloat(grandChildren[j], 'x'),
-                  y: this.reader.getFloat(grandChildren[j], 'y'),
-                  z: this.reader.getFloat(grandChildren[j], 'z')
+                var to= {
+                  x: this.reader.getFloat(grandChildren[a], 'x'),
+                  y: this.reader.getFloat(grandChildren[a], 'y'),
+                  z: this.reader.getFloat(grandChildren[a], 'z')
                 }
               }
             }
@@ -1105,9 +1104,9 @@ class MySceneGraph {
       if(isNaN(elements.top)){
         this.onXMLError('Perspective Views expected a float number on top.');
       }
-      //var aux=new CGFcameraOrtho(elements.left, elements.right, elements.bottom,elements.top,vec3.fromValues(elements.from.x, elements.from.y,elements.from.z), vec3.fromValues(elements.to.x, elements.to.y, elements.to.y),vec3.fromValues(0,1,0));
 
-      var aux=new CGFcameraOrtho( -30,30,10,10, 0.4, 100, vec3.fromValues(15,15,15), vec3.fromValues(0,0,0),  vec3.fromValues(0,0,1));
+      var aux=new CGFcameraOrtho(elements.left, elements.right,elements.bottom,elements.top,elements.near,elements.far,vec3.fromValues(elements.from.x, elements.from.y,elements.from.z), vec3.fromValues(elements.to.x, elements.to.y, elements.to.z),vec3.fromValues(0,1,0));
+
       return aux;
 
     }
