@@ -70,6 +70,8 @@
         <texture id="white" file="white.png"/>
         <texture id="green" file="green.jpg"/>
         <texture id="carbono" file="carbono.jpg"/>
+        <texture id="carbono_m" file="carbono_m.png"/>
+        <texture id="cr" file="car.jpg"/>
 
     </textures>
 
@@ -1318,7 +1320,7 @@
 
             </materials>
 
-            <texture id="green" length_s="1" length_t="1"/>
+            <texture id="cr" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -1335,7 +1337,7 @@
 
             </materials>
 
-            <texture id="carbono" length_s="1" length_t="1"/>
+            <texture id="carbono_m" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="sphere"/>
@@ -1353,7 +1355,7 @@
 
             </materials>
 
-            <texture id="carbono" length_s="1" length_t="1"/>
+            <texture id="carbono_m" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="sphere"/>
@@ -1574,7 +1576,7 @@
           <material id ="silver"/>
       </materials>
 
-      <texture id="trunk" length_s="1" length_t="1"/>
+      <texture id="inherit" length_s="1" length_t="1"/>
 
       <children>
           <componentref id="corimao_torre_par4"/>
