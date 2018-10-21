@@ -65,7 +65,7 @@ MyTriangle.prototype.initBuffers=function(){
 };
 
 
-MyTriangle.updateTexCoords = function (l_s, l_t){
+MyTriangle.prototype.updateTexCoords = function (l_s, l_t){
 
   this.disp1_p2=Math.sqrt( Math.pow((this.point_2[0] - this.point_1[0]), 2) +
                       Math.pow((this.point_2[1] - this.point_1[1]), 2) +
@@ -79,13 +79,13 @@ MyTriangle.updateTexCoords = function (l_s, l_t){
 			                Math.pow((this.point_3[1] - this.point_2[1]), 2) +
 			                Math.pow((this.point_3[2] - this.point_2[2]), 2));
 
-  var angBt = Math.acos((Math.pow(disp2_p3, 2) - Math.pow(disp3_p1, 2) + Math.pow(disp1_p2, 2)) / (2 * disp2_p3 * disp1_p2));
+  var angBt = Math.acos((Math.pow(this.disp2_p3, 2) - Math.pow(this.disp3_p1, 2) + Math.pow(this.disp1_p2, 2)) / (2 * this.disp2_p3 * this.disp1_p2));
 
-  var aux = disp2_p3 * Math.sin(angBt);
+  var aux = this.disp2_p3 * Math.sin(angBt);
 
   this.texCoords = [0, aux/l_t,
-                    disp1_p2/l_s, aux/l_t,
-                    (disp1_p2-disp2_p3*Math.cos(angBt))/afS,(aux-disp2_p3*Math.sin(angBt))/l_t
+                    this.disp1_p2/l_s, aux/l_t,
+                    (this.disp1_p2-this.disp2_p3*Math.cos(angBt))/l_s,(aux-this.disp2_p3*Math.sin(angBt))/l_t
                    ];
 
   this.updateTexCoordsGLBuffers();

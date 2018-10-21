@@ -1,4 +1,3 @@
-
 function MyRectangle(scene, reference) {
     CGFobject.call(this, scene);
 
@@ -66,4 +65,4 @@ MyRectangle.prototype.updateTexCoords = function(l_s, l_t) {
   }
 
   this.updateTexCoordsGLBuffers();
-}
+};

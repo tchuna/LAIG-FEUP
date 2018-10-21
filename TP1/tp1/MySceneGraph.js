@@ -21,6 +21,8 @@ class MySceneGraph {
   constructor(filename, scene) {
     this.loadedOk = null;
 
+    this.boolean = true;
+
     // Establish bidirectional references between scene and graph.
     this.scene = scene;
     scene.graph = this;
@@ -89,7 +91,6 @@ class MySceneGraph {
     var error;
 
     // Processes each node, verifying errors.
-
     // <scene>
     var index;
     if ((index = nodeNames.indexOf("scene")) == -1)
@@ -102,8 +103,6 @@ class MySceneGraph {
       if ((error = this.parseScene(nodes[index])) != null)
       return error;
     }
-
-
 
     // <views>
     if ((index = nodeNames.indexOf("views")) == -1)
@@ -1008,6 +1007,7 @@ class MySceneGraph {
               var refId = this.reader.getString(grandChildren[k], 'id');
               if (this.primitives[refId] == null) {
                 this.onXMLMinorError("graphBuilder: primitive "+refId+" not defined.");
+                continue;
               }
               else {
                 this.nodes[refId].parents.push(node);
@@ -1175,7 +1175,7 @@ class MySceneGraph {
     for (var i = 0; i < node.children.length; i++) {
       if (node.children[i].type == 'primitive') {
         if (node.texture.texture != 'none') {
-          // node.children[i].primitive.updateTexCoords(node.texture.length_s, node.texture.length_t);
+          node.children[i].primitive.updateTexCoords(node.texture.length_s, node.texture.length_t);
           node.texture.texture.bind();
         }
         node.children[i].primitive.display();
