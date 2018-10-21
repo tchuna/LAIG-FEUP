@@ -12,8 +12,8 @@
           slices:this.slices
         };
 
-        this.top = new MyCircle(scene,aux);
-        this.bottom = new MyCircle(scene,aux);
+        this.top = new MyCircle(scene,aux.slices);
+        this.bottom = new MyCircle(scene,aux.slices);
     };
 
     MyCylinder.prototype = Object.create(CGFobject.prototype);
@@ -24,7 +24,7 @@
 
         this.scene.pushMatrix();
         this.scene.translate(0, 0, this.height);
-        //this.top.display();
+        this.top.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
