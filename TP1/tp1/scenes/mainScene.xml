@@ -59,13 +59,18 @@
     </lights>
 
     <textures>
-        <texture id="trunk" file="trunk-image.jpg"/>
+        <texture id="trunk" file="trunk-image.png"/>
         <texture id="floor" file="wall.jpg"/>
         <texture id="river" file="agua.jpg"/>
         <texture id="cerca" file="cerca.jpg"/>
         <texture id="door" file="door.jpg"/>
         <texture id="piso_ponte" file="metal_piso..jpg"/>
         <texture id="madeira" file="madeira.jpg"/>
+        <texture id="ma_turbine" file="midel_turbine.jpg"/>
+        <texture id="white" file="white.png"/>
+        <texture id="green" file="green.jpg"/>
+        <texture id="carbono" file="carbono.jpg"/>
+
     </textures>
 
     <materials>
@@ -74,6 +79,12 @@
           <ambient r="1" g="1" b="1" a="1"/>
           <diffuse r="1" g="1" b="1" a="1"/>
           <specular r="1" g="1" b="1" a="1"/>
+       </material>
+       <material id="p1" shininess="0.1">
+          <emission r="0" g="0" b="0" a="0"/>
+          <ambient r="1" g="1" b="1" a="1"/>
+          <diffuse r="1" g="1" b="1" a="1"/>
+          <specular r="0" g="0" b="0" a="1"/>
        </material>
         <material id="m1" shininess="0.1">
             <emission r="0" g="0" b="0" a="0"/>
@@ -1026,10 +1037,10 @@
             </transformation>
 
             <materials>
-                <material id ="light_orange"/>
+                <material id ="default"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="white" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="cut_cone"/>
@@ -1043,10 +1054,10 @@
             </transformation>
 
             <materials>
-                <material id ="light_orange"/>
+                <material id ="default"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="white" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="cylinder"/>
@@ -1060,10 +1071,10 @@
             </transformation>
 
             <materials>
-                <material id ="light_orange"/>
+                <material id ="default"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="inherit" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="cylinder_1"/>
@@ -1077,10 +1088,10 @@
             </transformation>
 
             <materials>
-                <material id ="light_orange"/>
+                <material id ="default"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="ma_turbine" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="torus"/>
@@ -1094,10 +1105,10 @@
             </transformation>
 
             <materials>
-                <material id ="light_orange"/>
+                <material id ="default"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="white" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="cylinder_1"/>
@@ -1111,10 +1122,10 @@
             </transformation>
 
             <materials>
-                <material id ="light_orange"/>
+                <material id ="default"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="white" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="cylinder_1"/>
@@ -1124,24 +1135,25 @@
             <transformation>
             </transformation>
             <materials>
-                <material id ="inherit"/>
+                <material id ="default"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="white" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="turbine_suporte_parte1"/>
                 <componentref id="turbine_suporte_parte2"/>
+
             </children>
         </component>
         <component id="turbine_helice_suport">
             <transformation>
             </transformation>
             <materials>
-                <material id ="inherit"/>
+                <material id ="default"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="white" length_s="1" length_t="1"/>
 
             <children>
               <componentref id="turbine_helice_suport_part1"/>
@@ -1153,10 +1165,10 @@
             <transformation>
             </transformation>
             <materials>
-                <material id ="inherit"/>
+                <material id ="default"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="white" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="turbine_helice_part3"/>
@@ -1170,10 +1182,10 @@
               <rotate axis="z" angle="60"/>
             </transformation>
             <materials>
-                <material id ="inherit"/>
+                <material id ="default"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="white" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="turbine_helice_1"/>
@@ -1189,7 +1201,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="white" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="turbine_helice_2"/>
@@ -1203,7 +1215,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="white" length_s="1" length_t="1"/>
 
             <children>
               <componentref id="turbine_helice_suport"/>
@@ -1217,10 +1229,10 @@
             <transformation>
             </transformation>
             <materials>
-                <material id ="inherit"/>
+                <material id ="default"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="white" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="turbine_suporte"/>
@@ -1286,11 +1298,10 @@
               <scale x="6" y="6" z="10"/>
             </transformation>
             <materials>
-                <material id ="table_wood"/>
+                <material id ="p1"/>
 
             </materials>
-
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="green" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -1303,11 +1314,11 @@
               <scale x="10" y="10" z="3"/>
             </transformation>
             <materials>
-                <material id ="table_wood"/>
+                <material id ="p1"/>
 
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="green" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -1320,11 +1331,11 @@
               <scale x="10" y="5" z="1"/>
             </transformation>
             <materials>
-                <material id ="table_wood"/>
+                <material id ="p1"/>
 
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="carbono" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="sphere"/>
@@ -1338,11 +1349,11 @@
               <scale x="10" y="5" z="1"/>
             </transformation>
             <materials>
-                <material id ="table_wood"/>
+                <material id ="p1"/>
 
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="carbono" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="sphere"/>
@@ -1354,11 +1365,11 @@
               <scale x="6" y="6" z="6"/>
             </transformation>
             <materials>
-                <material id ="table_wood"/>
+                <material id ="p1"/>
 
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="carbono" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="sphere"/>
@@ -1667,7 +1678,7 @@
         <material id ="table_wood"/>
     </materials>
 
-    <texture id="madeira" length_s="1" length_t="1"/>
+    <texture id="carbono" length_s="1" length_t="1"/>
 
     <children>
         <componentref id="corimao_torre_par10"/>
@@ -1697,7 +1708,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="carbono" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="corimao_torre_par1"/>
@@ -1720,7 +1731,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="green" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="torre_suporte"/>
