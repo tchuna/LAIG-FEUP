@@ -192,6 +192,8 @@
 
             <materials>
                 <material id ="floor"/>
+                <material id="fuschia"/>
+                <material id="beige"/>
             </materials>
 
             <texture id="floor" length_s="1" length_t="1"/>
@@ -209,6 +211,7 @@
 
             <materials>
                 <material id ="floor"/>
+                <material id="fuschia"/>
             </materials>
 
             <texture id="floor" length_s="1" length_t="1"/>
