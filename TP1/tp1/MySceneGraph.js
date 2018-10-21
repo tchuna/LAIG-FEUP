@@ -306,6 +306,7 @@ class MySceneGraph {
       }
       // Ortho view
       else if (children[i].nodeName == "ortho") {
+        grandChildren = children[i].children;
         for (var j = 0; j < grandChildren.length; j++) {
           if (grandChildren[j].nodeName != "from" && grandChildren[j].nodeName != "to") {
             this.onXMLMinorError("unknown tag <"+grandChildren[j].nodeName+">");
@@ -1136,9 +1137,8 @@ class MySceneGraph {
     if(isNaN(elements.top)){
       this.onXMLError('Perspective Views expected a float number on top.');
     }
-    //var aux=new CGFcameraOrtho(elements.left, elements.right, elements.bottom,elements.top,vec3.fromValues(elements.from.x, elements.from.y,elements.from.z), vec3.fromValues(elements.to.x, elements.to.y, elements.to.y),vec3.fromValues(0,1,0));
-
-    var aux=new CGFcameraOrtho( -30,30,10,10, 0.4, 100, vec3.fromValues(15,15,15), vec3.fromValues(0,0,0),  vec3.fromValues(0,0,1));
+    var aux=new CGFcameraOrtho(elements.left, elements.right, elements.bottom,elements.top,elements.near,elements.far,vec3.fromValues(elements.from.x, elements.from.y,elements.from.z), vec3.fromValues(elements.to.x, elements.to.y, elements.to.y),vec3.fromValues(0,1,0));
+    
     return aux;
 
   }
