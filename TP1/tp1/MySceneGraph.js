@@ -21,8 +21,6 @@ class MySceneGraph {
   constructor(filename, scene) {
     this.loadedOk = null;
 
-    this.boolean = true;
-
     // Establish bidirectional references between scene and graph.
     this.scene = scene;
     scene.graph = this;
@@ -36,6 +34,8 @@ class MySceneGraph {
     this.axisCoords['x'] = [1, 0, 0];
     this.axisCoords['y'] = [0, 1, 0];
     this.axisCoords['z'] = [0, 0, 1];
+
+    this.currMaterial = [];
 
     // File reading
     this.reader = new CGFXMLreader();
@@ -962,6 +962,11 @@ class MySceneGraph {
               node.materials.push(this.materials[materialId]);
             }
           }
+
+          this.currMaterial[node.id] = {
+            current: 0,
+            total:node.materials.length
+          };
           break;
         case "texture":
           var textId = this.reader.getString(children[j], 'id');
@@ -1170,7 +1175,12 @@ class MySceneGraph {
 
   rendering(scene, node){
     scene.multMatrix(node.transformMatrix);
-    node.materials[0].apply();
+
+    if (this.currMaterial[node.id].current >= this.currMaterial[node.id].total) {
+      this.currMaterial[node.id].current = 0;
+    }
+
+    node.materials[this.currMaterial[node.id].current].apply();
 
     for (var i = 0; i < node.children.length; i++) {
       if (node.children[i].type == 'primitive') {

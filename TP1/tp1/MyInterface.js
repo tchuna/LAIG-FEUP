@@ -30,24 +30,24 @@ class MyInterface extends CGFinterface {
     }
 
     /**
- * processKeyboard
- * @param event {Event}
- */
-processKeyboard(event) {
-  CGFinterface.prototype.processKeyboard.call(this,event);
+    * processKeyboard
+    * @param event {Event}
+    */
+    processKeyboard(event) {
+      CGFinterface.prototype.processKeyboard.call(this,event);
 
-  switch (event.code) {
-    case "KeyC":
-				this.scene.changeCamera();
-      break;
-   case "KeyM":
-       //change maaterial
-     break;
-    default:
+      switch (event.code) {
+        case "KeyC":
+          this.scene.changeCamera();
+          break;
+        case "KeyM":
+          this.scene.changeMaterial();
+          break;
+        default:
 
-  }
+      }
 
-}
+    }
 
     /**
      * Adds a folder containing the IDs of the lights passed as parameter.
