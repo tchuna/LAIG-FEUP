@@ -38,7 +38,7 @@
             <specular r="0.7" g="0.7" b="0.7" a="1"/>
         </omni>
         <omni id="light_3" enabled="0">
-            <location x="-3" y="15" z="3" w="1" />
+            <location x="3" y="10" z="27" w="1" />
             <ambient r="0.1" g="0.1" b="0.1" a="1"/>
             <diffuse r="0.7" g="0.7" b="0.7" a="1"/>
             <specular r="0.7" g="0.7" b="0.7" a="1"/>
@@ -60,7 +60,9 @@
 
     <textures>
         <texture id="trunk" file="trunk-image.jpg"/>
-        <texture id="water" file="water.jpg"/>
+        <texture id="floor" file="wall.jpg"/>
+        <texture id="river" file="agua.jpg"/>
+        <texture id="cerca" file="cerca.jpg"/>
     </textures>
 
     <materials>
@@ -192,7 +194,7 @@
                 <material id ="floor"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="floor" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square_at_zero"/>
@@ -209,7 +211,7 @@
                 <material id ="floor"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="floor" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square_at_zero"/>
@@ -226,7 +228,7 @@
                 <material id ="river"/>
             </materials>
 
-            <texture id="water" length_s="1" length_t="1"/>
+            <texture id="river" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="square_at_zero"/>
@@ -241,7 +243,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-              <texture id="trunk" length_s="1" length_t="1"/>
+              <texture id="cerca" length_s="1" length_t="1"/>
             <children>
                 <primitiveref id="triangle" />
             </children>
@@ -255,7 +257,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-              <texture id="trunk" length_s="1" length_t="1"/>
+              <texture id="cerca" length_s="1" length_t="1"/>
             <children>
                 <primitiveref id="triangle" />
             </children>
@@ -271,7 +273,7 @@
                 <material id="inherit" />
             </materials>
 
-          <texture id="trunk" length_s="1" length_t="1"/>
+          <texture id="cerca" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="triangle" />
@@ -288,7 +290,7 @@
                 <material id="inherit" />
             </materials>
 
-              <texture id="trunk" length_s="1" length_t="1"/>
+              <texture id="cerca" length_s="1" length_t="1"/>
 
             <children>
                 <primitiveref id="triangle" />
@@ -308,7 +310,7 @@
                 <material id="inherit" />
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="cerca" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="piramede_lado1" />
@@ -327,8 +329,6 @@
                 <material id="inherit" />
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
-
             <children>
                 <primitiveref id="square_at_zero" />
             </children>
@@ -344,7 +344,7 @@
                 <material id="inherit" />
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="cerca" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="lados_piramede" />
@@ -473,22 +473,7 @@
                 <componentref id="top_face"/>
             </children>
         </component>
-        <component id="table_top">
-            <transformation>
-                <translate x="0" y="3.65" z="0.0"/>
-                <scale x="5" y="0.3" z="3"/>
-            </transformation>
 
-            <materials>
-                <material id ="inherit"/>
-            </materials>
-
-            <texture id="trunk" length_s="1" length_t="1"/>
-
-            <children>
-                <componentref id="cube"/>
-            </children>
-        </component>
         <component id="degrau_1">
             <transformation>
               <translate x="12.2" y="0.15" z="8"/>
@@ -1750,7 +1735,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="cerca" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cube"/>
@@ -1765,7 +1750,7 @@
                 <material id ="inherit"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="cerca" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="piramide"/>
@@ -1778,7 +1763,7 @@
                 <material id ="default"/>
             </materials>
 
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="cerca" length_s="1" length_t="1"/>
 
             <children>
                 <componentref id="cerca_suporte_1"/>
@@ -1793,7 +1778,7 @@
             <materials>
                 <material id ="default"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="cerca" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cerca_part0"/>
             </children>
@@ -1806,7 +1791,7 @@
             <materials>
                 <material id ="default"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="cerca" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cerca_part0"/>
             </children>
@@ -1819,7 +1804,7 @@
             <materials>
                 <material id ="default"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="cerca" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cerca_part0"/>
             </children>
@@ -1832,7 +1817,7 @@
             <materials>
                 <material id ="default"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="cerca" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cerca_part0"/>
             </children>
@@ -1845,7 +1830,7 @@
             <materials>
                 <material id ="default"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="cerca" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cerca_part0"/>
             </children>
@@ -1858,7 +1843,7 @@
             <materials>
                 <material id ="default"/>
             </materials>
-            <texture id="trunk" length_s="1" length_t="1"/>
+            <texture id="cerca" length_s="1" length_t="1"/>
             <children>
                 <componentref id="cerca_part0"/>
             </children>

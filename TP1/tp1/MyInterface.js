@@ -37,18 +37,12 @@ processKeyboard(event) {
   CGFinterface.prototype.processKeyboard.call(this,event);
 
   switch (event.code) {
-    case "KeyA":
+    case "KeyC":
 				this.scene.changeCamera();
       break;
-    case 118:
-				console.log("tchuna");
-    break;
-		case 109:
-				console.log("tchuna");
-    break;
-		case 77:
-					console.log("tchuna");
-    break;
+   case "KeyM":
+       //change maaterial
+     break;
     default:
 
   }
