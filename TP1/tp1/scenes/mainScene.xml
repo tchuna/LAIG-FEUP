@@ -2,19 +2,21 @@
     <scene root="living_room" axis_length="5"/>
     <views default="default">
         <perspective id="default" near="0.1" far="500" angle="0.4">
-            <from x="15" y="15" z="15"/>
-            <to x="0" y="0" z="0"/>
+            <from x="30" y="80" z="80"/>
+            <to x="25" y="10" z="10"/>
         </perspective>
-
         <perspective id="v1" near="0.1" far="500" angle="0.4">
-            <from x="15" y="15" z="15"/>
-            <to x="0" y="0" z="0"/>
+            <from x="100" y="5" z="40"/>
+            <to x="10" y="10" z="80"/>
         </perspective>
-
-        <perspective id="v2" near="0.1" far="500" angle="0.4">
-            <from x="15" y="15" z="15"/>
-            <to x="0" y="0" z="0"/>
+        <perspective id="v2" near="0.1" far="500" angle="0.12">
+            <from x="25" y="10" z="200"/>
+            <to x="10" y="10" z="20"/>
         </perspective>
+        <ortho id="ortho1" near="0.1" far="100.0" left="-30" right="30" top="10" bottom="-10">
+            <from x="15.0" y="15.0" z="15.0" />
+            <to x="0.0" y="0.0" z="0.0" />
+        </ortho>
 
     </views>
 

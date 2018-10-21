@@ -1,6 +1,10 @@
 /**
 * MyInterface class, creating a GUI interface.
 */
+
+var obj = {
+        current: "default",
+};
 class MyInterface extends CGFinterface {
     /**
      * @constructor
@@ -19,13 +23,37 @@ class MyInterface extends CGFinterface {
         //  http://workshop.chromeexperiments.com/examples/gui
 
         this.gui = new dat.GUI();
-        //this.gui.add(text, 'message', [ 'pizza', 'chrome', 'hooray' ] );
-
 
         // add a group of controls (and open/expand by defult)
 
         return true;
     }
+
+    /**
+ * processKeyboard
+ * @param event {Event}
+ */
+processKeyboard(event) {
+  CGFinterface.prototype.processKeyboard.call(this,event);
+
+  switch (event.code) {
+    case "KeyA":
+				this.scene.changeCamera();
+      break;
+    case 118:
+				console.log("tchuna");
+    break;
+		case 109:
+				console.log("tchuna");
+    break;
+		case 77:
+					console.log("tchuna");
+    break;
+    default:
+
+  }
+
+}
 
     /**
      * Adds a folder containing the IDs of the lights passed as parameter.
@@ -47,15 +75,19 @@ class MyInterface extends CGFinterface {
         }
     }
 
-    addViews(){
-      var group = this.gui.addFolder("Views");
-      group.open();
+    addViewsGroup(views) {
 
-    this.gui.add(text, 'message', [ 'pizza', 'chrome', 'hooray' ] );
+        var group = this.gui.addFolder("Views");
+        group.open();
 
+        // add two check boxes to the group. The identifiers must be members variables of the scene initialized in scene.init as boolean
+        // e.g. this.option1=true; this.option2=false;
+
+        for (var key in views) {
+            if (views.hasOwnProperty(key)) {
+                this.scene.graph.views[key] = views[key].enabled;
+
+            }
+        }
     }
-
-
-
-
 }
