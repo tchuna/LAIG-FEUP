@@ -8,8 +8,9 @@ var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
 var MATERIALS_INDEX = 5;
 var TRANSFORMATIONS_INDEX = 6;
-var PRIMITIVES_INDEX = 7;
-var COMPONENTS_INDEX = 8;
+var ANIMATION_INDEX=7;
+var PRIMITIVES_INDEX = 8;
+var COMPONENTS_INDEX = 9;
 
 /**
 * MySceneGraph class, representing the scene graph.
@@ -176,6 +177,18 @@ class MySceneGraph {
       return error;
     }
 
+    //Aanimations
+    if ((index = nodeNames.indexOf("animations")) == -1)
+    return "tag <animations> missing";
+    else {
+      if (index != ANIMATION_INDEX)
+      this.onXMLMinorError("tag <animations> out of order");
+
+      //Parse primitives block
+    if ((error = this.parseAnimations(nodes[index])) != null)
+      return error;
+    }
+
     // <primitives>
     if ((index = nodeNames.indexOf("primitives")) == -1)
     return "tag <primitives> missing";
@@ -236,6 +249,8 @@ class MySceneGraph {
 
     return null;
   }
+
+
 
   /**
   * Parses the <views> block.
@@ -685,13 +700,6 @@ class MySceneGraph {
       this.materials[materialId].setDiffuse(diffuse.red, diffuse.green, diffuse.blue, diffuse.alpha);
       this.materials[materialId].setSpecular(specular.red, specular.green, specular.blue, specular.alpha);
 
-      // this.materials[materialId] = {
-      //   shininess: this.reader.getFloat(children[i], 'shininess'),
-      //   emission: emission,
-      //   ambient: ambient,
-      //   diffuse: diffuse,
-      //   specular: specular
-      // }
     }
 
     this.log("Parsed materials");
@@ -762,6 +770,95 @@ class MySceneGraph {
 
     this.log("Parsed transformations");
     return null;
+  }
+
+
+  /**
+  * Parses the <views> block.
+  * @param {views block element} animationsNode
+  */
+  parseAnimations(animationNode){
+
+    var children = animationNode.children;
+    this.linearAnimations=[];
+    this.circularAnimations=[];
+    this.controlPoints=[];
+
+    var grandChildren;
+
+
+    if(children.length==0){
+      this.onXMLMinorError("Scene without Animation");
+    }else{
+
+      for (var i = 0; i < children.length; i++) {
+        if (children[i].nodeName != "linear" && children[i].nodeName != "circular") {
+          this.onXMLMinorError("unknown tag <"+children[i].nodeName+">");
+          continue;
+        }
+
+        if(children[i].nodeName=="linear"){
+          var idAnimation=this.reader.getString(children[i], 'id');
+          var spanTime=this.reader.getFloat(children[i], 'span');
+
+          if (idAnimation == null || idAnimation.length == 0){
+            return "no ID defined in linear animation";
+          }
+
+          if (this.linearAnimations[idAnimation] != null){
+            return "ID must be unique for each linear animations  (conflict: ID = " + idAnimation + ")";
+          }
+
+          if (spanTime== null || spanTime == 0){
+            return "no SPAN  defined in linear animation";
+          }
+
+          grandChildren = children[i].children;
+
+          if(grandChildren.length<2){
+            return "need at least 2 ControlPoints  in each animation";
+          }
+
+          for (var i = 0; i < grandChildren.length; i++) {
+            if (grandChildren[i].nodeName != "controlpoint") {
+              this.onXMLMinorError("unknown tag <"+grandChildren[i].nodeName+">");
+              continue;
+            }
+
+            var xx=this.reader.getFloat(grandChildren[i],"xx");
+            var yy=this.reader.getFloat(grandChildren[i],"yy");
+            var zz=this.reader.getFloat(grandChildren[i],"zz");
+
+
+            if (xx == null || yy == null || zz == null){
+              return "error in linear animation control points";
+            }
+            var paux=[];
+            paux.push(xx);
+            paux.push(yy);
+            paux.push(zz);
+            this.controlPoints.push(paux);
+          }
+          //console.log(this.controlPoints.length)
+          //new LinearAnimation(this.scene,idAnimation,spanTime,this.controlPoints);
+          this.controlPoints=[];
+
+        }
+
+
+
+
+
+      }
+
+
+
+
+
+    }
+
+    this.log("Parsed Animations");
+
   }
 
   /**

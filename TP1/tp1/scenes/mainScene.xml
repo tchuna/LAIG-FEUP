@@ -159,6 +159,16 @@
         </transformation>
     </transformations>
 
+    <animations>
+      <linear id="an_1" span="1">
+        <controlpoint xx="2" yy="3" zz="3" />
+        <controlpoint xx="2" yy="2" zz="2" />
+        <controlpoint xx="1" yy="1" zz="2" />
+        <controlpoint xx="1" yy="0" zz="1" />
+      </linear>
+    </animations>
+
+
     <primitives>
         <primitive id="square">
             <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
