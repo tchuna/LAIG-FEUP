@@ -809,7 +809,7 @@ class MySceneGraph {
             return "ID must be unique for each linear animations  (conflict: ID = " + idAnimation + ")";
           }
 
-          if (spanTime== null || spanTime == 0){
+          if (isNaN(spanTime)== null || spanTime == 0){
             return "no SPAN  defined in linear animation";
           }
 
@@ -819,18 +819,18 @@ class MySceneGraph {
             return "need at least 2 ControlPoints  in each animation";
           }
 
-          for (var i = 0; i < grandChildren.length; i++) {
-            if (grandChildren[i].nodeName != "controlpoint") {
+          for (var j = 0; j < grandChildren.length; j++) {
+            if (grandChildren[j].nodeName != "controlpoint") {
               this.onXMLMinorError("unknown tag <"+grandChildren[i].nodeName+">");
               continue;
             }
 
-            var xx=this.reader.getFloat(grandChildren[i],"xx");
-            var yy=this.reader.getFloat(grandChildren[i],"yy");
-            var zz=this.reader.getFloat(grandChildren[i],"zz");
+            var xx=this.reader.getFloat(grandChildren[j],"xx");
+            var yy=this.reader.getFloat(grandChildren[j],"yy");
+            var zz=this.reader.getFloat(grandChildren[j],"zz");
 
 
-            if (xx == null || yy == null || zz == null){
+            if (isNaN(xx) || isNaN(yy) || isNaN(zz)){
               return "error in linear animation control points";
             }
             var paux=[];
@@ -839,9 +839,42 @@ class MySceneGraph {
             paux.push(zz);
             this.controlPoints.push(paux);
           }
-          //console.log(this.controlPoints.length)
-          //new LinearAnimation(this.scene,idAnimation,spanTime,this.controlPoints);
+
+          //var auxAnimate=new LinearAnimation(this.scene,idAnimation,spanTime,this.controlPoints);
+          //this.linearAnimations.push(auxAnimate);
           this.controlPoints=[];
+
+        }
+
+       if(children[i].nodeName=="circular"){
+          var id=this.reader.getString(children[i], 'id');
+          var spn=this.reader.getFloat(children[i], 'span');
+          var auxcenter=this.reader.getString(children[i], 'center');
+          var radius=this.reader.getFloat(children[i], 'radius');
+          var starAng=this.reader.getFloat(children[i], 'startang');
+          var rotang=this.reader.getFloat(children[i], 'rotang');
+
+
+
+          if (id== null || id.length == 0){
+            return "no ID defined in circular animation";
+          }
+
+          if (auxcenter== null || auxcenter.length !=5){
+            return "no center defined in circular animation";
+          }
+
+          if (isNaN(spn)  || isNaN(radius) || isNaN(starAng) || isNaN(rotang)){
+            return "miss some componete in circular animation";
+          }
+          var center=[];
+          center[0]=auxcenter[0];
+          center[1]=auxcenter[2];
+          center[2]=auxcenter[4];
+
+          //var auxCircularAnimate=new Circular(this.scene,id,spn,center,radius,starAng,rotang);
+          //this.circularAnimations.push(auxCircularAnimate);
+
 
         }
 
