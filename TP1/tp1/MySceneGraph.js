@@ -186,13 +186,13 @@ class MySceneGraph {
         this.onXMLMinorError("tag <animations> out of order");
 
       //Parse animations block
-      if ((error = this.parseAnimations(node[index])) != null)
+      if ((error = this.parseAnimations(nodes[index])) != null)
         return error;
     }
 
     // <primitives>
     if ((index = nodeNames.indexOf("primitives")) == -1)
-    return "tag <primitives> missing";
+      return "tag <primitives> missing";
     else {
       if (index != PRIMITIVES_INDEX)
       this.onXMLMinorError("tag <primitives> out of order");
@@ -250,6 +250,8 @@ class MySceneGraph {
 
     return null;
   }
+
+
 
   /**
   * Parses the <views> block.
@@ -778,6 +780,115 @@ class MySceneGraph {
     return null;
   }
 
+
+  /**
+  * Parses the <views> block.
+  * @param {views block element} animationsNode
+  */
+  parseAnimations(animationNode){
+
+    var children = animationNode.children;
+    this.linearAnimations=[];
+    this.circularAnimations=[];
+    this.controlPoints=[];
+
+    var grandChildren;
+
+
+    if(children.length==0){
+      this.onXMLMinorError("Scene without Animation");
+    }else{
+
+      for (var i = 0; i < children.length; i++) {
+        if (children[i].nodeName != "linear" && children[i].nodeName != "circular") {
+          this.onXMLMinorError("unknown tag <"+children[i].nodeName+">");
+          continue;
+        }
+
+        if(children[i].nodeName=="linear"){
+          var idAnimation=this.reader.getString(children[i], 'id');
+          var spanTime=this.reader.getFloat(children[i], 'span');
+
+          if (idAnimation == null || idAnimation.length == 0){
+            return "no ID defined in linear animation";
+          }
+
+          if (this.linearAnimations[idAnimation] != null){
+            return "ID must be unique for each linear animations  (conflict: ID = " + idAnimation + ")";
+          }
+
+          if (isNaN(spanTime)== null || spanTime == 0){
+            return "no SPAN  defined in linear animation";
+          }
+
+          grandChildren = children[i].children;
+
+          if(grandChildren.length<2){
+            return "need at least 2 ControlPoints  in each animation";
+          }
+
+          for (var j = 0; j < grandChildren.length; j++) {
+            if (grandChildren[j].nodeName != "controlpoint") {
+              this.onXMLMinorError("unknown tag <"+grandChildren[i].nodeName+">");
+              continue;
+            }
+
+            var xx=this.reader.getFloat(grandChildren[j],"xx");
+            var yy=this.reader.getFloat(grandChildren[j],"yy");
+            var zz=this.reader.getFloat(grandChildren[j],"zz");
+
+
+            if (isNaN(xx) || isNaN(yy) || isNaN(zz)){
+              return "error in linear animation control points";
+            }
+            var paux=[];
+            paux.push(xx);
+            paux.push(yy);
+            paux.push(zz);
+            this.controlPoints.push(paux);
+          }
+
+          //var auxAnimate=new LinearAnimation(this.scene,idAnimation,spanTime,this.controlPoints);
+          //this.linearAnimations.push(auxAnimate);
+          this.controlPoints=[];
+
+        }
+
+       if(children[i].nodeName=="circular"){
+          var id=this.reader.getString(children[i], 'id');
+          var spn=this.reader.getFloat(children[i], 'span');
+          var auxcenter=this.reader.getString(children[i], 'center');
+          var radius=this.reader.getFloat(children[i], 'radius');
+          var starAng=this.reader.getFloat(children[i], 'startang');
+          var rotang=this.reader.getFloat(children[i], 'rotang');
+
+
+          if (id== null || id.length == 0){
+            return "no ID defined in circular animation";
+          }
+
+          if (auxcenter== null || auxcenter.length !=5){
+            return "no center defined in circular animation";
+          }
+
+          if (isNaN(spn)  || isNaN(radius) || isNaN(starAng) || isNaN(rotang)){
+            return "miss some componete in circular animation";
+          }
+          var center=[];
+          center[0]=auxcenter[0];
+          center[1]=auxcenter[2];
+          center[2]=auxcenter[4];
+
+          //var auxCircularAnimate=new Circular(this.scene,id,spn,center,radius,starAng,rotang);
+          //this.circularAnimations.push(auxCircularAnimate);
+        }
+      }
+    }
+
+    this.log("Parsed Animations");
+
+  }
+
   /**
   * Parses the <animations> block
   * @param {animations block element} animationsNode
@@ -855,7 +966,7 @@ class MySceneGraph {
               }
 
               if (auxcenter == null || auxcenter.length != 5) {
-                return "no center defined in circular animation (ID = "id")";
+                return "no center defined in circular animation (ID = "+id+")";
               }
 
               if (isNaN(span) || isNaN(radius) || isNaN(startAng) || isNaN(rotang)) {
@@ -864,9 +975,9 @@ class MySceneGraph {
 
 
               var center = [];
-              var center[0] = [0];
-              var center[1] = [2];
-              var center[2] = [4];
+              center[0] = 0;
+              center[1] = 2;
+              center[2] = 4;
           }
         }
       }
