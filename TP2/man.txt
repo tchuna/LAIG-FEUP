@@ -1,0 +1,2 @@
+Para alterar os mateiais pressione a tecla 'm'
+Para alterar as vistas (cameras) pressione a tecla 'c'

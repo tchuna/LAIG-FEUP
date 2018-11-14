@@ -8,8 +8,9 @@ var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
 var MATERIALS_INDEX = 5;
 var TRANSFORMATIONS_INDEX = 6;
-var PRIMITIVES_INDEX = 7;
-var COMPONENTS_INDEX = 8;
+var ANIMATION_INDEX = 7
+var PRIMITIVES_INDEX = 8;
+var COMPONENTS_INDEX = 9;
 
 /**
 * MySceneGraph class, representing the scene graph.
@@ -174,6 +175,19 @@ class MySceneGraph {
       //Parse transformations block
       if ((error = this.parseTransformations(nodes[index])) != null)
       return error;
+    }
+
+    // <animations>
+    if ((index = nodeNames.indexOf("animations")) == -1) {
+      return "tag <animations> missing";
+    }
+    else {
+      if (index != ANIMATION_INDEX)
+        this.onXMLMinorError("tag <animations> out of order");
+
+      //Parse animations block
+      if ((error = this.parseAnimations(node[index])) != null)
+        return error;
     }
 
     // <primitives>
@@ -569,7 +583,16 @@ class MySceneGraph {
         return "A file must be defined for texture "+textId;
       }
 
-      this.textures[textId] = new CGFtexture(this.scene, "./scenes/images/" + file);
+      if (file.includes('scenes/images')) {
+        this.textures[textId] = new CGFtexture(this.scene, file);
+      }
+      else if (file.includes('images/')) {
+        this.textures[textId] = new CGFtexture(this.scene, './scenes/' + file);
+      }
+      else {
+        this.textures[textId] = new CGFtexture(this.scene, "./scenes/images/" + file);
+      }
+
     }
 
     this.log("Parsed textures");
@@ -684,19 +707,10 @@ class MySceneGraph {
       this.materials[materialId].setAmbient(ambient.red, ambient.green, ambient.blue, ambient.alpha)
       this.materials[materialId].setDiffuse(diffuse.red, diffuse.green, diffuse.blue, diffuse.alpha);
       this.materials[materialId].setSpecular(specular.red, specular.green, specular.blue, specular.alpha);
-
-      // this.materials[materialId] = {
-      //   shininess: this.reader.getFloat(children[i], 'shininess'),
-      //   emission: emission,
-      //   ambient: ambient,
-      //   diffuse: diffuse,
-      //   specular: specular
-      // }
     }
 
     this.log("Parsed materials");
     return null;
-
   }
 
   /**
@@ -763,6 +777,102 @@ class MySceneGraph {
     this.log("Parsed transformations");
     return null;
   }
+
+  /**
+  * Parses the <animations> block
+  * @param {animations block element} animationsNode
+  */
+  parseAnimations(animationsNode) {
+    var children = animationsNode.children;
+    var grandChildren;
+
+    this.linearAnimations = [];
+    this.circularAnimations = [];
+    this.controlPoints = [];
+
+      if (children.length == 0) {
+        this.onXMLMinorError("Scene without Animation");
+      }
+      else {
+        for (var i = 0; i < children.length; i++) {
+          if (children[i].nodeName != "linear" && children[i].nodeName != "circular") {
+            this.onXMLMinorError("unknown tag <"+children[i].nodeName+">");
+            continue;
+          }
+
+          if (children[i].nodeName == "linear") {
+            var idAnimation = this.reader.getString(children[i], 'id');
+            var spanTime = this.reader.getFloat(children[i], 'span');
+
+            if (idAnimation == null || idAnimation.length == 0) {
+              return "no ID defined in linear animation"
+            }
+            if (this.linearAnimations[idAnimation] != null) {
+              return "ID must be unique for each linear animation (conflict: ID = "+idAnimation+")";
+            }
+            if (isNaN(spanTime) == null || spanTime == 0) {
+              return "no SPAN defined in linear animation (ID = "+idAnimation+")";
+            }
+
+            grandChildren = children[i].children;
+
+            if (grandChildren.length < 2) {
+              return "at least two control points must be defined for each animation";
+            }
+
+            for (var j = 0; j < grandChildren.length; j++) {
+              if (grandChildren[j].nodeName != "controlpoint") {
+                this.onXMLMinorError("unknown tag <"+grandChildren[i].nodeName+">");
+                continue;
+              }
+
+              var xx = this.reader.getFloat(grandChildren[j], "xx");
+              var yy = this.reader.getFloat(grandChildren[j], "yy");
+              var zz = this.reader.getFloat(grandChildren[j], "zz");
+
+              if (isNaN(xx) || isNaN(yy) || isNaN(zz)) {
+                return "error in linear animation control points";
+              }
+
+              var paux = [];
+              paux.push(xx);
+              paux.push(yy);
+              paux.push(zz);
+              this.controlPoints.push(paux);
+            }
+            // this.controlPoints = [];
+          }
+          else if (children[i].nodeName == "circular") {
+              var id = this.reader.getString(children[i], 'id');
+              var span = this.reader.getFloat(children[i], 'span');
+              var auxcenter = this.reader.getString(children[i], 'center');
+              var radius = this.reader.getFloat(children[i], 'radius');
+              var startAng = this.reader.getFloat(children[i], 'startang');
+              var rotang = this.reader.getFloat(children[i], 'rotang');
+
+              if (id == null || id.length == 0) {
+                return "no ID defined in circular animation";
+              }
+
+              if (auxcenter == null || auxcenter.length != 5) {
+                return "no center defined in circular animation (ID = "id")";
+              }
+
+              if (isNaN(span) || isNaN(radius) || isNaN(startAng) || isNaN(rotang)) {
+                return "Some componentes of circular animation are missing.";
+              }
+
+
+              var center = [];
+              var center[0] = [0];
+              var center[1] = [2];
+              var center[2] = [4];
+          }
+        }
+      }
+      this.log("Parsed Animations");
+  }
+
 
   /**
   * Parses the <primitives> block.
@@ -972,16 +1082,28 @@ class MySceneGraph {
           var textId = this.reader.getString(children[j], 'id');
           if (textId == 'none') {
             node.texture = {
-              texture: textId,
-              length_s: this.reader.getFloat(children[j], 'length_s'),
-              length_t: this.reader.getFloat(children[j], 'length_t')
+              texture: textId
+              // length_s: this.reader.getFloat(children[j], 'length_s'),
+              // length_t: this.reader.getFloat(children[j], 'length_t')
             }
           }
           else if (textId == 'inherit') {
-            node.texture = {
-              texture: node.parent.texture.texture,
-              length_s: this.reader.getFloat(children[j], 'length_s'),
-              length_t: this.reader.getFloat(children[j], 'length_t')
+            var length_s = this.reader.getFloat(children[j], 'length_s', false);
+            var length_t = this.reader.getFloat(children[j], 'length_t', false)
+
+            if (length_s != null && length_t != null) {
+                  node.texture = {
+                    texture: node.parent.texture.texture,
+                    length_s: length_s,
+                    length_t: length_t
+                  }
+            }
+            else {
+              node.texture = {
+                texture: node.parent.texture.texture,
+                length_s: node.parent.texture.length_s,
+                length_t: node.parent.texture.length_t
+              }
             }
           }
           else {
@@ -1099,7 +1221,7 @@ class MySceneGraph {
     if(isNaN(elements.to.z)){
       this.onXMLError('Perspective Views expected a float number o to(z)');
     }
-    var aux=new CGFcamera(elements.angle, elements.near, elements.far, vec3.fromValues(elements.from.x, elements.from.y,elements.from.z), vec3.fromValues(elements.to.x, elements.to.y, elements.to.y));
+    var aux=new CGFcamera(elements.angle * DEGREE_TO_RAD, elements.near, elements.far, vec3.fromValues(elements.from.x, elements.from.y,elements.from.z), vec3.fromValues(elements.to.x, elements.to.y, elements.to.y));
 
     return aux;
 

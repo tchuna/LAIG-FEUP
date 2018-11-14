@@ -1,15 +1,15 @@
 <yas>
     <scene root="main_scene" axis_length="5"/>
     <views default="default">
-        <perspective id="default" near="0.1" far="500" angle="0.4">
+        <perspective id="default" near="0.1" far="500" angle="30">
             <from x="30" y="80" z="80"/>
             <to x="25" y="10" z="10"/>
         </perspective>
-        <perspective id="v1" near="0.1" far="500" angle="0.4">
+        <perspective id="v1" near="0.1" far="500" angle="30">
             <from x="100" y="5" z="40"/>
             <to x="10" y="10" z="80"/>
         </perspective>
-        <perspective id="v2" near="0.1" far="500" angle="0.12">
+        <perspective id="v2" near="0.1" far="500" angle="50">
             <from x="25" y="10" z="200"/>
             <to x="10" y="10" z="20"/>
         </perspective>
