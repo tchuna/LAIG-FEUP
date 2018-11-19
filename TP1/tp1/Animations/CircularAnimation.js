@@ -3,8 +3,8 @@
 * @constructor
 */
 class CircularAnimation extends Animation {
-  constructor(scene, id, time, radius, centerPoint, startAngle, rotateAngle) {
-    super(scene, id, time);
+  constructor(scene, id, duration, centerPoint, radius, startAngle, rotateAngle) {
+    super(scene, id, duration);
     // Radius
     this.radius = radius;
     // Center coordinates [x,y,z]
@@ -21,14 +21,14 @@ class CircularAnimation extends Animation {
 
 
   /**
-  * Update Current Angle
+  * Update variables
   *
-  * @param Integer time
+  * @param time  elapsed time
   */
   update(time) {
     if (Math.abs(this.currAngle) < Math.abs(this.rotateAngle)) {
-      if (time > this.time) {
-        time = this.time;
+      if (time > this.duration) {
+        time = this.duration;
       }
 
       this.currAngle = this.startAngle + (this.angularSpeed * time);
@@ -36,7 +36,7 @@ class CircularAnimation extends Animation {
   }
 
   /**
-  * Apply transformation matrix
+  * Apply transformations to the scene
   *
   */
   apply() {

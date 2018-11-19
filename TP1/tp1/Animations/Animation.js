@@ -7,7 +7,7 @@ var DEGREE_TO_RAD = Math.PI / 180;
 class Animation{
   constructor(scene, idAnimation, duration){
     this.scene = scene;
-    this.id = idAnimatio;
+    this.id = idAnimation;
     this.duration = duration;
   }
 }

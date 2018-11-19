@@ -251,8 +251,6 @@ class MySceneGraph {
     return null;
   }
 
-
-
   /**
   * Parses the <views> block.
   * @param {views block element} viewsNode
@@ -782,22 +780,19 @@ class MySceneGraph {
 
 
   /**
-  * Parses the <views> block.
-  * @param {views block element} animationsNode
+  * Parses the <animations> block
+  * @param {animations block element} animationsNode
   */
-  parseAnimations(animationNode){
-
+  parseAnimations(animationNode) {
     var children = animationNode.children;
-    this.linearAnimations=[];
-    this.circularAnimations=[];
-    this.controlPoints=[];
 
-    var grandChildren;
+    this.animations = [];
 
-
-    if(children.length==0){
-      this.onXMLMinorError("Scene without Animation");
-    }else{
+    if(children.length != 0) {
+      var grandChildren;
+      var controlPoints;
+      var animationId;
+      var spanTime;
 
       for (var i = 0; i < children.length; i++) {
         if (children[i].nodeName != "linear" && children[i].nodeName != "circular") {
@@ -805,185 +800,82 @@ class MySceneGraph {
           continue;
         }
 
-        if(children[i].nodeName=="linear"){
-          var idAnimation=this.reader.getString(children[i], 'id');
-          var spanTime=this.reader.getFloat(children[i], 'span');
+        animationId = this.reader.getString(children[i], 'id') || null;
+        spanTime = this.reader.getFloat(children[i], 'span') || -1;
 
-          if (idAnimation == null || idAnimation.length == 0){
-            return "no ID defined in linear animation";
-          }
+        if (animationId == null || animationId.length == 0) {
+          return "no ID defined in linear animation";
+        }
 
-          if (this.linearAnimations[idAnimation] != null){
-            return "ID must be unique for each linear animations  (conflict: ID = " + idAnimation + ")";
-          }
+        if (this.animations[animationId] != null) {
+          return "ID must be unique for each animation (conflict: ID = "+animationId+")";
+        }
 
-          if (isNaN(spanTime)== null || spanTime == 0){
-            return "no SPAN  defined in linear animation";
-          }
+        if (isNaN(spanTime) || spanTime <= 0) {
+          return "SPAN must be a positive number (animation: ID = "+animationId+")";
+        }
 
+        if(children[i].nodeName == "linear") {
+          controlPoints = [];
           grandChildren = children[i].children;
 
-          if(grandChildren.length<2){
-            return "need at least 2 ControlPoints  in each animation";
+          if(grandChildren.length < 2) {
+            return "At least 2 Control Points are needed (animation: ID = "+animationId+")";
           }
 
           for (var j = 0; j < grandChildren.length; j++) {
             if (grandChildren[j].nodeName != "controlpoint") {
-              this.onXMLMinorError("unknown tag <"+grandChildren[i].nodeName+">");
+              this.onXMLMinorError("unknown tag <"+grandChildren[i].nodeName+"> (animation: ID = "+animationId+")");
               continue;
             }
 
-            var xx=this.reader.getFloat(grandChildren[j],"xx");
-            var yy=this.reader.getFloat(grandChildren[j],"yy");
-            var zz=this.reader.getFloat(grandChildren[j],"zz");
+            var xx = this.reader.getFloat(grandChildren[j],"xx");
+            var yy = this.reader.getFloat(grandChildren[j],"yy");
+            var zz = this.reader.getFloat(grandChildren[j],"zz");
 
-
-            if (isNaN(xx) || isNaN(yy) || isNaN(zz)){
-              return "error in linear animation control points";
+            if (isNaN(xx)) {
+              return "component XX must be a number (animation: ID = "+animationId+")";
             }
-            var paux=[];
-            paux.push(xx);
-            paux.push(yy);
-            paux.push(zz);
-            this.controlPoints.push(paux);
+            if (isNaN(yy)) {
+              return "component YY must be a number (animation: ID = "+animationId+")";
+            }
+            if (isNaN(zz)) {
+              return "component ZZ must be a number (animation: ID = "+animationId+")";
+            }
+
+            controlPoints.push([xx, yy, zz]);
           }
 
-          //var auxAnimate=new LinearAnimation(this.scene,idAnimation,spanTime,this.controlPoints);
-          //this.linearAnimations.push(auxAnimate);
-          this.controlPoints=[];
-
+          this.animations[animationId] = new LinearAnimation(this.scene, animationId, spanTime, controlPoints);
         }
+        else if(children[i].nodeName == "circular") {
+          var center = this.reader.getString(children[i], 'center');
+          var radius = this.reader.getFloat(children[i], 'radius');
+          var startAng = this.reader.getFloat(children[i], 'startang');
+          var rotAng = this.reader.getFloat(children[i], 'rotang');
 
-       if(children[i].nodeName=="circular"){
-          var id=this.reader.getString(children[i], 'id');
-          var spn=this.reader.getFloat(children[i], 'span');
-          var auxcenter=this.reader.getString(children[i], 'center');
-          var radius=this.reader.getFloat(children[i], 'radius');
-          var starAng=this.reader.getFloat(children[i], 'startang');
-          var rotang=this.reader.getFloat(children[i], 'rotang');
+          center = center.split(" ");
+          center = center.filter(function(el) { return !isNaN(el) } );
 
-
-          if (id== null || id.length == 0){
-            return "no ID defined in circular animation";
+          if (center == null || center.length != 3 || '' in center) {
+            return "A center point must be defined with exact 3 values separeted by white spaces (animation: ID = "+animationId+")";
+          }
+          if (isNaN(radius) || radius <= 0) {
+            return "RADIUS must be a positive number (animation: ID = "+animationId+")";
+          }
+          if (isNaN(startAng)) {
+            return "STARTANG must be an angle expressed in degrees (animation: ID = "+animationId+")";
+          }
+          if (isNaN(rotAng)) {
+            return "ROTANG must be an angle expressed in degrees (animation: ID = "+animationId+")";
           }
 
-          if (auxcenter== null || auxcenter.length !=5){
-            return "no center defined in circular animation";
-          }
-
-          if (isNaN(spn)  || isNaN(radius) || isNaN(starAng) || isNaN(rotang)){
-            return "miss some componete in circular animation";
-          }
-          var center=[];
-          center[0]=auxcenter[0];
-          center[1]=auxcenter[2];
-          center[2]=auxcenter[4];
-
-          //var auxCircularAnimate=new Circular(this.scene,id,spn,center,radius,starAng,rotang);
-          //this.circularAnimations.push(auxCircularAnimate);
+          this.animations[animationId] = new CircularAnimation(this.scene, animationId, spanTime, center, radius, startAng, rotAng);
         }
       }
     }
-
     this.log("Parsed Animations");
-
   }
-
-  /**
-  * Parses the <animations> block
-  * @param {animations block element} animationsNode
-  */
-  parseAnimations(animationsNode) {
-    var children = animationsNode.children;
-    var grandChildren;
-
-    this.linearAnimations = [];
-    this.circularAnimations = [];
-    this.controlPoints = [];
-
-      if (children.length == 0) {
-        this.onXMLMinorError("Scene without Animation");
-      }
-      else {
-        for (var i = 0; i < children.length; i++) {
-          if (children[i].nodeName != "linear" && children[i].nodeName != "circular") {
-            this.onXMLMinorError("unknown tag <"+children[i].nodeName+">");
-            continue;
-          }
-
-          if (children[i].nodeName == "linear") {
-            var idAnimation = this.reader.getString(children[i], 'id');
-            var spanTime = this.reader.getFloat(children[i], 'span');
-
-            if (idAnimation == null || idAnimation.length == 0) {
-              return "no ID defined in linear animation"
-            }
-            if (this.linearAnimations[idAnimation] != null) {
-              return "ID must be unique for each linear animation (conflict: ID = "+idAnimation+")";
-            }
-            if (isNaN(spanTime) == null || spanTime == 0) {
-              return "no SPAN defined in linear animation (ID = "+idAnimation+")";
-            }
-
-            grandChildren = children[i].children;
-
-            if (grandChildren.length < 2) {
-              return "at least two control points must be defined for each animation";
-            }
-
-            for (var j = 0; j < grandChildren.length; j++) {
-              if (grandChildren[j].nodeName != "controlpoint") {
-                this.onXMLMinorError("unknown tag <"+grandChildren[i].nodeName+">");
-                continue;
-              }
-
-              var xx = this.reader.getFloat(grandChildren[j], "xx");
-              var yy = this.reader.getFloat(grandChildren[j], "yy");
-              var zz = this.reader.getFloat(grandChildren[j], "zz");
-
-              if (isNaN(xx) || isNaN(yy) || isNaN(zz)) {
-                return "error in linear animation control points";
-              }
-
-              var paux = [];
-              paux.push(xx);
-              paux.push(yy);
-              paux.push(zz);
-              this.controlPoints.push(paux);
-            }
-            // this.controlPoints = [];
-          }
-          else if (children[i].nodeName == "circular") {
-              var id = this.reader.getString(children[i], 'id');
-              var span = this.reader.getFloat(children[i], 'span');
-              var auxcenter = this.reader.getString(children[i], 'center');
-              var radius = this.reader.getFloat(children[i], 'radius');
-              var startAng = this.reader.getFloat(children[i], 'startang');
-              var rotang = this.reader.getFloat(children[i], 'rotang');
-
-              if (id == null || id.length == 0) {
-                return "no ID defined in circular animation";
-              }
-
-              if (auxcenter == null || auxcenter.length != 5) {
-                return "no center defined in circular animation (ID = "+id+")";
-              }
-
-              if (isNaN(span) || isNaN(radius) || isNaN(startAng) || isNaN(rotang)) {
-                return "Some componentes of circular animation are missing.";
-              }
-
-
-              var center = [];
-              center[0] = 0;
-              center[1] = 2;
-              center[2] = 4;
-          }
-        }
-      }
-      this.log("Parsed Animations");
-  }
-
 
   /**
   * Parses the <primitives> block.
@@ -1141,7 +1033,29 @@ class MySceneGraph {
               mat4.scale(node.transformMatrix, node.transformMatrix, [x,y,z]);
             }
             else {
-              this.onXMLMinorError("unknown tag <"+grandChildren[i].nodeName+">");
+              this.onXMLMinorError("unknown tag <"+grandChildren[k].nodeName+">");
+              continue;
+            }
+          }
+          break;
+        case "animations":
+          grandChildren = children[j].children;
+          for (var k = 0; k < grandChildren.length; k++) {
+            if (grandChildren[k].nodeName == "animationref") {
+              var animationId = this.reader.getString(grandChildren[k], 'id');
+              if (animationId.length == 0) {
+                this.onXMLMinorError("graphBuilder: an animation id must be defined in order to reference it");
+                continue;
+              }
+              if (this.animations[animationId] == null) {
+                this.onXMLMinorError("graphBuilder: animation '"+animationId+"' does not exist");
+                continue;
+              }
+
+              node.animations.push(this.animations[animationId]);
+            }
+            else {
+              this.onXMLMinorError("unknown tag <"+grandChildren[k].nodeName+">");
               continue;
             }
           }
@@ -1304,6 +1218,10 @@ class MySceneGraph {
     }
   }
 
+  /**
+  * Create Perspective camera
+  *
+  */
   createPersCamera(elements){
     if(isNaN(elements.near)){
       this.onXMLError('Perspective Views expected a float number on near.');
@@ -1338,6 +1256,10 @@ class MySceneGraph {
 
   }
 
+  /**
+  * Create Orto camera
+  *
+  */
   createOrtCamera(elements){
     if(isNaN(elements.near)){
       this.onXMLError('Perspective Views expected a float number on near.');
@@ -1406,8 +1328,20 @@ class MySceneGraph {
     console.log("   " + message);
   }
 
+  /**
+  * Run the graph and display the elements, applying textures, materials, and
+  * animations
+  *
+  * @param CGFScene scene
+  * @param Node node
+  */
   rendering(scene, node){
     scene.multMatrix(node.transformMatrix);
+
+    // TODO: fix animation transformations
+    for (var i = 0; i < node.animations.length; i++) {
+      node.animations[i].apply();
+    }
 
     if (this.currMaterial[node.id].current >= this.currMaterial[node.id].total) {
       this.currMaterial[node.id].current = 0;
@@ -1436,6 +1370,7 @@ class MySceneGraph {
 
   /**
   * Displays the scene, processing each node, starting in the root node.
+  *
   */
   displayScene() {
     // entry point for graph rendering

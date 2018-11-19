@@ -11,6 +11,7 @@ function Node(id, type) {
   if (this.type == 'component') {
     this.texture = null;
     this.materials = [];
+    this.animations = [];
 
     this.transformMatrix = mat4.create();
     mat4.identity(this.transformMatrix);
@@ -65,3 +66,11 @@ Node.prototype.setMatrix = function () {
 
   mat4.copy(this.originalTransformMatrix, this.transformMatrix);
 };
+
+Node.prototype.update = function (time) {
+  if (this.type == 'component') {
+    for (var i = 0; i < this.animations.length; i++) {
+      this.animations[i].update(time);
+    }
+  }
+}

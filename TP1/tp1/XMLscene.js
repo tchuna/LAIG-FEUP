@@ -111,99 +111,95 @@ class XMLscene extends CGFscene {
 
     // Change ambient and background details according to parsed graph
     this.setGlobalAmbientLight(this.graph.ambient.ambient.red,
-      this.graph.ambient.ambient.green,
-      this.graph.ambient.ambient.blue,
-      this.graph.ambient.ambient.alpha);
-      this.gl.clearColor(this.graph.ambient.background.red,
-        this.graph.ambient.background.green,
-        this.graph.ambient.background.blue,
-        this.graph.ambient.background.alpha);
+                              this.graph.ambient.ambient.green,
+                              this.graph.ambient.ambient.blue,
+                              this.graph.ambient.ambient.alpha);
+    this.gl.clearColor(this.graph.ambient.background.red,
+                       this.graph.ambient.background.green,
+                       this.graph.ambient.background.blue,
+                       this.graph.ambient.background.alpha);
 
-        this.initLights();
+    this.initLights();
 
-        // Adds lights group.
-        this.interface.addLightsGroup(this.graph.lights);
+    // Adds lights group.
+    this.interface.addLightsGroup(this.graph.lights);
 
-        //this.interface.addViewssGroup(this.graph.views);
+    //this.interface.addViewssGroup(this.graph.views);
 
-        this.sceneInited = true;
+    this.sceneInited = true;
+  }
+
+
+  changeCamera() {
+    if(this.chaneViews == this.graph.viewsId.length-1) {
+      this.chaneViews=0;
+    }
+    else {
+      this.chaneViews++;
+    }
+    this.camera=this.graph.views[this.graph.viewsId[this.chaneViews]];
+    this.interface.setActiveCamera(this.camera);
+  }
+
+  changeMaterial(){
+    for (var node in this.graph.currMaterial) {
+      if (this.graph.currMaterial.hasOwnProperty(node)) {
+        this.graph.currMaterial[node].current++;
       }
+    }
+  }
 
 
-      changeCamera(){
-        if(this.chaneViews==this.graph.viewsId.length-1){
-          this.chaneViews=0;
-        }else{
-          this.chaneViews++;
-        }
-        this.camera=this.graph.views[this.graph.viewsId[this.chaneViews]];
-        this.interface.setActiveCamera(this.camera);
-      }
+  /**
+  * Displays the scene.
+  */
+  display() {
+    // ---- BEGIN Background, camera and axis setup
 
-      changeMaterial(){
-        for (var node in this.graph.currMaterial) {
-          if (this.graph.currMaterial.hasOwnProperty(node)) {
-            this.graph.currMaterial[node].current++;
+    // Clear image and depth buffer everytime we update the scene
+    this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
+    this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+
+    // Initialize Model-View matrix as identity (no transformation
+    this.updateProjectionMatrix();
+    this.loadIdentity();
+
+    // Apply transformations corresponding to the camera position relative to the origin
+    this.applyViewMatrix();
+
+    this.pushMatrix();
+
+    if (this.graph.loadedOk) {
+      // Draw axis
+
+      this.axis.display();
+
+      var i = 0;
+      for (var key in this.lightValues) {
+        if (this.lightValues.hasOwnProperty(key)) {
+          if (this.lightValues[key]) {
+            this.lights[i].setVisible(true);
+            this.lights[i].enable();
           }
-        }
-      }
-
-
-      /**
-      * Displays the scene.
-      */
-      display() {
-        // ---- BEGIN Background, camera and axis setup
-
-        // Clear image and depth buffer everytime we update the scene
-        this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
-        this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-
-        // Initialize Model-View matrix as identity (no transformation
-        this.updateProjectionMatrix();
-        this.loadIdentity();
-
-        // Apply transformations corresponding to the camera position relative to the origin
-        this.applyViewMatrix();
-
-        this.pushMatrix();
-
-        if (this.graph.loadedOk) {
-          // Draw axis
-
-          this.axis.display();
-
-          var i = 0;
-          for (var key in this.lightValues) {
-            if (this.lightValues.hasOwnProperty(key)) {
-              if (this.lightValues[key]) {
-                this.lights[i].setVisible(true);
-                //
-                this.lights[i].enable();
-              }
-              else {
-                this.lights[i].setVisible(false);
-                this.lights[i].disable();
-              }
-              this.lights[i].update();
-              i++;
-            }
+          else {
+            this.lights[i].setVisible(false);
+            this.lights[i].disable();
           }
-
-          // Displays the scene (MySceneGraph function).
-          this.graph.displayScene();
-
+          this.lights[i].update();
+          i++;
         }
-        else {
-          // Draw axis
-          this.axis.display();
-        }
-
-        this.popMatrix();
-        // ---- END Background, camera and axis setup
       }
 
-
-
+      // Displays the scene (MySceneGraph function).
+      this.graph.displayScene();
 
     }
+    else {
+      // Draw axis
+      this.axis.display();
+    }
+
+    this.popMatrix();
+    // ---- END Background, camera and axis setup
+  }
+}
