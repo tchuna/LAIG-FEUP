@@ -71,9 +71,8 @@ Node.prototype.update = function (deltaTime) {
   if (this.type == 'component') {
     for (var animation in this.animations) {
       if (this.animations.hasOwnProperty(animation)) {
-        this.animations[animation].update(deltaTime);
         if (this.animations[animation].enable) {
-          this.animations[animation].enableAnimation();
+          this.animations[animation].update(deltaTime);
         }
       }
     }

@@ -73,22 +73,19 @@ class LinearAnimation extends Animation{
   update(deltaTime) {
     var distance = deltaTime * this.velocity;
     this.travelledDistance += distance;
-    if (this.travelledDistance > this.distancePerSegment[this.index]) {
+    if (this.travelledDistance >= this.distancePerSegment[this.index]) {
       this.travelledDistance -= this.distancePerSegment[this.index];
       this.index++;
-      this.updateMovementDirection();
+      if (this.index == this.controlPoints.length - 1) {
+        this.reset();
+      }
+      else {
+        this.updateMovementDirection();
+      }
     }
-    else {
-      // console.log(this.currentPosition);
-      vec3.scale(this.currentPosition,
-                 this.direction,
-                 this.travelledDistance / this.distancePerSegment[this.index]);
-    }
-
-    if (this.index == this.controlPoints.length - 1) {
-      this.reset();
-      this.enable = false;
-    }
+    vec3.scale(this.currentPosition,
+               this.direction,
+               this.travelledDistance / this.distancePerSegment[this.index]);
   }
 
   /**
