@@ -163,8 +163,10 @@
 
   <animations>
     <linear id="an_1" span="5">
-      <controlpoint xx="5" yy="20" zz="0" />
+      <controlpoint xx="0" yy="0" zz="0" />
       <controlpoint xx="25" yy="20" zz="0" />
+      <controlpoint xx="25" yy="10" zz="0" />
+      <controlpoint xx="25" yy="10" zz="20" />
     </linear>
     <circular id="par" span="20" center="0 0 0" radius="2" startang="0" rotang="930" />
   </animations>

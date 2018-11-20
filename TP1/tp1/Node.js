@@ -67,10 +67,15 @@ Node.prototype.setMatrix = function () {
   mat4.copy(this.originalTransformMatrix, this.transformMatrix);
 };
 
-Node.prototype.update = function (time) {
+Node.prototype.update = function (deltaTime) {
   if (this.type == 'component') {
-    for (var i = 0; i < this.animations.length; i++) {
-      this.animations[i].update(time);
+    for (var animation in this.animations) {
+      if (this.animations.hasOwnProperty(animation)) {
+        this.animations[animation].update(deltaTime);
+        if (this.animations[animation].enable) {
+          this.animations[animation].enableAnimation();
+        }
+      }
     }
   }
-}
+};

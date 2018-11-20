@@ -38,6 +38,8 @@ class XMLscene extends CGFscene {
 
     this.axis = new CGFaxis(this);
 
+    this.setUpdatePeriod(20);
+
   }
 
   /**
@@ -129,6 +131,17 @@ class XMLscene extends CGFscene {
     this.sceneInited = true;
   }
 
+  update(currTime) {
+    this.lastTime = this.lastTime || 0.0;
+    var deltaTime = (currTime - this.lastTime)/1000;
+    this.lastTime = currTime;
+
+    for (var id in this.graph.nodes) {
+      if (this.graph.nodes.hasOwnProperty(id)) {
+        this.graph.nodes[id].update(deltaTime);
+      }
+    }
+  }
 
   changeCamera() {
     if(this.chaneViews == this.graph.viewsId.length-1) {
