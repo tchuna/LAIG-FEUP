@@ -13,6 +13,8 @@ function Node(id, type) {
     this.materials = [];
     this.animations = [];
 
+    this.currAnimationId = 0;
+
     this.transformMatrix = mat4.create();
     mat4.identity(this.transformMatrix);
     this.transforms = [];
@@ -67,10 +69,19 @@ Node.prototype.setMatrix = function () {
   mat4.copy(this.originalTransformMatrix, this.transformMatrix);
 };
 
-Node.prototype.update = function (time) {
+Node.prototype.update = function (deltaTime) {
   if (this.type == 'component') {
-    for (var i = 0; i < this.animations.length; i++) {
-      this.animations[i].update(time);
+    if (this.animations.length > 0) {
+
+      this.animations[this.currAnimationId].update(deltaTime);
+
+      if (!this.animations[this.currAnimationId].enable) {
+        this.animations[this.currAnimationId].enableAnimation();
+        this.currAnimationId++;
+      }
+      if(this.currAnimationId >= this.animations.length) {
+        this.currAnimationId = 0;
+      }
     }
   }
-}
+};

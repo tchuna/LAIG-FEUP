@@ -3,7 +3,9 @@
 * @constructor
 */
 class CircularAnimation extends Animation {
+
   constructor(scene, id, duration, centerPoint, radius, startAngle, rotateAngle) {
+
     super(scene, id, duration);
     // Radius
     this.radius = radius;
@@ -14,9 +16,12 @@ class CircularAnimation extends Animation {
     // Total Angle to Rotate
     this.rotateAngle = rotateAngle * DEGREE_TO_RAD;
     // Current Angle
-    this.currAngle = 0;
-    // Angular Speed = Angle / Time;
-    this.angularSpeed = this.rotateAngle / this.time;
+    this.currAngle = this.startAngle;
+    // Angular Speed = Angle / Duration;
+    this.angularSpeed = (this.rotateAngle - this.startAngle) / this.duration;
+    // Enable/Disable animation
+    this.enable = true;
+
   }
 
 
@@ -25,14 +30,13 @@ class CircularAnimation extends Animation {
   *
   * @param time  elapsed time
   */
-  update(time) {
-    if (Math.abs(this.currAngle) < Math.abs(this.rotateAngle)) {
-      if (time > this.duration) {
-        time = this.duration;
-      }
-
-      this.currAngle = this.startAngle + (this.angularSpeed * time);
+  update(deltaTime) {
+    if (Math.abs(this.currAngle) >= Math.abs(this.rotateAngle)) {
+      this.reset();
+      this.enable = false;
     }
+
+    this.currAngle -= (this.angularSpeed * deltaTime);
   }
 
   /**
@@ -40,9 +44,21 @@ class CircularAnimation extends Animation {
   *
   */
   apply() {
-    this.scene.translate(this.centerPoint[0], this.centerPoint[1], this.centerPoint[2]);
+    this.scene.translate(this.centerPoint[0], this.centerPoint[1],  this.centerPoint[2]);
     this.scene.rotate(this.currAngle, 0, 1, 0);
     this.scene.translate(this.radius, 0, 0);
+  }
+
+  reset() {
+    this.currAngle = this.startAngle;
+  }
+
+  enableAnimation() {
+    this.enable = true;
+  }
+
+  disableAnimation() {
+    this.enable = false;
   }
 
 }
