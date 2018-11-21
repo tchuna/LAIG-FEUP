@@ -1343,9 +1343,8 @@ class MySceneGraph {
   rendering(scene, node){
     scene.multMatrix(node.transformMatrix);
 
-    for (var i = 0; i < node.animations.length; i++) {
-      // console.log(node.animations[i]);
-      node.animations[i].apply();
+    if(node.animations.length > 0) {
+      node.animations[node.currAnimationId].apply();
     }
 
     if (this.currMaterial[node.id].current >= this.currMaterial[node.id].total) {

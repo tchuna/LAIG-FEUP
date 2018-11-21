@@ -32,10 +32,11 @@ class CircularAnimation extends Animation {
   */
   update(deltaTime) {
     if (Math.abs(this.currAngle) >= Math.abs(this.rotateAngle)) {
-      this.currAngle = this.startAngle;
+      this.reset();
+      this.enable = false;
     }
 
-    this.currAngle += (this.angularSpeed * deltaTime);
+    this.currAngle -= (this.angularSpeed * deltaTime);
   }
 
   /**
@@ -46,6 +47,18 @@ class CircularAnimation extends Animation {
     this.scene.translate(this.centerPoint[0], this.centerPoint[1],  this.centerPoint[2]);
     this.scene.rotate(this.currAngle, 0, 1, 0);
     this.scene.translate(this.radius, 0, 0);
+  }
+
+  reset() {
+    this.currAngle = this.startAngle;
+  }
+
+  enableAnimation() {
+    this.enable = true;
+  }
+
+  disableAnimation() {
+    this.enable = false;
   }
 
 }

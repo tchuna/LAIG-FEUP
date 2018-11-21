@@ -78,6 +78,7 @@ class LinearAnimation extends Animation{
       this.index++;
       if (this.index == this.controlPoints.length - 1) {
         this.reset();
+        this.enable = false;
       }
       else {
         this.updateMovementDirection();

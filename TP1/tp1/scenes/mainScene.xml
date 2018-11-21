@@ -162,13 +162,13 @@
   </transformations>
 
   <animations>
-    <linear id="an_1" span="5">
+    <linear id="an_1" span="15">
       <controlpoint xx="0" yy="0" zz="0" />
       <controlpoint xx="25" yy="20" zz="0" />
       <controlpoint xx="25" yy="0" zz="0" />
       <controlpoint xx="25" yy="0" zz="20" />
     </linear>
-    <circular id="par" span="5" center="0 0 0" radius="10" startang="90" rotang="180" />
+    <circular id="par" span="5" center="15 0 20" radius="10" startang="0" rotang="180" />
   </animations>
 
   <primitives>
@@ -2045,6 +2045,7 @@
       </transformation>
 
       <animations>
+        <animationref id="an_1" />
         <animationref id="par" />
       </animations>
 
