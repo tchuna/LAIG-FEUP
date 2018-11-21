@@ -177,6 +177,9 @@
     <primitive id="square_at_zero">
       <rectangle x1="0" y1="0" x2="1" y2="1" />
     </primitive>
+    <primitive id="plane_1">
+      <plane npartsU="5" npartsV="8" />
+    </primitive>
 
     <primitive id="triangle">
       <triangle x1="0" y1="1" z1="0" x2="-0.5" y2="0" z2="0.5" x3="0.5" y3="0" z3="0.5" />
