@@ -854,11 +854,16 @@ class MySceneGraph {
           var startAng = this.reader.getFloat(children[i], 'startang');
           var rotAng = this.reader.getFloat(children[i], 'rotang');
 
+          if (center == null) {
+            return "A center point must be defined (animation: ID = "+animationId+")";
+          }
+
           center = center.split(" ");
+          center = center.map(el => parseInt(el));
           center = center.filter(function(el) { return !isNaN(el) } );
 
-          if (center == null || center.length != 3 || '' in center) {
-            return "A center point must be defined with exact 3 values separeted by white spaces (animation: ID = "+animationId+")";
+          if (center.length != 3 || '' in center) {
+            return "CENTER must be defined with exact 3 values separeted by white spaces (animation: ID = "+animationId+")";
           }
           if (isNaN(radius) || radius <= 0) {
             return "RADIUS must be a positive number (animation: ID = "+animationId+")";
@@ -1338,8 +1343,8 @@ class MySceneGraph {
   rendering(scene, node){
     scene.multMatrix(node.transformMatrix);
 
-    // TODO: fix animation transformations
     for (var i = 0; i < node.animations.length; i++) {
+      // console.log(node.animations[i]);
       node.animations[i].apply();
     }
 
