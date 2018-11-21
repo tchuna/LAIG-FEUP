@@ -979,7 +979,7 @@ class MySceneGraph {
           npartsV:this.reader.getFloat(grandChildren[0], 'npartsV'),
 
         };
-        this.primitives[primId] = new Plane(this.scene, primitive);
+      //  this.primitives[primId] = new Plane(this.scene, primitive);
         default:
         return "unknow primitive <"+grandChildren[0].nodeName+">";
       }
