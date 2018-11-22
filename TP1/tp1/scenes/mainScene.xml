@@ -175,28 +175,13 @@
 
     <!--patch-->
     <primitive id="nur">
-      <patch npointU="2" npointV="3" npartsU="3" npartsV="4">
-            <controlpoint xx="-1.5" yy="0" zz="-1.5"/>
-            <controlpoint xx="-2" yy="2" zz="-2"/>
-            <controlpoint xx="2" yy="2" zz="-2"/>
-            <controlpoint xx="1.5" yy="0" zz="-1.5"/>
-
-            <controlpoint xx="0" yy="3" zz="0"/>
-            <controlpoint xx="-2" yy="3" zz="0"/>
-            <controlpoint xx="2" yy="3" zz="0"/>
-            <controlpoint xx="0" yy="3" zz="0"/>
-
-            <controlpoint xx="0" yy="3" zz="0"/>
-            <controlpoint xx="-2" yy="3" zz="0"/>
-            <controlpoint xx="2" yy="3" zz="0"/>
-            <controlpoint xx="0" yy="3" zz="0"/>
-
-            <controlpoint xx="-1.5" yy="0" zz="1.5"/>
-            <controlpoint xx="-2" yy="2" zz="2"/>
-            <controlpoint xx="2" yy="2" zz="2"/>
-            <controlpoint xx="1.5" yy="0" zz="1.5"/>
-          </patch>
-        </primitive>
+      <patch npointU="2" npointV="3" npartsU="20" npartsV="20">
+          <controlpoint xx="-2" yy="-2" zz="0" />
+          <controlpoint xx="-2" yy="2" zz="0" />
+          <controlpoint xx="2" yy="-2" zz="0" />
+          <controlpoint xx="2" yy="2" zz="0" />
+        </patch>
+      </primitive>
     <primitive id="square">
       <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
     </primitive>
@@ -281,15 +266,16 @@
     <!--plane-->
     <component id="ex_plane">
       <transformation>
-        <translate x="0" y="10" z="0"/>
-        <scale x="8" y="25" z="1"/>
+        <translate x="10" y="10" z="0"/>
+        <rotate axis="x" angle="-90"/>
+
       </transformation>
 
       <materials>
         <material id ="river"/>
       </materials>
 
-      <texture id="river" length_s="1" length_t="1"/>
+      <texture id="cr" length_s="0.5" length_t="1"/>
 
       <children>
         <primitiveref id="plane_1"/>
@@ -299,8 +285,7 @@
     <!--patch-->
     <component id="nurb_patch">
       <transformation>
-        <translate x="0" y="17" z="0"/>
-        <scale x="8" y="25" z="1"/>
+        <translate x="0" y="0" z="0"/>
       </transformation>
 
       <materials>

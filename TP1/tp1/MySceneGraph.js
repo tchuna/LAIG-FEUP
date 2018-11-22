@@ -1002,7 +1002,7 @@ class MySceneGraph {
 
       };
 
-      this.primitives[primId] = new MyPatch(this.scene,primitive);break
+      this.primitives[primId] = new MyPatch(this.scene,primitive);break;
 
         default:
         return "unknow primitive <"+grandChildren[0].nodeName+">";

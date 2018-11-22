@@ -11,7 +11,32 @@ function MyPatch(scene,reference){
   this.controlPoints=reference.controlPoints;
 
 
-  this.makeSurface(this.pointU,this.pointV,this.controlPoints);
+  var co=[	// U = 0
+							[ // V = 0..3;
+								 [ -2.0, -2.0, 1.0, 1 ],
+								 [ -2.0, -1.0, -2.0, 1 ],
+								 [ -2.0, 1.0, 5.0, 1 ],
+								 [ -2.0, 2.0, -1.0, 1 ],
+                [ -2.0, 2.0, -1.0, 1 ]
+							],
+							// U = 1
+							[ // V = 0..3
+								 [ 0, -2.0, 0, 1 ],
+								 [ 0, -1.0, -1.0, 5 ],
+								 [ 0, 1.0, 1.5, 5 ],
+								 [ 0, 2.0, 0, 1 ]
+							],
+							// U = 2
+							[ // V = 0..3
+								 [ 2.0, -2.0, -1.0, 1 ],
+								 [ 2.0, -1.0, 2.0, 1 ],
+								 [ 2.0, 1.0, -5.0, 1 ],
+								 [ 2.0, 2.0, 1.0, 1 ]
+							]
+						];
+
+
+  this.patch=this.makeSurface(this.pointU,this.pointV,this.npartsU,this.npartsV,co);
 
 }
 
@@ -36,20 +61,22 @@ MyPatch.prototype.getKnotsVector_ = function(degree){
 
 };
 
-MyPatch.prototype.makeSurface= function(degreeU,degreeV,cP){
-  
+MyPatch.prototype.makeSurface= function(degreeU,degreeV,npartsU,npartsV,cP){
+
   var nurbsSurface=new CGFnurbsSurface(degreeU,degreeV,cP);
 
   getSurfacePoint = function(u, v) {
 		return nurbsSurface.getPoint(u, v);
 	};
 
-  this.nurbs = new CGFnurbsObject(this.scene,this.npartsU,this.npartsV,nurbsSurface);
+  var nurbs = new CGFnurbsObject(this.scene,npartsU,npartsV,nurbsSurface);
+  return nurbs;
 };
+
 
 MyPatch.prototype.display=function(){
   this.scene.pushMatrix();
-  this.nurbs.display();
+  this.patch.display();
   this.scene.popMatrix();
 
 };
