@@ -172,6 +172,31 @@
   </animations>
 
   <primitives>
+
+    <!--patch-->
+    <primitive id="nur">
+      <patch npointU="2" npointV="3" npartsU="3" npartsV="4">
+            <controlpoint xx="-1.5" yy="0" zz="-1.5"/>
+            <controlpoint xx="-2" yy="2" zz="-2"/>
+            <controlpoint xx="2" yy="2" zz="-2"/>
+            <controlpoint xx="1.5" yy="0" zz="-1.5"/>
+
+            <controlpoint xx="0" yy="3" zz="0"/>
+            <controlpoint xx="-2" yy="3" zz="0"/>
+            <controlpoint xx="2" yy="3" zz="0"/>
+            <controlpoint xx="0" yy="3" zz="0"/>
+
+            <controlpoint xx="0" yy="3" zz="0"/>
+            <controlpoint xx="-2" yy="3" zz="0"/>
+            <controlpoint xx="2" yy="3" zz="0"/>
+            <controlpoint xx="0" yy="3" zz="0"/>
+
+            <controlpoint xx="-1.5" yy="0" zz="1.5"/>
+            <controlpoint xx="-2" yy="2" zz="2"/>
+            <controlpoint xx="2" yy="2" zz="2"/>
+            <controlpoint xx="1.5" yy="0" zz="1.5"/>
+          </patch>
+        </primitive>
     <primitive id="square">
       <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
     </primitive>
@@ -179,7 +204,9 @@
     <primitive id="square_at_zero">
       <rectangle x1="0" y1="0" x2="1" y2="1" />
     </primitive>
-    
+    <primitive id="plane_1">
+      <plane npartsU="5" npartsV="8" />
+    </primitive>
 
     <primitive id="triangle">
       <triangle x1="0" y1="1" z1="0" x2="-0.5" y2="0" z2="0.5" x3="0.5" y3="0" z3="0.5" />
@@ -248,6 +275,42 @@
 
       <children>
         <primitiveref id="square_at_zero"/>
+      </children>
+    </component>
+
+    <!--plane-->
+    <component id="ex_plane">
+      <transformation>
+        <translate x="0" y="10" z="0"/>
+        <scale x="8" y="25" z="1"/>
+      </transformation>
+
+      <materials>
+        <material id ="river"/>
+      </materials>
+
+      <texture id="river" length_s="1" length_t="1"/>
+
+      <children>
+        <primitiveref id="plane_1"/>
+      </children>
+    </component>
+
+    <!--patch-->
+    <component id="nurb_patch">
+      <transformation>
+        <translate x="0" y="17" z="0"/>
+        <scale x="8" y="25" z="1"/>
+      </transformation>
+
+      <materials>
+        <material id ="river"/>
+      </materials>
+
+      <texture id="river" length_s="1" length_t="1"/>
+
+      <children>
+        <primitiveref id="nur"/>
       </children>
     </component>
 
@@ -2078,6 +2141,8 @@
       <texture id="trunk" length_s="1" length_t="1"/>
 
       <children>
+        <componentref id="nurb_patch"/>
+        <componentref id="ex_plane"/>
         <componentref id="floor_right"/>
         <componentref id="floor_left"/>
         <componentref id="river"/>

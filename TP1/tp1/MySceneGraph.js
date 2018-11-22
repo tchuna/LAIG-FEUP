@@ -974,12 +974,36 @@ class MySceneGraph {
         this.primitives[primId] = new MyTorus(this.scene, primitive);
         break;
         case "plane":
+
         primitive={
           npartsU:this.reader.getFloat(grandChildren[0], 'npartsU'),
           npartsV:this.reader.getFloat(grandChildren[0], 'npartsV'),
 
         };
-      //  this.primitives[primId] = new Plane(this.scene, primitive);
+        this.primitives[primId] = new MyPlane(this.scene, primitive);break;
+
+        case "patch":
+
+        var points=[];
+        var cpoints=primitivesNode.getElementsByTagName("controlpoint");
+
+        for (var point of cpoints) {
+        var x = this.reader.getFloat(point, 'xx');
+        var y = this.reader.getFloat(point, 'yy');
+        var z = this.reader.getFloat(point, 'zz');
+        points.push([x, y, z, 1]);
+      }
+      primitive={
+        npointU:this.reader.getFloat(grandChildren[0], 'npointU'),
+        npointV:this.reader.getFloat(grandChildren[0], 'npointV'),
+        npartsU:this.reader.getFloat(grandChildren[0], 'npartsU'),
+        npartsV:this.reader.getFloat(grandChildren[0], 'npartsV'),
+        controlPoints:points,
+
+      };
+
+      this.primitives[primId] = new MyPatch(this.scene,primitive);break
+
         default:
         return "unknow primitive <"+grandChildren[0].nodeName+">";
       }
