@@ -10,6 +10,8 @@ function MyPatch(scene,reference){
   this.pointV=reference.npointV;
   this.controlPoints=reference.controlPoints;
 
+  console.log(this.controlPoints[0]);
+
 
   var co=[	// U = 0
 							[ // V = 0..3;

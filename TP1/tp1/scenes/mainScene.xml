@@ -285,7 +285,9 @@
     <!--patch-->
     <component id="nurb_patch">
       <transformation>
-        <translate x="0" y="0" z="0"/>
+        <translate x="20.3" y="0" z="15"/>
+        <rotate axis="x" angle="-90"/>
+        <scale x="2" y="7" z="1"/>
       </transformation>
 
       <materials>
@@ -2127,10 +2129,9 @@
 
       <children>
         <componentref id="nurb_patch"/>
-        <componentref id="ex_plane"/>
         <componentref id="floor_right"/>
         <componentref id="floor_left"/>
-        <componentref id="river"/>
+
         <componentref id="ponte"/>
         <componentref id="turbina_1"/>
         <componentref id="turbina_2"/>
