@@ -980,7 +980,7 @@ class MySceneGraph {
           npartsV:this.reader.getFloat(grandChildren[0], 'npartsV'),
 
         };
-        this.primitives[primId] = new MyPlane(this.scene, primitive);break;
+        this.primitives[primId] = new Plane(this.scene, primitive);break;
 
         case "patch":
 
@@ -1002,7 +1002,9 @@ class MySceneGraph {
 
       };
 
-      this.primitives[primId] = new MyPatch(this.scene,primitive);break;
+      this.primitives[primId] = new Patch(this.scene,primitive);break;
+
+      case "vehicle":  this.primitives[primId] = new Vehicle(this.scene);break;
 
         default:
         return "unknow primitive <"+grandChildren[0].nodeName+">";

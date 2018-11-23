@@ -182,6 +182,10 @@
           <controlpoint xx="2" yy="2" zz="0" />
         </patch>
       </primitive>
+
+      <primitive id="vehicle_1">
+        <vehicle/>
+      </primitive>
     <primitive id="square">
       <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
     </primitive>
@@ -262,6 +266,25 @@
         <primitiveref id="square_at_zero"/>
       </children>
     </component>
+    <!--veicle-->
+    <component id="ex_vehicle">
+      <transformation>
+        <translate x="20" y="20" z="-6"/>
+        <rotate axis="x" angle="-90"/>
+
+      </transformation>
+
+      <materials>
+        <material id ="river"/>
+      </materials>
+
+      <texture id="cr" length_s="0.5" length_t="1"/>
+
+      <children>
+        <primitiveref id="vehicle_1"/>
+      </children>
+    </component>
+
 
     <!--plane-->
     <component id="ex_plane">
@@ -2128,6 +2151,7 @@
       <texture id="trunk" length_s="1" length_t="1"/>
 
       <children>
+        <componentref id="ex_vehicle"/>
         <componentref id="nurb_patch"/>
         <componentref id="floor_right"/>
         <componentref id="floor_left"/>

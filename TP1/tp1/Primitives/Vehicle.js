@@ -1,20 +1,34 @@
 
-
-function Patch(scene,reference){
+function Vehicle(scene){
   CGFobject.call(this,scene);
 
   this.scene=scene;
-  this.npartsU=reference.npartsU;
-  this.npartsV=reference.npartsV;
-  this.pointU=reference.npointU;
-  this.pointV=reference.npointV;
-  this.controlPoints=reference.controlPoints;
-
-  console.log(this.controlPoints[0]);
 
 
+  var v=[	// U = 0
+							[ // V = 0..3;
+								 [-3.0, -1.5, 0.0, 1],
+                 [-3.5, -2.0, 2.0, 1],
+   							 [-3.5,  2.0, 2.0, 1],
+   							 [-3.0,  1.5, 0.0, 1]
+							],
+							// U = 1
+							[ // V = 0..3
+                [0.0,  0.0, 3.0, 1],
+                [0.0, -3.0, 2.5, 5],
+                [0.0,  3.0, 2.5, 5],
+                [0.0,  0.0, 3.0, 1]
+							],
+							// U = 2
+							[ // V = 0..3
+                [3.0, -1.5, 0.0, 1],
+                [3.5, -2.0, 2.0, 1],
+                [3.5,  2.0, 2.0, 1],
+                [3.0,  1.5, 0.0, 1]
+							]
+						];
 
-  var ex=[	// U = 0
+  var co=[	// U = 0
 							[ // V = 0..3;
 								 [ -2.0, -2.0, 1.0, 1 ],
 								 [ -2.0, -1.0, -2.0, 1 ],
@@ -38,14 +52,14 @@ function Patch(scene,reference){
 						];
 
 
-  this.patch=this.makeSurface(this.pointU,this.pointV,this.npartsU,this.npartsV,ex);
+  this.patch=this.makeSurface(2,3,20,20,v);
 
 }
 
-Patch.prototype=Object.create(CGFobject.prototype);
-Patch.prototype.constructor=Patch;
+Vehicle.prototype=Object.create(CGFobject.prototype);
+Vehicle.prototype.constructor=Vehicle;
 
-Patch.prototype.getKnotsVector_ = function(degree){
+Vehicle.prototype.getKnotsVector_ = function(degree){
 
   var aux=new Array();
 
@@ -63,7 +77,7 @@ Patch.prototype.getKnotsVector_ = function(degree){
 
 };
 
-Patch.prototype.makeSurface= function(degreeU,degreeV,npartsU,npartsV,cP){
+Vehicle.prototype.makeSurface= function(degreeU,degreeV,npartsU,npartsV,cP){
 
   var nurbsSurface=new CGFnurbsSurface(degreeU,degreeV,cP);
 
@@ -76,11 +90,11 @@ Patch.prototype.makeSurface= function(degreeU,degreeV,npartsU,npartsV,cP){
 };
 
 
-Patch.prototype.display=function(){
+Vehicle.prototype.display=function(){
   this.scene.pushMatrix();
   this.patch.display();
   this.scene.popMatrix();
 
 };
 
-Patch.prototype.updateTexCoords= function (aS, aT) {}
+Vehicle.prototype.updateTexCoords= function (aS, aT) {}

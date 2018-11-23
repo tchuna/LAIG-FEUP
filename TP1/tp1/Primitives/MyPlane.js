@@ -1,4 +1,4 @@
-function MyPlane(scene, parts) {
+function Plane(scene, parts) {
 	this.scene = scene;
 	CGFobject.call(this,scene);
 
@@ -46,12 +46,12 @@ function MyPlane(scene, parts) {
 
 }
 
-MyPlane.prototype = Object.create(CGFobject.prototype);
-MyPlane.prototype.constructor = MyPlane;
+Plane.prototype = Object.create(CGFobject.prototype);
+Plane.prototype.constructor = Plane;
 
 
 
-MyPlane.prototype.display = function() {
+Plane.prototype.display = function() {
 
 		this.scene.pushMatrix();
 	  this.plane.display();
@@ -59,10 +59,10 @@ MyPlane.prototype.display = function() {
 		this.scene.popMatrix();
 }
 
-MyPlane.prototype.updateTexCoords = function (aS, aT) {}
+Plane.prototype.updateTexCoords = function (aS, aT) {}
 
 
-MyPlane.prototype.makeSurface=function(degree1, degree2,c) {
+Plane.prototype.makeSurface=function(degree1, degree2,c) {
 
 		var nurbsSurface = new CGFnurbsSurface(degree1, degree2, c);
 
