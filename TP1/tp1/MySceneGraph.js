@@ -903,10 +903,12 @@ class MySceneGraph {
 
       // Get id of the current material.
       var primId = this.reader.getString(children[i], 'id');
-      if (primId == null || primId.length == 0)
-      return "no ID defined for primitive";
-      if (this.primitives[primId] != null)
-      return "ID must be unique for each primitive (conflict: ID = " + primId + ")";
+      if (primId == null || primId.length == 0) {
+        return "no ID defined for primitive";
+      }
+      if (this.primitives[primId] != null){
+        return "ID must be unique for each primitive (conflict: ID = " + primId + ")";
+      }
 
       grandChildren = children[i].children;
       if(grandChildren.length == 0){
@@ -918,91 +920,87 @@ class MySceneGraph {
       var primitive;
       switch (grandChildren[0].nodeName) {
         case "rectangle":
-        primitive={
-          x1: this.reader.getFloat(grandChildren[0], 'x1'),
-          y1: this.reader.getFloat(grandChildren[0], 'y1'),
-          x2: this.reader.getFloat(grandChildren[0], 'x2'),
-          y2: this.reader.getFloat(grandChildren[0], 'y2')
-        };
-        this.primitives[primId] = new MyRectangle(this.scene, primitive);
-        break;
+          primitive={
+            x1: this.reader.getFloat(grandChildren[0], 'x1'),
+            y1: this.reader.getFloat(grandChildren[0], 'y1'),
+            x2: this.reader.getFloat(grandChildren[0], 'x2'),
+            y2: this.reader.getFloat(grandChildren[0], 'y2')
+          };
+          this.primitives[primId] = new MyRectangle(this.scene, primitive);
+          break;
         case "triangle":
-        primitive={
-          x1: this.reader.getFloat(grandChildren[0], 'x1'),
-          y1: this.reader.getFloat(grandChildren[0], 'y1'),
-          z1: this.reader.getFloat(grandChildren[0], 'z1'),
-          x2: this.reader.getFloat(grandChildren[0], 'x2'),
-          y2: this.reader.getFloat(grandChildren[0], 'y2'),
-          z2: this.reader.getFloat(grandChildren[0], 'z2'),
-          x3: this.reader.getFloat(grandChildren[0], 'x3'),
-          y3: this.reader.getFloat(grandChildren[0], 'y3'),
-          z3: this.reader.getFloat(grandChildren[0], 'z3')
-        };
-        this.primitives[primId] = new MyTriangle(this.scene, primitive);
-        break;
+          primitive={
+            x1: this.reader.getFloat(grandChildren[0], 'x1'),
+            y1: this.reader.getFloat(grandChildren[0], 'y1'),
+            z1: this.reader.getFloat(grandChildren[0], 'z1'),
+            x2: this.reader.getFloat(grandChildren[0], 'x2'),
+            y2: this.reader.getFloat(grandChildren[0], 'y2'),
+            z2: this.reader.getFloat(grandChildren[0], 'z2'),
+            x3: this.reader.getFloat(grandChildren[0], 'x3'),
+            y3: this.reader.getFloat(grandChildren[0], 'y3'),
+            z3: this.reader.getFloat(grandChildren[0], 'z3')
+          };
+          this.primitives[primId] = new MyTriangle(this.scene, primitive);
+          break;
         case "circle":
-        primitive = {
-          slices: this.reader.getInteger(grandChildren[0], 'slices')
-        };
-        this.primitives[primId] = new MyCircle(this.scene, primitive);
-        break;
+          primitive = {
+            slices: this.reader.getInteger(grandChildren[0], 'slices')
+          };
+          this.primitives[primId] = new MyCircle(this.scene, primitive);
+          break;
         case "cylinder":
-        primitive={
-          base: this.reader.getFloat(grandChildren[0], 'base'),
-          top: this.reader.getFloat(grandChildren[0], 'top'),
-          height: this.reader.getFloat(grandChildren[0], 'height'),
-          slices: this.reader.getInteger(grandChildren[0], 'slices'),
-          stacks: this.reader.getInteger(grandChildren[0], 'stacks')
-        };
-        this.primitives[primId] = new MyCylinder(this.scene, primitive);
-        break;
+          primitive={
+            base: this.reader.getFloat(grandChildren[0], 'base'),
+            top: this.reader.getFloat(grandChildren[0], 'top'),
+            height: this.reader.getFloat(grandChildren[0], 'height'),
+            slices: this.reader.getInteger(grandChildren[0], 'slices'),
+            stacks: this.reader.getInteger(grandChildren[0], 'stacks')
+          };
+          this.primitives[primId] = new MyCylinder(this.scene, primitive);
+          break;
         case "sphere":
-        primitive= {
-          radius: this.reader.getFloat(grandChildren[0], 'radius'),
-          slices: this.reader.getInteger(grandChildren[0], 'slices'),
-          stacks: this.reader.getInteger(grandChildren[0], 'stacks')
-        };
-        this.primitives[primId] = new MySphere(this.scene, primitive);
-        break;
+          primitive= {
+            radius: this.reader.getFloat(grandChildren[0], 'radius'),
+            slices: this.reader.getInteger(grandChildren[0], 'slices'),
+            stacks: this.reader.getInteger(grandChildren[0], 'stacks')
+          };
+          this.primitives[primId] = new MySphere(this.scene, primitive);
+          break;
         case "torus":
-        primitive = {
-          inner: this.reader.getFloat(grandChildren[0], 'inner'),
-          outer: this.reader.getFloat(grandChildren[0], 'outer'),
-          slices: this.reader.getInteger(grandChildren[0], 'slices'),
-          loops: this.reader.getInteger(grandChildren[0], 'loops')
-        };
-        this.primitives[primId] = new MyTorus(this.scene, primitive);
-        break;
+          primitive = {
+            inner: this.reader.getFloat(grandChildren[0], 'inner'),
+            outer: this.reader.getFloat(grandChildren[0], 'outer'),
+            slices: this.reader.getInteger(grandChildren[0], 'slices'),
+            loops: this.reader.getInteger(grandChildren[0], 'loops')
+          };
+          this.primitives[primId] = new MyTorus(this.scene, primitive);
+          break;
         case "plane":
-
-        primitive={
-          npartsU:this.reader.getFloat(grandChildren[0], 'npartsU'),
-          npartsV:this.reader.getFloat(grandChildren[0], 'npartsV'),
-
-        };
-        this.primitives[primId] = new Plane(this.scene, primitive);break;
-
+          primitive={
+            npartsU:this.reader.getFloat(grandChildren[0], 'npartsU'),
+            npartsV:this.reader.getFloat(grandChildren[0], 'npartsV')
+          };
+          this.primitives[primId] = new Plane(this.scene, primitive);
+          break;
         case "patch":
+          var points=[];
+          var cpoints=primitivesNode.getElementsByTagName("controlpoint");
 
-        var points=[];
-        var cpoints=primitivesNode.getElementsByTagName("controlpoint");
-
-        for (var point of cpoints) {
-        var x = this.reader.getFloat(point, 'xx');
-        var y = this.reader.getFloat(point, 'yy');
-        var z = this.reader.getFloat(point, 'zz');
-        points.push([x, y, z, 1]);
-      }
-      primitive={
-        npointU:this.reader.getFloat(grandChildren[0], 'npointU'),
-        npointV:this.reader.getFloat(grandChildren[0], 'npointV'),
-        npartsU:this.reader.getFloat(grandChildren[0], 'npartsU'),
-        npartsV:this.reader.getFloat(grandChildren[0], 'npartsV'),
-        controlPoints:points,
-
-      };
-
-      this.primitives[primId] = new Patch(this.scene,primitive);break;
+          for (var point of cpoints) {
+            var x = this.reader.getFloat(point, 'xx');
+            var y = this.reader.getFloat(point, 'yy');
+            var z = this.reader.getFloat(point, 'zz');
+            points.push([x, y, z, 1]);
+          }
+          primitive={
+            npointU: this.reader.getFloat(grandChildren[0], 'npointU'),
+            npointV: this.reader.getFloat(grandChildren[0], 'npointV'),
+            npartsU: this.reader.getFloat(grandChildren[0], 'npartsU'),
+            npartsV: this.reader.getFloat(grandChildren[0], 'npartsV'),
+            controlPoints: points
+          };
+          this.primitives[primId] = new Patch(this.scene,primitive);
+          break;
 
       case "vehicle":  this.primitives[primId] = new Vehicle(this.scene);break;
 

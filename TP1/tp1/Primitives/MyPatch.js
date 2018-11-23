@@ -8,42 +8,61 @@ function Patch(scene,reference){
   this.npartsV=reference.npartsV;
   this.pointU=reference.npointU;
   this.pointV=reference.npointV;
-  this.controlPoints=reference.controlPoints;
 
-  console.log(this.controlPoints[0]);
+  this.buildControlPoints(reference.controlPoints);
+  console.log(this.controlPoints);
 
-
-
-  var ex=[	// U = 0
-							[ // V = 0..3;
-								 [ -2.0, -2.0, 1.0, 1 ],
-								 [ -2.0, -1.0, -2.0, 1 ],
-								 [ -2.0, 1.0, 5.0, 1 ],
-								 [ -2.0, 2.0, -1.0, 1 ]
-							],
-							// U = 1
-							[ // V = 0..3
-								 [ 0, -2.0, 0, 1 ],
-								 [ 0, -1.0, -1.0, 5 ],
-								 [ 0, 1.0, 1.5, 5 ],
-								 [ 0, 2.0, 0, 1 ]
-							],
-							// U = 2
-							[ // V = 0..3
-								 [ 2.0, -2.0, -1.0, 1 ],
-								 [ 2.0, -1.0, 2.0, 1 ],
-								 [ 2.0, 1.0, -5.0, 1 ],
-								 [ 2.0, 2.0, 1.0, 1 ]
-							]
-						];
+  // var ex=[	// U = 0
+	// 						[ // V = 0..3;
+	// 							 [ -2.0, -2.0, 1.0, 1 ],
+	// 							 [ -2.0, -1.0, -2.0, 1 ],
+	// 							 [ -2.0, 1.0, 5.0, 1 ],
+	// 							 [ -2.0, 2.0, -1.0, 1 ]
+	// 						],
+	// 						// U = 1
+	// 						[ // V = 0..3
+	// 							 [ 0, -2.0, 0, 1 ],
+	// 							 [ 0, -1.0, -1.0, 5 ],
+	// 							 [ 0, 1.0, 1.5, 5 ],
+	// 							 [ 0, 2.0, 0, 1 ]
+	// 						],
+	// 						// U = 2
+	// 						[ // V = 0..3
+	// 							 [ 2.0, -2.0, -1.0, 1 ],
+	// 							 [ 2.0, -1.0, 2.0, 1 ],
+	// 							 [ 2.0, 1.0, -5.0, 1 ],
+	// 							 [ 2.0, 2.0, 1.0, 1 ]
+	// 						]
+	// 					];
 
 
-  this.patch=this.makeSurface(this.pointU,this.pointV,this.npartsU,this.npartsV,ex);
+  this.patch=this.makeSurface(this.pointU,this.pointV,this.npartsU,this.npartsV, this.controlPoints);
 
 }
 
 Patch.prototype=Object.create(CGFobject.prototype);
 Patch.prototype.constructor=Patch;
+
+Patch.prototype.buildControlPoints = function(controlPoints) {
+  var index = 0;
+  var matrix = [];
+  var length = controlPoints.length;
+  this.controlPoints = [];
+  
+  while (true) {
+    if (index == length) {
+      break;
+    }
+
+    const element = controlPoints.splice(0,1)[0];
+    matrix.push(element);
+
+    if( !( ++index % (this.pointV+1) ) ) {
+      this.controlPoints.push(matrix);
+      matrix = [];
+    }
+  }
+};
 
 Patch.prototype.getKnotsVector_ = function(degree){
 

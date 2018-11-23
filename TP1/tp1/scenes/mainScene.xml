@@ -176,10 +176,20 @@
     <!--patch-->
     <primitive id="nur">
       <patch npointU="2" npointV="3" npartsU="20" npartsV="20">
-          <controlpoint xx="-2" yy="-2" zz="0" />
-          <controlpoint xx="-2" yy="2" zz="0" />
-          <controlpoint xx="2" yy="-2" zz="0" />
-          <controlpoint xx="2" yy="2" zz="0" />
+          <controlpoint xx="-2" yy="-2" zz="1" />
+          <controlpoint xx="-2" yy="-1" zz="-2"/>
+          <controlpoint xx="-2" yy="1" zz="5" />
+          <controlpoint xx="-2" yy="2" zz="-1" />
+
+          <controlpoint xx="0" yy="-2" zz="0" />
+          <controlpoint xx="0" yy="-1" zz="-1" />
+          <controlpoint xx="0" yy="1" zz="1.5" />
+          <controlpoint xx="0" yy="2" zz="0" />
+
+          <controlpoint xx="2" yy="-2" zz="-1" />
+          <controlpoint xx="2" yy="-1" zz="2" />
+          <controlpoint xx="2" yy="1" zz="-5" />
+          <controlpoint xx="2" yy="2" zz="1" />
         </patch>
       </primitive>
 
