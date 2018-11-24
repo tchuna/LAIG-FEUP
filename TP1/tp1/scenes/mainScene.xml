@@ -214,32 +214,32 @@
             <controlpoint xx="0" yy="20" zz="90" />
             <controlpoint xx="0" yy="15" zz="70" />
             <controlpoint xx="0" yy="1" zz="50" />
-            <controlpoint xx="0" yy="1" zz="7" />
+            <controlpoint xx="0" yy="1" zz="0" />
 
             <controlpoint xx="50" yy="1" zz="100" />
             <controlpoint xx="50" yy="1" zz="90" />
             <controlpoint xx="50" yy="1" zz="70" />
             <controlpoint xx="50" yy="1" zz="50" />
-            <controlpoint xx="50" yy="1" zz="7" />
+            <controlpoint xx="50" yy="1" zz="0" />
 
             <controlpoint xx="100" yy="5" zz="100"/>
             <controlpoint xx="100" yy="45" zz="90" />
             <controlpoint xx="100" yy="0" zz="7" />
             <controlpoint xx="100" yy="0" zz="50" />
-            <controlpoint xx="100" yy="0" zz="7" />
+            <controlpoint xx="100" yy="0" zz="0" />
 
             <controlpoint xx="150" yy="20" zz="100"/>
             <controlpoint xx="150" yy="20" zz="90" />
             <controlpoint xx="150" yy="10" zz="70"/>
             <controlpoint xx="150" yy="1" zz="50"/>
-            <controlpoint xx="150" yy="1" zz="7" />
+            <controlpoint xx="150" yy="1" zz="0" />
 
             <controlpoint xx="200" yy="20" zz="100"/>
             <controlpoint xx="200" yy="20" zz="90" />
             <controlpoint xx="200" yy="10" zz="70"/>
             <controlpoint xx="200" yy="1" zz="50"/>
-            <controlpoint xx="200" yy="1" zz="7"/>
-            
+            <controlpoint xx="200" yy="1" zz="0"/>
+
             </patch>
       </primitive>
 
@@ -267,30 +267,30 @@
          <controlpoint xx="200" yy="20" zz="90" />
          <controlpoint xx="200" yy="10" zz="70" />
          <controlpoint xx="200" yy="1" zz="50" />
-         <controlpoint xx="200" yy="1" zz="7" />
+         <controlpoint xx="200" yy="1" zz="0" />
 
          <controlpoint xx="200" yy="0" zz="100" />
          <controlpoint xx="200" yy="0" zz="90" />
          <controlpoint xx="200" yy="0" zz="70" />
          <controlpoint xx="200" yy="0" zz="50" />
-         <controlpoint xx="200" yy="0" zz="7" />
+         <controlpoint xx="200" yy="0" zz="0" />
        </patch>
 
       </primitive>
 
       <primitive id="right_nurb">
         <patch npointU="1" npointV="4" npartsU="100" npartsV="100">
-          <controlpoint xx="0" yy="0" zz="100" ww="1"/>
-          <controlpoint xx="0" yy="0" zz="90" ww="1"/>
-          <controlpoint xx="0" yy="0" zz="70" ww="1"/>
-          <controlpoint xx="0" yy="0" zz="50" ww="1"/>
-          <controlpoint xx="0" yy="0" zz="7" ww="1"/>
+          <controlpoint xx="0" yy="0" zz="100"/>
+          <controlpoint xx="0" yy="0" zz="90" />
+          <controlpoint xx="0" yy="0" zz="70"/>
+          <controlpoint xx="0" yy="0" zz="50" />
+          <controlpoint xx="0" yy="0" zz="0"/>
 
-          <controlpoint xx="0" yy="20" zz="100" ww="1"/>
-          <controlpoint xx="0" yy="20" zz="90" ww="1"/>
-          <controlpoint xx="0" yy="15" zz="70" ww="1"/>
-          <controlpoint xx="0" yy="1" zz="50" ww="1"/>
-          <controlpoint xx="0" yy="1" zz="7" ww="1"/>
+          <controlpoint xx="0" yy="20" zz="100"/>
+          <controlpoint xx="0" yy="20" zz="90"/>
+          <controlpoint xx="0" yy="15" zz="70" />
+          <controlpoint xx="0" yy="1" zz="50" />
+          <controlpoint xx="0" yy="1" zz="0" />
        </patch>
 
       </primitive>
@@ -531,6 +531,10 @@
 
     <component id="floor">
       <transformation>
+      <translate x="0" y="0" z="40"/>
+
+      <rotate axis="y" angle="90"/>
+
       </transformation>
 
       <materials>
@@ -547,7 +551,27 @@
       </children>
     </component>
 
+    <component id="floor_1">
+      <transformation>
+      <translate x="60" y="0" z="0"/>
 
+      <rotate axis="y" angle="270"/>
+
+      </transformation>
+
+      <materials>
+        <material id ="inherit"/>
+      </materials>
+
+      <texture id="inherit" length_s="1" length_t="1"/>
+
+      <children>
+        <componentref id="nurb_1"/>
+        <componentref id="nurb_2"/>
+        <componentref id="nurb_3"/>
+        <componentref id="nurb_4"/>
+      </children>
+    </component>
 
     <!-- Cena Principal -->
     <component id="main_scene">
@@ -563,6 +587,7 @@
       <children>
         <componentref id="ex_vehicle"/>
         <componentref id="floor"/>
+        <componentref id="floor_1"/>
       </children>
     </component>
   </components>
