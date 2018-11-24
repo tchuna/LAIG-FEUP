@@ -10,30 +10,32 @@ function Patch(scene,reference){
   this.pointV=reference.npointV;
 
   this.buildControlPoints(reference.controlPoints);
-  console.log(this.controlPoints);
 
-  // var ex=[	// U = 0
-	// 						[ // V = 0..3;
-	// 							 [ -2.0, -2.0, 1.0, 1 ],
-	// 							 [ -2.0, -1.0, -2.0, 1 ],
-	// 							 [ -2.0, 1.0, 5.0, 1 ],
-	// 							 [ -2.0, 2.0, -1.0, 1 ]
-	// 						],
-	// 						// U = 1
-	// 						[ // V = 0..3
-	// 							 [ 0, -2.0, 0, 1 ],
-	// 							 [ 0, -1.0, -1.0, 5 ],
-	// 							 [ 0, 1.0, 1.5, 5 ],
-	// 							 [ 0, 2.0, 0, 1 ]
-	// 						],
-	// 						// U = 2
-	// 						[ // V = 0..3
-	// 							 [ 2.0, -2.0, -1.0, 1 ],
-	// 							 [ 2.0, -1.0, 2.0, 1 ],
-	// 							 [ 2.0, 1.0, -5.0, 1 ],
-	// 							 [ 2.0, 2.0, 1.0, 1 ]
-	// 						]
-	// 					];
+  //console.log(this.controlPoints);
+
+  /*var ex=[	// U = 0
+	 						[ // V = 0..3;
+	 							 [ -2.0, -2.0, 1.0, 1 ],
+	 							 [ -2.0, -1.0, -2.0, 1 ],
+	 							 [ -2.0, 1.0, 5.0, 1 ],
+	 							 [ -2.0, 2.0, -1.0, 1 ]
+	 						],
+	 						// U = 1
+	 						[ // V = 0..3
+	 							 [ 0, -2.0, 0, 1 ],
+	 							 [ 0, -1.0, -1.0, 1 ],
+	 							 [ 0, 1.0, 1.5, 1 ],
+  							 [ 0, 2.0, 0, 1 ]
+	 						],
+	 						// U = 2
+	 						[ // V = 0..3
+	 							 [ 2.0, -2.0, -1.0, 1 ],
+	 							 [ 2.0, -1.0, 2.0, 1 ],
+	 							 [ 2.0, 1.0, -5.0, 1 ],
+	 							 [ 2.0, 2.0, 1.0, 1 ]
+	 						]
+            ];*/
+
 
 
   this.patch=this.makeSurface(this.pointU,this.pointV,this.npartsU,this.npartsV, this.controlPoints);
@@ -48,7 +50,7 @@ Patch.prototype.buildControlPoints = function(controlPoints) {
   var matrix = [];
   var length = controlPoints.length;
   this.controlPoints = [];
-  
+
   while (true) {
     if (index == length) {
       break;

@@ -22,7 +22,7 @@
 
   <ambient>
     <ambient r="0" g="0" b="0" a="1"/>
-    <background r="0.3" g="0.5" b="0.5" a="1" />
+    <background r="0" g="0.5" b="0.3" a="1" />
   </ambient>
 
   <lights>
@@ -2165,6 +2165,10 @@
         <componentref id="nurb_patch"/>
         <componentref id="floor_right"/>
         <componentref id="floor_left"/>
+      <!--  <componentref id="ex_vehicle"/>
+        <componentref id="nurb_patch"/>
+        <componentref id="floor_right"/>
+        <componentref id="floor_left"/>
 
         <componentref id="ponte"/>
         <componentref id="turbina_1"/>
@@ -2172,7 +2176,8 @@
         <componentref id="turbina_3"/>
         <componentref id="torre"/>
         <componentref id="cerca"/>
-        <componentref id="cubo_test"/>
+        <componentref id="cubo_test"/>-->
+
       </children>
     </component>
   </components>
