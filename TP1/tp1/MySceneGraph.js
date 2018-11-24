@@ -983,8 +983,13 @@ class MySceneGraph {
           this.primitives[primId] = new Plane(this.scene, primitive);
           break;
         case "patch":
+        console.log("tchuna");
+
+          var cpoints=grandChildren[0].getElementsByTagName("controlpoint");
+          var npointUaux= this.reader.getFloat(grandChildren[0], 'npointU');
+          var npointVaux=this.reader.getFloat(grandChildren[0], 'npointV');
           var points=[];
-          var cpoints=primitivesNode.getElementsByTagName("controlpoint");
+
 
           for (var point of cpoints) {
             var x = this.reader.getFloat(point, 'xx');
@@ -992,15 +997,18 @@ class MySceneGraph {
             var z = this.reader.getFloat(point, 'zz');
             points.push([x, y, z, 1]);
           }
+          console.log(points.length);
+          console.log(npointUaux);
+
+
           primitive={
-            npointU: this.reader.getFloat(grandChildren[0], 'npointU'),
-            npointV: this.reader.getFloat(grandChildren[0], 'npointV'),
+            npointU:npointUaux,
+            npointV: npointVaux,
             npartsU: this.reader.getFloat(grandChildren[0], 'npartsU'),
             npartsV: this.reader.getFloat(grandChildren[0], 'npartsV'),
             controlPoints: points
           };
-          this.primitives[primId] = new Patch(this.scene,primitive);
-          break;
+          this.primitives[primId] = new Patch(this.scene,primitive);break;
 
       case "vehicle":  this.primitives[primId] = new Vehicle(this.scene);break;
 
