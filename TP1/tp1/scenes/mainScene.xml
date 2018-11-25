@@ -183,7 +183,7 @@
     </primitive>
 
     <primitive id="terrain">
-      <terrain idtexture="terra" idheightmap="height_map" parts="5" heightscale="50" />
+      <terrain idtexture="terra" idheightmap="height_map" parts="5" heightscale="7" />
     </primitive>
 
     <primitive id="triangle">
@@ -251,7 +251,8 @@
             </patch>
     </primitive>
 
-    <primitive id="top_nurb_2">
+
+    <primitive id="top_nurb_3">
       <patch npointU="4" npointV="4" npartsU="100" npartsV="100">
 
             <controlpoint xx="0" yy="20" zz="100" />
@@ -261,21 +262,21 @@
             <controlpoint xx="0" yy="1" zz="0" />
 
             <controlpoint xx="50" yy="1" zz="100" />
-            <controlpoint xx="100" yy="1" zz="90" />
-            <controlpoint xx="50" yy="20" zz="70" />
-            <controlpoint xx="50" yy="10" zz="50" />
-            <controlpoint xx="10" yy="20" zz="0" />
+            <controlpoint xx="50" yy="1" zz="90" />
+            <controlpoint xx="50" yy="100" zz="70" />
+            <controlpoint xx="50" yy="100" zz="50" />
+            <controlpoint xx="50" yy="1" zz="20" />
 
             <controlpoint xx="100" yy="5" zz="100"/>
-            <controlpoint xx="100" yy="45" zz="90" />
-            <controlpoint xx="100" yy="0" zz="7" />
+            <controlpoint xx="100" yy="20" zz="90" />
+            <controlpoint xx="100" yy="10" zz="7" />
             <controlpoint xx="100" yy="500" zz="50" />
-            <controlpoint xx="100" yy="40" zz="0" />
+            <controlpoint xx="100" yy="0" zz="0" />
 
             <controlpoint xx="150" yy="20" zz="100"/>
             <controlpoint xx="150" yy="20" zz="90" />
             <controlpoint xx="150" yy="10" zz="70"/>
-            <controlpoint xx="150" yy="10" zz="50"/>
+            <controlpoint xx="150" yy="1" zz="50"/>
             <controlpoint xx="150" yy="1" zz="0" />
 
             <controlpoint xx="200" yy="20" zz="100"/>
@@ -520,7 +521,7 @@
     <!--veicle-->
     <component id="ex_vehicle">
       <transformation>
-        <translate x="20" y="20" z="-6"/>
+        <translate x="20" y="30" z="-6"/>
       </transformation>
       <animations>
         <animationref id="par" />
@@ -673,7 +674,7 @@
       <texture id="granito" length_s="0.1" length_t="0.1"/>
 
       <children>
-        <primitiveref id="top_nurb_2"/>
+        <primitiveref id="top_nurb_3"/>
       </children>
     </component>
 
@@ -768,7 +769,7 @@
 
     <component id="floor_1">
       <transformation>
-      <translate x="59" y="0" z="0"/>
+      <translate x="39.4" y="0" z="0"/>
 
       <rotate axis="y" angle="270"/>
 
@@ -785,6 +786,23 @@
         <componentref id="nurb_2"/>
         <componentref id="nurb_3"/>
         <componentref id="nurb_4"/>
+      </children>
+    </component>
+
+    <component id="floor_full">
+      <transformation>
+
+      </transformation>
+
+      <materials>
+        <material id ="inherit"/>
+      </materials>
+
+      <texture id="inherit" length_s="1" length_t="1"/>
+
+      <children>
+        <componentref id="floor"/>
+        <componentref id="floor_1"/>
       </children>
     </component>
 
@@ -840,6 +858,7 @@
         <componentref id="floor_1"/>
         <componentref id="full_river"/>
         <componentref id="ex_plane"/> -->
+        <componentref id="floor_full"/>
         <componentref id="terrain" />
 
 
