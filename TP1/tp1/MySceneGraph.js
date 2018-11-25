@@ -865,7 +865,7 @@ class MySceneGraph {
           if (center.length != 3 || '' in center) {
             return "CENTER must be defined with exact 3 values separeted by white spaces (animation: ID = "+animationId+")";
           }
-          if (isNaN(radius) || radius <= 0) {
+          if (isNaN(radius) || radius < 0) {
             return "RADIUS must be a positive number (animation: ID = "+animationId+")";
           }
           if (isNaN(startAng)) {
@@ -1010,10 +1010,12 @@ class MySceneGraph {
           };
           this.primitives[primId] = new Patch(this.scene,primitive);break;
 
-      case "vehicle":  this.primitives[primId] = new Vehicle(this.scene);break;
+        case "vehicle": 
+          this.primitives[primId] = new Vehicle(this.scene);
+          break;
 
         default:
-        return "unknow primitive <"+grandChildren[0].nodeName+">";
+          return "unknow primitive <"+grandChildren[0].nodeName+">";
       }
 
       this.nodes[primId] = new Node(primId, 'primitive');
