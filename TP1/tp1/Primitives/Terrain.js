@@ -25,7 +25,6 @@ Terrain.prototype.display = function() {
     this.scene.pushMatrix();
     this.texture.bind();
     this.height_map.bind(1);
-    this.scene.translate(0.0, -10.0, 0.0);
     this.scene.scale(100.0, 5.0, 100.0);
     this.plane.display();
     this.scene.popMatrix();

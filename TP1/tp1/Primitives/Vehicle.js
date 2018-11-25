@@ -82,7 +82,7 @@ Vehicle.prototype.constructor=Vehicle;
 Vehicle.prototype.display=function(){
 
   this.scene.rotate(-90 * degToRad, 1, 0, 0);
-  this.scene.translate(0.0, 0.0, 25.0);
+  this.scene.translate(0.0, 0.0, 15.0);
 
   this.scene.pushMatrix();
   this.scene.translate(0, 3.0, 0);
