@@ -2,13 +2,14 @@
 precision highp float;
 #endif
 
-varying vec4 coords;
-varying vec4 normal;
+varying vec2 vTextureCoord;
 
-uniform float timeFactor;
-uniform vec4 selColor;
+uniform sampler2D uSampler;
+uniform sampler2D uSampler2;
 
 void main() {
-    gl_FragColor = normal;
-    gl_fragColor.rgb = mix(gl_FragColor.rgb, selColor.rgb, timeFactor);
+	vec4 color = texture2D(uSampler, vTextureCoord);
+	vec4 filter = texture2D(uSampler2, vec2(0.0,0.1)+vTextureCoord);
+	
+	gl_FragColor = color;
 }

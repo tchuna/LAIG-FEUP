@@ -834,10 +834,10 @@
       <children>
         <componentref id="ex_vehicle"/>
         <componentref id="ex_vehicle_1"/>
-        <componentref id="floor"/>
+        <!-- <componentref id="floor"/>
         <componentref id="floor_1"/>
         <componentref id="full_river"/>
-        <componentref id="ex_plane"/>
+        <componentref id="ex_plane"/> -->
         <componentref id="terrain" />
 
 
