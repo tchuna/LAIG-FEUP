@@ -541,7 +541,7 @@
 
     <component id="ex_vehicle_1">
       <transformation>
-        <translate x="-10" y="20" z="20"/>
+        <translate x="-40" y="25" z="20"/>
 
       </transformation>
       <animations>
