@@ -65,7 +65,8 @@
     <texture id="green" file="green.jpg"/>
     <texture id="carbono" file="carbono.jpg"/>
     <texture id="carbono_m" file="carbono_m.png"/>
-    <texture id="cr" file="car.jpg"/>
+    <texture id="cr" file="d.jpg"/>
+    <texture id="cr_1" file="d_1.jpg"/>
     <texture id="granito" file="granito.jpg"/>
     <texture id="terra" file="terra.jpg"/>
 
@@ -348,6 +349,10 @@
         <vehicle/>
       </primitive>
 
+      <primitive id="vehicle_2">
+        <vehicle/>
+      </primitive>
+
   </primitives>
 
   <components>
@@ -481,13 +486,30 @@
       </animations>
 
       <materials>
-        <material id ="river"/>
+        <material id ="default"/>
       </materials>
 
       <texture id="cr" length_s="0.5" length_t="1"/>
 
       <children>
         <primitiveref id="vehicle_1"/>
+      </children>
+    </component>
+
+    <component id="ex_vehicle_1">
+      <transformation>
+        <translate x="40" y="15" z="20"/>
+        <rotate axis="x" angle="-90"/>
+      </transformation>
+
+      <materials>
+        <material id ="default"/>
+      </materials>
+
+      <texture id="cr_1" length_s="0.5" length_t="1"/>
+
+      <children>
+        <primitiveref id="vehicle_2"/>
       </children>
     </component>
 
@@ -733,6 +755,7 @@
 
       <children>
         <componentref id="ex_vehicle"/>
+        <componentref id="ex_vehicle_1"/>
         <componentref id="floor"/>
         <componentref id="floor_1"/>
         <componentref id="full_river"/>
