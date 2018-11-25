@@ -183,7 +183,7 @@
     </primitive>
 
     <primitive id="terrain">
-      <terrain idtexture="terra" idheightmap="height_map" parts="5" heightscale="7" />
+      <terrain idtexture="terra" idheightmap="height_map" parts="5" heightscale="25" />
     </primitive>
 
     <primitive id="triangle">
@@ -858,7 +858,7 @@
         <componentref id="floor_1"/>
         <componentref id="full_river"/>
         <componentref id="ex_plane"/> -->
-        <componentref id="floor_full"/>
+        <!-- <componentref id="floor_full"/> -->
         <componentref id="terrain" />
 
 
