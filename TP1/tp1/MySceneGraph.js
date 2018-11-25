@@ -983,8 +983,6 @@ class MySceneGraph {
           this.primitives[primId] = new Plane(this.scene, primitive);
           break;
         case "patch":
-        console.log("tchuna");
-
           var cpoints=grandChildren[0].getElementsByTagName("controlpoint");
           var npointUaux= this.reader.getFloat(grandChildren[0], 'npointU');
           var npointVaux=this.reader.getFloat(grandChildren[0], 'npointV');
@@ -997,9 +995,6 @@ class MySceneGraph {
             var z = this.reader.getFloat(point, 'zz');
             points.push([x, y, z, 1]);
           }
-          console.log(points.length);
-          console.log(npointUaux);
-
 
           primitive={
             npointU:npointUaux,
@@ -1008,8 +1003,34 @@ class MySceneGraph {
             npartsV: this.reader.getFloat(grandChildren[0], 'npartsV'),
             controlPoints: points
           };
-          this.primitives[primId] = new Patch(this.scene,primitive);break;
+          this.primitives[primId] = new Patch(this.scene,primitive);
+          break;
+        case "terrain":
+          var texture = this.reader.getString(grandChildren[0], "idtexture");
+          var height_map = this.reader.getString(grandChildren[0], "idheightmap");
+          var parts = this.reader.getInteger(grandChildren[0], "parts");
+          var height_scale = this.reader.getFloat(grandChildren[0], "heightscale");
 
+          if(this.textures[texture] == null) {
+            return "Error parsing primitive Terrain: texture "+texture+" not found!";
+          }
+          if(this.textures[height_map] == null) {
+            return "Error parsing primitive Terrain: heightmap "+height_map+" not found!";
+          }
+          if(this.parts <=0) {
+            return "Error parsing primitive Terrain: invalid value "+parts+" for parts!";
+          }
+          if(this.height_scale <=0) {
+            return "Error parsing primitive Terrain: invalid value " +height_scale+ " for height scale!";
+          }
+          primitive = {
+            texture: this.textures[texture],
+            height_map: this.textures[height_map],
+            parts: parts,
+            height_scale: height_scale
+          };
+          this.primitives[primId] = new Terrain(this.scene, primitive);
+          break;
         case "vehicle": 
           this.primitives[primId] = new Vehicle(this.scene);
           break;

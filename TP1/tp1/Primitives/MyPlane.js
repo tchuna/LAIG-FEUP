@@ -7,7 +7,7 @@ function Plane(scene, parts) {
 
 	this.buildControPoints(this.npartsU, this.npartsV);
 
-	// console.log(this.controlPoints);
+	console.log(this.controlPoints);
   	this.plane = this.makeSurface( this.npartsU, this.npartsV, this.controlPoints);
 };
 
