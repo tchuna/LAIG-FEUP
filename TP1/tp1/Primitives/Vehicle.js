@@ -53,7 +53,7 @@ function Vehicle(scene){
 
   to = {
     inner:1,
-    outer: 1,
+    outer: 1.2,
     slices: 20,
     loops:20
   };
@@ -68,6 +68,9 @@ function Vehicle(scene){
   this.wire=new MyCylinder(this.scene,cylnd);
   this.base=new MySphere(this.scene,sphere);
   this.base_1=new MyTorus(this.scene,to);
+
+  this.vehicl= new CGFappearance(this.scene);
+  this.vehicl.loadTexture("images/c.jpg");
 
 
 
@@ -84,7 +87,7 @@ Vehicle.prototype.display=function(){
   this.scene.translate(0, 3.0, 0);
 	this.vehicle.display();
   this.scene.popMatrix();
-  
+
   this.scene.pushMatrix();
   this.scene.translate(0, 3, -4.5);
   this.scene.scale(1.35, 1.35, 0.65);
