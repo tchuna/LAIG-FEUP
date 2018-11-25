@@ -1,3 +1,4 @@
+
 <yas>
   <scene root="main_scene" axis_length="5"/>
 
@@ -838,11 +839,9 @@
         <!-- <componentref id="floor"/>
         <componentref id="floor_1"/>
         <componentref id="full_river"/>
-<<<<<<< HEAD
-=======
         <componentref id="ex_plane"/> -->
         <componentref id="terrain" />
->>>>>>> 9c5c25b134c810c87c9e5829f5d50dd0d428e3c9
+
 
 
       </children>
