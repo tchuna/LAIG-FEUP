@@ -208,7 +208,7 @@
             <controlpoint xx="200" yy="1" zz="7"/>
             </patch>
       </primitive>
-      
+
       <primitive id="front_nurb">
         <patch npointU="1" npointV="4" npartsU="20" npartsV="20">
           <controlpoint xx="0" yy="20" zz="100"/>
@@ -2195,7 +2195,7 @@
       <children>
         <componentref id="ex_vehicle"/>
         <componentref id="nurb_patch"/>
-
+        <componentref id="cubo_test"/>
       <!--  <componentref id="ex_vehicle"/>
         <componentref id="nurb_patch"/>
         <componentref id="floor_right"/>
