@@ -2,14 +2,16 @@ function Terrain(scene, terrain) {
     CGFobject.call(this, scene);
 
     this.scene = scene;
+    this.texture = terrain.texture;
+    this.height_map = terrain.height_map;
+    this.parts = terrain.parts;
+    this.height_scale = terrain.height_scale;
+    
 
     this.shader = new CGFshader(this.scene.gl, 'Shaders/Terrain.vert', 'Shaders/Terrain.frag');
-    this.shader.setUniformValues({normScale: 1.0});
+    this.shader.setUniformsValues({normScale: this.height_scale});
 
-    this.texture = new CGFtexture(this.scene, terrain.texture);
-    this.height_map = new CGFtexture(this.scene, terrain.height_tex);
-
-    // this.plane = new MyPlane(this.scene);
+    this.plane = new Plane(this.scene, {npartsU: this.parts, npartsV: this.parts});
     
 }
 
@@ -19,9 +21,12 @@ Terrain.prototype.constructor = Terrain;
 Terrain.prototype.display = function() {
     this.scene.setActiveShader(this.shader);
 
+    this.scene.pushMatrix();
     this.texture.bind();
     this.height_map.bind(1);
-    // this.plane.display();
+    this.scene.scale(100.0, 5.0, 100.0);
+    this.plane.display();
+    this.scene.popMatrix();
 
     this.scene.setActiveShader(this.scene.defaultShader);
 };

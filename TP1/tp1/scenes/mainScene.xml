@@ -69,6 +69,7 @@
     <texture id="cr_1" file="d_1.jpg"/>
     <texture id="granito" file="granito.jpg"/>
     <texture id="terra" file="terra.jpg"/>
+    <texture id="height_map" file="terrainmap.jpg" />
 
   </textures>
 
@@ -178,6 +179,10 @@
     </primitive>
     <primitive id="plane_1">
       <plane npartsU="5" npartsV="8" />
+    </primitive>
+
+    <primitive id="terrain">
+      <terrain idtexture="terra" idheightmap="height_map" parts="5" heightscale="50" />
     </primitive>
 
     <primitive id="triangle">
@@ -299,96 +304,96 @@
       </patch>
     </primitive>
 
-  <primitive id="left_nurb">
-    <patch npointU="1" npointV="4" npartsU="100" npartsV="100">
-      <controlpoint xx="200" yy="20" zz="100" />
-      <controlpoint xx="200" yy="20" zz="90" />
-      <controlpoint xx="200" yy="10" zz="70" />
-      <controlpoint xx="200" yy="1" zz="50" />
-      <controlpoint xx="200" yy="1" zz="0" />
+    <primitive id="left_nurb">
+      <patch npointU="1" npointV="4" npartsU="100" npartsV="100">
+        <controlpoint xx="200" yy="20" zz="100" />
+        <controlpoint xx="200" yy="20" zz="90" />
+        <controlpoint xx="200" yy="10" zz="70" />
+        <controlpoint xx="200" yy="1" zz="50" />
+        <controlpoint xx="200" yy="1" zz="0" />
 
-      <controlpoint xx="200" yy="0" zz="100" />
-      <controlpoint xx="200" yy="0" zz="90" />
-      <controlpoint xx="200" yy="0" zz="70" />
-      <controlpoint xx="200" yy="0" zz="50" />
-      <controlpoint xx="200" yy="0" zz="0" />
-    </patch>
+        <controlpoint xx="200" yy="0" zz="100" />
+        <controlpoint xx="200" yy="0" zz="90" />
+        <controlpoint xx="200" yy="0" zz="70" />
+        <controlpoint xx="200" yy="0" zz="50" />
+        <controlpoint xx="200" yy="0" zz="0" />
+      </patch>
 
-  </primitive>
+    </primitive>
 
-  <primitive id="right_nurb">
-    <patch npointU="1" npointV="4" npartsU="100" npartsV="100">
-      <controlpoint xx="0" yy="0" zz="100"/>
-      <controlpoint xx="0" yy="0" zz="90" />
-      <controlpoint xx="0" yy="0" zz="70"/>
-      <controlpoint xx="0" yy="0" zz="50" />
-      <controlpoint xx="0" yy="0" zz="0"/>
+    <primitive id="right_nurb">
+      <patch npointU="1" npointV="4" npartsU="100" npartsV="100">
+        <controlpoint xx="0" yy="0" zz="100"/>
+        <controlpoint xx="0" yy="0" zz="90" />
+        <controlpoint xx="0" yy="0" zz="70"/>
+        <controlpoint xx="0" yy="0" zz="50" />
+        <controlpoint xx="0" yy="0" zz="0"/>
 
-      <controlpoint xx="0" yy="20" zz="100"/>
-      <controlpoint xx="0" yy="20" zz="90"/>
-      <controlpoint xx="0" yy="15" zz="70" />
-      <controlpoint xx="0" yy="1" zz="50" />
-      <controlpoint xx="0" yy="1" zz="0" />
-    </patch>
+        <controlpoint xx="0" yy="20" zz="100"/>
+        <controlpoint xx="0" yy="20" zz="90"/>
+        <controlpoint xx="0" yy="15" zz="70" />
+        <controlpoint xx="0" yy="1" zz="50" />
+        <controlpoint xx="0" yy="1" zz="0" />
+      </patch>
 
-  </primitive>
+    </primitive>
 
-  <primitive id="river_nurb">
-    <patch npointU="5" npointV="5" npartsU="100" npartsV="100">
+    <primitive id="river_nurb">
+      <patch npointU="5" npointV="5" npartsU="100" npartsV="100">
 
-      <controlpoint xx="-25" yy="-25" zz="-10"/>
-      <controlpoint xx="-25" yy="-15" zz="-5" />
-      <controlpoint xx="-25" yy="-5" zz="0"/>
-      <controlpoint xx="-25" yy="5" zz="0" />
-      <controlpoint xx="-25" yy="15" zz="-5"/>
-      <controlpoint xx="-25" yy="25" zz="-10"/>
+        <controlpoint xx="-25" yy="-25" zz="-10"/>
+        <controlpoint xx="-25" yy="-15" zz="-5" />
+        <controlpoint xx="-25" yy="-5" zz="0"/>
+        <controlpoint xx="-25" yy="5" zz="0" />
+        <controlpoint xx="-25" yy="15" zz="-5"/>
+        <controlpoint xx="-25" yy="25" zz="-10"/>
 
-      <controlpoint xx="-15" yy="-25" zz="-8"/>
-      <controlpoint xx="-15" yy="-15" zz="-4" />
-      <controlpoint xx="-15" yy="-5" zz="-4"/>
-      <controlpoint xx="-15" yy="50" zz="-4" />
-      <controlpoint xx="-15" yy="15" zz="-4"/>
-      <controlpoint xx="-15" yy="25" zz="-8"/>
+        <controlpoint xx="-15" yy="-25" zz="-8"/>
+        <controlpoint xx="-15" yy="-15" zz="-4" />
+        <controlpoint xx="-15" yy="-5" zz="-4"/>
+        <controlpoint xx="-15" yy="50" zz="-4" />
+        <controlpoint xx="-15" yy="15" zz="-4"/>
+        <controlpoint xx="-15" yy="25" zz="-8"/>
 
-      <controlpoint xx="-5" yy="-25" zz="-5"/>
-      <controlpoint xx="-5" yy="-15" zz="-3" />
-      <controlpoint xx="-5" yy="-5" zz="-8"/>
-      <controlpoint xx="-5" yy="50" zz="-8" />
-      <controlpoint xx="-5" yy="15" zz="-3"/>
-      <controlpoint xx="-5" yy="25" zz="-5"/>
+        <controlpoint xx="-5" yy="-25" zz="-5"/>
+        <controlpoint xx="-5" yy="-15" zz="-3" />
+        <controlpoint xx="-5" yy="-5" zz="-8"/>
+        <controlpoint xx="-5" yy="50" zz="-8" />
+        <controlpoint xx="-5" yy="15" zz="-3"/>
+        <controlpoint xx="-5" yy="25" zz="-5"/>
 
-      <controlpoint xx="5" yy="-25" zz="-3"/>
-      <controlpoint xx="5" yy="-15" zz="-2" />
-      <controlpoint xx="5" yy="-5" zz="-8"/>
-      <controlpoint xx="5" yy="5" zz="-8" />
-      <controlpoint xx="5" yy="15" zz="-2"/>
-      <controlpoint xx="5" yy="25" zz="-3"/>
+        <controlpoint xx="5" yy="-25" zz="-3"/>
+        <controlpoint xx="5" yy="-15" zz="-2" />
+        <controlpoint xx="5" yy="-5" zz="-8"/>
+        <controlpoint xx="5" yy="5" zz="-8" />
+        <controlpoint xx="5" yy="15" zz="-2"/>
+        <controlpoint xx="5" yy="25" zz="-3"/>
 
-      <controlpoint xx="15" yy="-25" zz="-8"/>
-      <controlpoint xx="15" yy="-15" zz="-4" />
-      <controlpoint xx="15" yy="-5" zz="-4"/>
-      <controlpoint xx="15" yy="5" zz="-4" />
-      <controlpoint xx="15" yy="15" zz="-4"/>
-      <controlpoint xx="15" yy="25" zz="8"/>
+        <controlpoint xx="15" yy="-25" zz="-8"/>
+        <controlpoint xx="15" yy="-15" zz="-4" />
+        <controlpoint xx="15" yy="-5" zz="-4"/>
+        <controlpoint xx="15" yy="5" zz="-4" />
+        <controlpoint xx="15" yy="15" zz="-4"/>
+        <controlpoint xx="15" yy="25" zz="8"/>
 
-      <controlpoint xx="25" yy="-25" zz="-10"/>
-      <controlpoint xx="25" yy="-15" zz="-5" />
-      <controlpoint xx="25" yy="-5" zz="2"/>
-      <controlpoint xx="25" yy="5" zz="2" />
-      <controlpoint xx="25" yy="15" zz="-5"/>
-      <controlpoint xx="25" yy="25" zz="-10"/>
+        <controlpoint xx="25" yy="-25" zz="-10"/>
+        <controlpoint xx="25" yy="-15" zz="-5" />
+        <controlpoint xx="25" yy="-5" zz="2"/>
+        <controlpoint xx="25" yy="5" zz="2" />
+        <controlpoint xx="25" yy="15" zz="-5"/>
+        <controlpoint xx="25" yy="25" zz="-10"/>
 
-    </patch>
+      </patch>
 
-  </primitive>
+    </primitive>
 
-  <primitive id="vehicle_1">
-    <vehicle />
-  </primitive>
+    <primitive id="vehicle_1">
+      <vehicle />
+    </primitive>
 
-      <primitive id="vehicle_2">
-        <vehicle/>
-      </primitive>
+    <primitive id="vehicle_2">
+      <vehicle/>
+    </primitive>
 
   </primitives>
 
@@ -573,6 +578,23 @@
       </children>
     </component>
 
+    <!-- Terrain -->
+    <component id="terrain">
+      <transformation>
+      </transformation>
+
+      <materials>
+        <material id="default" />
+      </materials>
+
+      <texture id="none" />
+
+      <children>
+        <primitiveref id="terrain" />
+      </children>
+    </component>
+
+    <!-- River -->
     <component id="river_nr_1">
       <transformation>
       <translate x="24.5" y="3" z="7.5"/>
@@ -813,9 +835,14 @@
       <children>
         <componentref id="ex_vehicle"/>
         <componentref id="ex_vehicle_1"/>
-        <componentref id="floor"/>
+        <!-- <componentref id="floor"/>
         <componentref id="floor_1"/>
         <componentref id="full_river"/>
+<<<<<<< HEAD
+=======
+        <componentref id="ex_plane"/> -->
+        <componentref id="terrain" />
+>>>>>>> 9c5c25b134c810c87c9e5829f5d50dd0d428e3c9
 
 
       </children>

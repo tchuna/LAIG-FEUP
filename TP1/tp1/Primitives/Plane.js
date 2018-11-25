@@ -7,7 +7,6 @@ function Plane(scene, parts) {
 
 	this.buildControPoints(this.npartsU, this.npartsV);
 
-	// console.log(this.controlPoints);
   	this.plane = this.makeSurface( this.npartsU, this.npartsV, this.controlPoints);
 };
 
@@ -17,10 +16,7 @@ Plane.prototype.constructor = Plane;
 
 
 Plane.prototype.display = function() {
-
-	this.scene.pushMatrix();
 	this.plane.display();
-	this.scene.popMatrix();
 };
 
 Plane.prototype.updateTexCoords = function (aS, aT) {}
