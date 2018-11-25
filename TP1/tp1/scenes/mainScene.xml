@@ -241,112 +241,112 @@
             <controlpoint xx="200" yy="1" zz="0"/>
 
             </patch>
-      </primitive>
+    </primitive>
 
-      <primitive id="front_nurb">
-        <patch npointU="1" npointV="4" npartsU="100" npartsV="100">
+    <primitive id="front_nurb">
+      <patch npointU="1" npointV="4" npartsU="100" npartsV="100">
 
-          <controlpoint xx="0" yy="20" zz="100"/>
-          <controlpoint xx="50" yy="1" zz="100"/>
-          <controlpoint xx="100" yy="5" zz="100"/>
-          <controlpoint xx="150" yy="20" zz="100" />
-          <controlpoint xx="200" yy="20" zz="100" />
+        <controlpoint xx="0" yy="20" zz="100"/>
+        <controlpoint xx="50" yy="1" zz="100"/>
+        <controlpoint xx="100" yy="5" zz="100"/>
+        <controlpoint xx="150" yy="20" zz="100" />
+        <controlpoint xx="200" yy="20" zz="100" />
 
 
-          <controlpoint xx="0" yy="0" zz="100" />
-          <controlpoint xx="50" yy="0" zz="100" />
-          <controlpoint xx="100" yy="0" zz="100" />
-          <controlpoint xx="150" yy="0" zz="100" />
-          <controlpoint xx="200" yy="0" zz="100" />
-        </patch>
-      </primitive>
+        <controlpoint xx="0" yy="0" zz="100" />
+        <controlpoint xx="50" yy="0" zz="100" />
+        <controlpoint xx="100" yy="0" zz="100" />
+        <controlpoint xx="150" yy="0" zz="100" />
+        <controlpoint xx="200" yy="0" zz="100" />
+      </patch>
+    </primitive>
 
-      <primitive id="left_nurb">
-        <patch npointU="1" npointV="4" npartsU="100" npartsV="100">
-          <controlpoint xx="200" yy="20" zz="100" />
-         <controlpoint xx="200" yy="20" zz="90" />
-         <controlpoint xx="200" yy="10" zz="70" />
-         <controlpoint xx="200" yy="1" zz="50" />
-         <controlpoint xx="200" yy="1" zz="0" />
+  <primitive id="left_nurb">
+    <patch npointU="1" npointV="4" npartsU="100" npartsV="100">
+      <controlpoint xx="200" yy="20" zz="100" />
+      <controlpoint xx="200" yy="20" zz="90" />
+      <controlpoint xx="200" yy="10" zz="70" />
+      <controlpoint xx="200" yy="1" zz="50" />
+      <controlpoint xx="200" yy="1" zz="0" />
 
-         <controlpoint xx="200" yy="0" zz="100" />
-         <controlpoint xx="200" yy="0" zz="90" />
-         <controlpoint xx="200" yy="0" zz="70" />
-         <controlpoint xx="200" yy="0" zz="50" />
-         <controlpoint xx="200" yy="0" zz="0" />
-       </patch>
+      <controlpoint xx="200" yy="0" zz="100" />
+      <controlpoint xx="200" yy="0" zz="90" />
+      <controlpoint xx="200" yy="0" zz="70" />
+      <controlpoint xx="200" yy="0" zz="50" />
+      <controlpoint xx="200" yy="0" zz="0" />
+    </patch>
 
-      </primitive>
+  </primitive>
 
-      <primitive id="right_nurb">
-        <patch npointU="1" npointV="4" npartsU="100" npartsV="100">
-          <controlpoint xx="0" yy="0" zz="100"/>
-          <controlpoint xx="0" yy="0" zz="90" />
-          <controlpoint xx="0" yy="0" zz="70"/>
-          <controlpoint xx="0" yy="0" zz="50" />
-          <controlpoint xx="0" yy="0" zz="0"/>
+  <primitive id="right_nurb">
+    <patch npointU="1" npointV="4" npartsU="100" npartsV="100">
+      <controlpoint xx="0" yy="0" zz="100"/>
+      <controlpoint xx="0" yy="0" zz="90" />
+      <controlpoint xx="0" yy="0" zz="70"/>
+      <controlpoint xx="0" yy="0" zz="50" />
+      <controlpoint xx="0" yy="0" zz="0"/>
 
-          <controlpoint xx="0" yy="20" zz="100"/>
-          <controlpoint xx="0" yy="20" zz="90"/>
-          <controlpoint xx="0" yy="15" zz="70" />
-          <controlpoint xx="0" yy="1" zz="50" />
-          <controlpoint xx="0" yy="1" zz="0" />
-       </patch>
+      <controlpoint xx="0" yy="20" zz="100"/>
+      <controlpoint xx="0" yy="20" zz="90"/>
+      <controlpoint xx="0" yy="15" zz="70" />
+      <controlpoint xx="0" yy="1" zz="50" />
+      <controlpoint xx="0" yy="1" zz="0" />
+    </patch>
 
-      </primitive>
+  </primitive>
 
-      <primitive id="river_nurb">
-        <patch npointU="5" npointV="5" npartsU="100" npartsV="100">
+  <primitive id="river_nurb">
+    <patch npointU="5" npointV="5" npartsU="100" npartsV="100">
 
-          <controlpoint xx="-25" yy="-25" zz="-10"/>
-          <controlpoint xx="-25" yy="-15" zz="-5" />
-          <controlpoint xx="-25" yy="-5" zz="0"/>
-          <controlpoint xx="-25" yy="5" zz="0" />
-          <controlpoint xx="-25" yy="15" zz="-5"/>
-          <controlpoint xx="-25" yy="25" zz="-10"/>
+      <controlpoint xx="-25" yy="-25" zz="-10"/>
+      <controlpoint xx="-25" yy="-15" zz="-5" />
+      <controlpoint xx="-25" yy="-5" zz="0"/>
+      <controlpoint xx="-25" yy="5" zz="0" />
+      <controlpoint xx="-25" yy="15" zz="-5"/>
+      <controlpoint xx="-25" yy="25" zz="-10"/>
 
-          <controlpoint xx="-15" yy="-25" zz="-8"/>
-          <controlpoint xx="-15" yy="-15" zz="-4" />
-          <controlpoint xx="-15" yy="-5" zz="-4"/>
-          <controlpoint xx="-15" yy="5" zz="-4" />
-          <controlpoint xx="-15" yy="15" zz="-4"/>
-          <controlpoint xx="-15" yy="25" zz="-8"/>
+      <controlpoint xx="-15" yy="-25" zz="-8"/>
+      <controlpoint xx="-15" yy="-15" zz="-4" />
+      <controlpoint xx="-15" yy="-5" zz="-4"/>
+      <controlpoint xx="-15" yy="5" zz="-4" />
+      <controlpoint xx="-15" yy="15" zz="-4"/>
+      <controlpoint xx="-15" yy="25" zz="-8"/>
 
-          <controlpoint xx="-5" yy="-25" zz="-5"/>
-          <controlpoint xx="-5" yy="-15" zz="-3" />
-          <controlpoint xx="-5" yy="-5" zz="-8"/>
-          <controlpoint xx="-5" yy="5" zz="-8" />
-          <controlpoint xx="-5" yy="15" zz="-3"/>
-          <controlpoint xx="-5" yy="25" zz="-5"/>
+      <controlpoint xx="-5" yy="-25" zz="-5"/>
+      <controlpoint xx="-5" yy="-15" zz="-3" />
+      <controlpoint xx="-5" yy="-5" zz="-8"/>
+      <controlpoint xx="-5" yy="5" zz="-8" />
+      <controlpoint xx="-5" yy="15" zz="-3"/>
+      <controlpoint xx="-5" yy="25" zz="-5"/>
 
-          <controlpoint xx="5" yy="-25" zz="-3"/>
-          <controlpoint xx="5" yy="-15" zz="-2" />
-          <controlpoint xx="5" yy="-5" zz="-8"/>
-          <controlpoint xx="5" yy="5" zz="-8" />
-          <controlpoint xx="5" yy="15" zz="-2"/>
-          <controlpoint xx="5" yy="25" zz="-3"/>
+      <controlpoint xx="5" yy="-25" zz="-3"/>
+      <controlpoint xx="5" yy="-15" zz="-2" />
+      <controlpoint xx="5" yy="-5" zz="-8"/>
+      <controlpoint xx="5" yy="5" zz="-8" />
+      <controlpoint xx="5" yy="15" zz="-2"/>
+      <controlpoint xx="5" yy="25" zz="-3"/>
 
-          <controlpoint xx="15" yy="-25" zz="-8"/>
-          <controlpoint xx="15" yy="-15" zz="-4" />
-          <controlpoint xx="15" yy="-5" zz="-4"/>
-          <controlpoint xx="15" yy="5" zz="-4" />
-          <controlpoint xx="15" yy="15" zz="-4"/>
-          <controlpoint xx="15" yy="25" zz="8"/>
+      <controlpoint xx="15" yy="-25" zz="-8"/>
+      <controlpoint xx="15" yy="-15" zz="-4" />
+      <controlpoint xx="15" yy="-5" zz="-4"/>
+      <controlpoint xx="15" yy="5" zz="-4" />
+      <controlpoint xx="15" yy="15" zz="-4"/>
+      <controlpoint xx="15" yy="25" zz="8"/>
 
-          <controlpoint xx="25" yy="-25" zz="-10"/>
-          <controlpoint xx="25" yy="-15" zz="-5" />
-          <controlpoint xx="25" yy="-5" zz="2"/>
-          <controlpoint xx="25" yy="5" zz="2" />
-          <controlpoint xx="25" yy="15" zz="-5"/>
-          <controlpoint xx="25" yy="25" zz="-10"/>
+      <controlpoint xx="25" yy="-25" zz="-10"/>
+      <controlpoint xx="25" yy="-15" zz="-5" />
+      <controlpoint xx="25" yy="-5" zz="2"/>
+      <controlpoint xx="25" yy="5" zz="2" />
+      <controlpoint xx="25" yy="15" zz="-5"/>
+      <controlpoint xx="25" yy="25" zz="-10"/>
 
-       </patch>
+    </patch>
 
-      </primitive>
+  </primitive>
 
-      <primitive id="vehicle_1">
-        <vehicle/>
-      </primitive>
+  <primitive id="vehicle_1">
+    <vehicle />
+  </primitive>
 
   </primitives>
 
@@ -473,7 +473,6 @@
     <component id="ex_vehicle">
       <transformation>
         <translate x="20" y="20" z="-6"/>
-        <rotate axis="x" angle="-90"/>
       </transformation>
       <animations>
         <animationref id="an_1" />

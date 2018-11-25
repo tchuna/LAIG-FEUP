@@ -77,55 +77,54 @@ Vehicle.prototype=Object.create(CGFobject.prototype);
 Vehicle.prototype.constructor=Vehicle;
 
 Vehicle.prototype.display=function(){
-  this.scene.pushMatrix();
-	this.scene.translate(0, 3.0, 0);
-	this.vehicle.display();
-	this.scene.popMatrix();
-  this.scene.pushMatrix();
 
+  this.scene.rotate(-90 * degToRad, 1, 0, 0);
+
+  this.scene.pushMatrix();
+  this.scene.translate(0, 3.0, 0);
+	this.vehicle.display();
+  this.scene.popMatrix();
+  
+  this.scene.pushMatrix();
   this.scene.translate(0, 3, -4.5);
   this.scene.scale(1.35, 1.35, 0.65);
   this.base_1.display();
-
   this.scene.popMatrix();
 
-
-
 	this.scene.pushMatrix();
-		this.scene.translate(-2.43, 3.9, -4.5);
-		this.scene.rotate(15 * degToRad, 1, 0, 0);
-		this.scene.rotate(20 * degToRad, 0, 0, 1);
-		this.scene.rotate(-Math.PI/8, 1, 0, 0);
-		this.scene.scale(0.02, 0.02, 5);
-		this.wire.display();
+	this.scene.translate(-2.43, 3.9, -4.5);
+	this.scene.rotate(15 * degToRad, 1, 0, 0);
+	this.scene.rotate(20 * degToRad, 0, 0, 1);
+	this.scene.rotate(-Math.PI/8, 1, 0, 0);
+	this.scene.scale(0.02, 0.02, 5);
+	this.wire.display();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
-		this.scene.translate(2.3, 3.9, -4.5);
-		this.scene.rotate(15 * degToRad, 1, 0, 0);
-		this.scene.rotate(-20 * degToRad, 0, 0, 1);
-		this.scene.rotate(-Math.PI/8, 1, 0, 0);
-		this.scene.scale(0.02, 0.02, 5);
-		this.wire.display();
+  this.scene.translate(2.3, 3.9, -4.5);
+  this.scene.rotate(15 * degToRad, 1, 0, 0);
+  this.scene.rotate(-20 * degToRad, 0, 0, 1);
+  this.scene.rotate(-Math.PI/8, 1, 0, 0);
+  this.scene.scale(0.02, 0.02, 5);
+  this.wire.display();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
-		this.scene.translate(-2.43, 1.9, -4.5);
-		this.scene.rotate(-15 * degToRad, 1, 0, 0);
-		this.scene.rotate(-20 * degToRad, 0, 0, 1);
-		this.scene.rotate(-Math.PI/-8, 1, 0, 0);
-		this.scene.scale(0.02, 0.02, 5);
-		this.wire.display();
+  this.scene.translate(-2.43, 1.9, -4.5);
+  this.scene.rotate(-15 * degToRad, 1, 0, 0);
+  this.scene.rotate(-20 * degToRad, 0, 0, 1);
+  this.scene.rotate(Math.PI/8, 1, 0, 0);
+  this.scene.scale(0.02, 0.02, 5);
+  this.wire.display();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
-		this.scene.translate(2.3, 1.9, -4.5);
-		this.scene.rotate(-15 * degToRad, 1, 0, 0);
-		this.scene.rotate(20 * degToRad, 0, 0, 1);
-		this.scene.rotate(-Math.PI/-8, 1, 0, 0);
-		this.scene.scale(0.02, 0.02, 5);
-		this.wire.display();
-
+  this.scene.translate(2.3, 1.9, -4.5);
+  this.scene.rotate(-15 * degToRad, 1, 0, 0);
+  this.scene.rotate(20 * degToRad, 0, 0, 1);
+  this.scene.rotate(Math.PI/8, 1, 0, 0);
+  this.scene.scale(0.02, 0.02, 5);
+  this.wire.display();
 	this.scene.popMatrix();
 
 
