@@ -175,7 +175,7 @@
       <rectangle x1="0" y1="0" x2="1" y2="1" />
     </primitive>
     <primitive id="plane_1">
-      <plane npartsU="5" npartsV="8" />
+      <plane npartsU="1" npartsV="1" />
     </primitive>
 
     <primitive id="triangle">
@@ -494,9 +494,8 @@
     <!--plane-->
     <component id="ex_plane">
       <transformation>
-        <translate x="10" y="10" z="0"/>
-        <rotate axis="x" angle="-90"/>
-
+        <!-- <translate x="10" y="10" z="0"/>
+        <rotate axis="x" angle="-90"/> -->
       </transformation>
 
       <materials>
@@ -735,6 +734,7 @@
         <componentref id="floor"/>
         <componentref id="floor_1"/>
         <componentref id="full_river"/>
+        <componentref id="ex_plane"/>
 
 
       </children>
