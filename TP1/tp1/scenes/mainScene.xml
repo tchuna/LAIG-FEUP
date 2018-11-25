@@ -220,20 +220,56 @@
 
             <controlpoint xx="50" yy="1" zz="100" />
             <controlpoint xx="50" yy="1" zz="90" />
-            <controlpoint xx="50" yy="1" zz="70" />
+            <controlpoint xx="50" yy="100" zz="70" />
             <controlpoint xx="50" yy="1" zz="50" />
-            <controlpoint xx="50" yy="1" zz="0" />
+            <controlpoint xx="50" yy="10" zz="20" />
 
             <controlpoint xx="100" yy="5" zz="100"/>
-            <controlpoint xx="100" yy="45" zz="90" />
+            <controlpoint xx="100" yy="40" zz="90" />
             <controlpoint xx="100" yy="0" zz="7" />
-            <controlpoint xx="100" yy="0" zz="50" />
+            <controlpoint xx="100" yy="100" zz="50" />
             <controlpoint xx="100" yy="0" zz="0" />
 
             <controlpoint xx="150" yy="20" zz="100"/>
             <controlpoint xx="150" yy="20" zz="90" />
             <controlpoint xx="150" yy="10" zz="70"/>
             <controlpoint xx="150" yy="1" zz="50"/>
+            <controlpoint xx="150" yy="1" zz="0" />
+
+            <controlpoint xx="200" yy="20" zz="100"/>
+            <controlpoint xx="200" yy="20" zz="90" />
+            <controlpoint xx="200" yy="10" zz="70"/>
+            <controlpoint xx="200" yy="1" zz="50"/>
+            <controlpoint xx="200" yy="1" zz="0"/>
+
+            </patch>
+    </primitive>
+
+    <primitive id="top_nurb_2">
+      <patch npointU="4" npointV="4" npartsU="100" npartsV="100">
+
+            <controlpoint xx="0" yy="20" zz="100" />
+            <controlpoint xx="0" yy="20" zz="90" />
+            <controlpoint xx="0" yy="15" zz="70" />
+            <controlpoint xx="0" yy="1" zz="50" />
+            <controlpoint xx="0" yy="1" zz="0" />
+
+            <controlpoint xx="50" yy="1" zz="100" />
+            <controlpoint xx="100" yy="1" zz="90" />
+            <controlpoint xx="50" yy="20" zz="70" />
+            <controlpoint xx="50" yy="10" zz="50" />
+            <controlpoint xx="10" yy="20" zz="0" />
+
+            <controlpoint xx="100" yy="5" zz="100"/>
+            <controlpoint xx="100" yy="45" zz="90" />
+            <controlpoint xx="100" yy="0" zz="7" />
+            <controlpoint xx="100" yy="500" zz="50" />
+            <controlpoint xx="100" yy="40" zz="0" />
+
+            <controlpoint xx="150" yy="20" zz="100"/>
+            <controlpoint xx="150" yy="20" zz="90" />
+            <controlpoint xx="150" yy="10" zz="70"/>
+            <controlpoint xx="150" yy="10" zz="50"/>
             <controlpoint xx="150" yy="1" zz="0" />
 
             <controlpoint xx="200" yy="20" zz="100"/>
@@ -310,14 +346,14 @@
       <controlpoint xx="-15" yy="-25" zz="-8"/>
       <controlpoint xx="-15" yy="-15" zz="-4" />
       <controlpoint xx="-15" yy="-5" zz="-4"/>
-      <controlpoint xx="-15" yy="5" zz="-4" />
+      <controlpoint xx="-15" yy="50" zz="-4" />
       <controlpoint xx="-15" yy="15" zz="-4"/>
       <controlpoint xx="-15" yy="25" zz="-8"/>
 
       <controlpoint xx="-5" yy="-25" zz="-5"/>
       <controlpoint xx="-5" yy="-15" zz="-3" />
       <controlpoint xx="-5" yy="-5" zz="-8"/>
-      <controlpoint xx="-5" yy="5" zz="-8" />
+      <controlpoint xx="-5" yy="50" zz="-8" />
       <controlpoint xx="-5" yy="15" zz="-3"/>
       <controlpoint xx="-5" yy="25" zz="-5"/>
 
@@ -601,6 +637,23 @@
 
     <!--floor-->
     <!--patch_1-->
+
+    <component id="nurb_1_1">
+      <transformation>
+       <scale x="0.2" y="0.2" z="0.2"/>
+      </transformation>
+
+      <materials>
+        <material id ="default"/>
+      </materials>
+
+      <texture id="granito" length_s="0.1" length_t="0.1"/>
+
+      <children>
+        <primitiveref id="top_nurb_2"/>
+      </children>
+    </component>
+
     <component id="nurb_1">
       <transformation>
        <scale x="0.2" y="0.2" z="0.2"/>
@@ -705,7 +758,7 @@
       <texture id="inherit" length_s="1" length_t="1"/>
 
       <children>
-        <componentref id="nurb_1"/>
+        <componentref id="nurb_1_1"/>
         <componentref id="nurb_2"/>
         <componentref id="nurb_3"/>
         <componentref id="nurb_4"/>
