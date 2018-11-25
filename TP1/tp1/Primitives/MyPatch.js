@@ -11,7 +11,7 @@ function Patch(scene,reference){
 
   this.buildControlPoints(reference.controlPoints);
 
-  
+
 
   this.patch=this.makeSurface(this.pointU,this.pointV,this.npartsU,this.npartsV, this.controlPoints);
 
@@ -41,23 +41,6 @@ Patch.prototype.buildControlPoints = function(controlPoints) {
   }
 };
 
-Patch.prototype.getKnotsVector_ = function(degree){
-
-  var aux=new Array();
-
-  for(var i=0;i<degree;i++){
-    aux.push(0);
-
-  }
-
-  for(var i=0;i<degree;i++){
-    aux.push(1);
-
-  }
-
-  return aux;
-
-};
 
 Patch.prototype.makeSurface= function(degreeU,degreeV,npartsU,npartsV,cP){
 

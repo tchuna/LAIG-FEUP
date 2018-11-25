@@ -975,6 +975,18 @@ class MySceneGraph {
           };
           this.primitives[primId] = new MyTorus(this.scene, primitive);
           break;
+
+        case "cylinder2":
+            primitive={
+              base: this.reader.getFloat(grandChildren[0], 'base'),
+              top: this.reader.getFloat(grandChildren[0], 'top'),
+              height: this.reader.getFloat(grandChildren[0], 'height'),
+              slices: this.reader.getInteger(grandChildren[0], 'slices'),
+              stacks: this.reader.getInteger(grandChildren[0], 'stacks')
+            };
+            this.primitives[primId] = new Cylinder2(this.scene, primitive);
+            break;
+
         case "plane":
           primitive={
             npartsU:this.reader.getFloat(grandChildren[0], 'npartsU'),
@@ -989,12 +1001,19 @@ class MySceneGraph {
           var points=[];
 
 
+
+
           for (var point of cpoints) {
             var x = this.reader.getFloat(point, 'xx');
             var y = this.reader.getFloat(point, 'yy');
             var z = this.reader.getFloat(point, 'zz');
             points.push([x, y, z, 1]);
           }
+
+
+          if (points.length != (npointUaux+1) * (npointVaux+1)) {
+            this.onXMLError("Patch can't be created because controlPoints must be (orderV)*(orderU)");}
+
 
           primitive={
             npointU:npointUaux,
@@ -1031,7 +1050,7 @@ class MySceneGraph {
           };
           this.primitives[primId] = new Terrain(this.scene, primitive);
           break;
-        case "vehicle": 
+        case "vehicle":
           this.primitives[primId] = new Vehicle(this.scene);
           break;
 
