@@ -295,6 +295,54 @@
 
       </primitive>
 
+      <primitive id="river_nurb">
+        <patch npointU="5" npointV="5" npartsU="100" npartsV="100">
+
+          <controlpoint xx="-25" yy="-25" zz="-10"/>
+          <controlpoint xx="-25" yy="-15" zz="-5" />
+          <controlpoint xx="-25" yy="-5" zz="0"/>
+          <controlpoint xx="-25" yy="5" zz="0" />
+          <controlpoint xx="-25" yy="15" zz="-5"/>
+          <controlpoint xx="-25" yy="25" zz="-10"/>
+
+          <controlpoint xx="-15" yy="-25" zz="-8"/>
+          <controlpoint xx="-15" yy="-15" zz="-4" />
+          <controlpoint xx="-15" yy="-5" zz="-4"/>
+          <controlpoint xx="-15" yy="5" zz="-4" />
+          <controlpoint xx="-15" yy="15" zz="-4"/>
+          <controlpoint xx="-15" yy="25" zz="-8"/>
+
+          <controlpoint xx="-5" yy="-25" zz="-5"/>
+          <controlpoint xx="-5" yy="-15" zz="-3" />
+          <controlpoint xx="-5" yy="-5" zz="-8"/>
+          <controlpoint xx="-5" yy="5" zz="-8" />
+          <controlpoint xx="-5" yy="15" zz="-3"/>
+          <controlpoint xx="-5" yy="25" zz="-5"/>
+
+          <controlpoint xx="5" yy="-25" zz="-3"/>
+          <controlpoint xx="5" yy="-15" zz="-2" />
+          <controlpoint xx="5" yy="-5" zz="-8"/>
+          <controlpoint xx="5" yy="5" zz="-8" />
+          <controlpoint xx="5" yy="15" zz="-2"/>
+          <controlpoint xx="5" yy="25" zz="-3"/>
+
+          <controlpoint xx="15" yy="-25" zz="-8"/>
+          <controlpoint xx="15" yy="-15" zz="-4" />
+          <controlpoint xx="15" yy="-5" zz="-4"/>
+          <controlpoint xx="15" yy="5" zz="-4" />
+          <controlpoint xx="15" yy="15" zz="-4"/>
+          <controlpoint xx="15" yy="25" zz="8"/>
+
+          <controlpoint xx="25" yy="-25" zz="-10"/>
+          <controlpoint xx="25" yy="-15" zz="-5" />
+          <controlpoint xx="25" yy="-5" zz="2"/>
+          <controlpoint xx="25" yy="5" zz="2" />
+          <controlpoint xx="25" yy="15" zz="-5"/>
+          <controlpoint xx="25" yy="25" zz="-10"/>
+
+       </patch>
+
+      </primitive>
 
       <primitive id="vehicle_1">
         <vehicle/>
@@ -460,6 +508,68 @@
       </children>
     </component>
 
+    <component id="river_nr_1">
+      <transformation>
+      <translate x="24.5" y="3" z="7.5"/>
+      <rotate axis="x" angle="-90"/>
+      <scale x="0.2" y="0.3" z="0.3"/>
+
+
+      </transformation>
+
+      <materials>
+        <material id ="river"/>
+      </materials>
+
+      <texture id="river" length_s="1" length_t="1"/>
+
+      <children>
+        <primitiveref id="river_nurb"/>
+      </children>
+    </component>
+
+    <component id="river_nr_2">
+      <transformation>
+      <translate x="34.5" y="3" z="7.5"/>
+      <rotate axis="x" angle="-90"/>
+      <rotate axis="z" angle="-180"/>
+      <scale x="0.2" y="0.3" z="0.3"/>
+
+
+      </transformation>
+
+      <materials>
+        <material id ="river"/>
+      </materials>
+
+      <texture id="river" length_s="1" length_t="1"/>
+
+      <children>
+        <primitiveref id="river_nurb"/>
+      </children>
+    </component>
+
+    <component id="river_nr_3">
+      <transformation>
+      <translate x="34.5" y="10" z="7.5"/>
+      <rotate axis="x" angle="-90"/>
+
+      <scale x="0.2" y="0.3" z="0.3"/>
+
+
+      </transformation>
+
+      <materials>
+        <material id ="river"/>
+      </materials>
+
+      <texture id="river" length_s="1" length_t="1"/>
+
+      <children>
+        <primitiveref id="river_nurb_1"/>
+      </children>
+    </component>
+
     <!--floor-->
     <!--patch_1-->
     <component id="nurb_1">
@@ -553,7 +663,7 @@
 
     <component id="floor_1">
       <transformation>
-      <translate x="60" y="0" z="0"/>
+      <translate x="59" y="0" z="0"/>
 
       <rotate axis="y" angle="270"/>
 
@@ -573,6 +683,44 @@
       </children>
     </component>
 
+    <component id="river_P_1">
+      <transformation>
+         <scale x="1" y="1" z="2.67"/>
+      </transformation>
+
+      <materials>
+        <material id ="inherit"/>
+      </materials>
+
+      <texture id="inherit" length_s="1" length_t="1"/>
+
+      <children>
+        <componentref id="river_nr_1"/>
+        <componentref id="river_nr_2"/>
+      </children>
+    </component>
+
+    <component id="full_river">
+      <transformation>
+
+      </transformation>
+
+      <materials>
+        <material id ="inherit"/>
+      </materials>
+
+      <texture id="inherit" length_s="1" length_t="1"/>
+
+      <children>
+        <componentref id="river_P_1"/>
+
+      </children>
+    </component>
+
+
+
+
+
     <!-- Cena Principal -->
     <component id="main_scene">
       <transformation>
@@ -588,6 +736,8 @@
         <componentref id="ex_vehicle"/>
         <componentref id="floor"/>
         <componentref id="floor_1"/>
+        <componentref id="full_river"/>
+
       </children>
     </component>
   </components>
