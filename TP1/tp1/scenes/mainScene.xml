@@ -182,7 +182,7 @@
     </primitive>
 
     <primitive id="terrain">
-      <terrain idtexture="terra" idheightmap="height_map" parts="5" heightscale="50" />
+      <terrain idtexture="terra" idheightmap="height_map" parts="15" heightscale="50" />
     </primitive>
 
     <primitive id="triangle">

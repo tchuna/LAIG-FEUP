@@ -9,7 +9,8 @@ function Terrain(scene, terrain) {
     
 
     this.shader = new CGFshader(this.scene.gl, 'Shaders/Terrain.vert', 'Shaders/Terrain.frag');
-    this.shader.setUniformsValues({normScale: this.height_scale});
+    this.shader.setUniformsValues({normScale: this.height_scale, uSampler2: 1});
+
 
     this.plane = new Plane(this.scene, {npartsU: this.parts, npartsV: this.parts});
     
@@ -24,6 +25,7 @@ Terrain.prototype.display = function() {
     this.scene.pushMatrix();
     this.texture.bind();
     this.height_map.bind(1);
+    this.scene.translate(0.0, -10.0, 0.0);
     this.scene.scale(100.0, 5.0, 100.0);
     this.plane.display();
     this.scene.popMatrix();

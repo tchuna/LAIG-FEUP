@@ -70,7 +70,7 @@ function Vehicle(scene){
   this.base_1=new MyTorus(this.scene,to);
 
   this.vehicl= new CGFappearance(this.scene);
-  this.vehicl.loadTexture("images/c.jpg");
+  this.vehicl.loadTexture("/scenes/images/c.jpg");
 
 
 
@@ -82,6 +82,7 @@ Vehicle.prototype.constructor=Vehicle;
 Vehicle.prototype.display=function(){
 
   this.scene.rotate(-90 * degToRad, 1, 0, 0);
+  this.scene.translate(0.0, 0.0, 25.0);
 
   this.scene.pushMatrix();
   this.scene.translate(0, 3.0, 0);

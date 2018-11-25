@@ -41,7 +41,7 @@ Plane.prototype.makeSurface = function(degree1, degree2, controlVertex) {
 
 		var nurbsSurface = new CGFnurbsSurface(degree1, degree2, controlVertex);
 
-		var obj = new CGFnurbsObject(this.scene, 20, 20, nurbsSurface);
+		var obj = new CGFnurbsObject(this.scene, 50, 50, nurbsSurface);
 
 		return obj;
 };
