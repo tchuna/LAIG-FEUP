@@ -1,4 +1,3 @@
-
 <yas>
   <scene root="main_scene" axis_length="5"/>
 
@@ -204,6 +203,10 @@
     </primitive>
     <primitive id="cylinder_1">
       <cylinder base="1" top="0.2" height="8" slices="50" stacks="50"/>
+    </primitive>
+
+    <primitive id="cylinder2">
+      <cylinder2 base="1" top="1" height="5" slices="250" stacks="250"/>
     </primitive>
 
 
@@ -565,6 +568,26 @@
       </children>
     </component>
 
+    <component id="ex_cy">
+      <transformation>
+        <translate x="20" y="10" z="0"/>
+          <scale x="20" y="20" z="20"/>
+
+
+      </transformation>
+
+      <materials>
+        <material id ="default"/>
+      </materials>
+
+      <texture id="cr" length_s="0.5" length_t="1"/>
+
+      <children>
+        <primitiveref id="cylinder2"/>
+      </children>
+    </component>
+
+
 
     <!--plane-->
     <component id="ex_plane">
@@ -882,6 +905,7 @@
         <!-- <componentref id="floor_full"/> -->
         <componentref id="terrain" />
         <componentref id="water" />
+        <componentref id="ex_cy" />
 
 
 
