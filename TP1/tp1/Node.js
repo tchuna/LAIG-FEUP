@@ -30,6 +30,8 @@ function Node(id, type) {
 
 }
 
+Node.prototype.constructor = Node;
+
 Node.prototype.setMatrix = function () {
   mat4.identity(this.transformMatrix);
 

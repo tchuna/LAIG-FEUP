@@ -1031,6 +1031,37 @@ class MySceneGraph {
           };
           this.primitives[primId] = new Terrain(this.scene, primitive);
           break;
+        case "water":
+          var texture = this.reader.getString(grandChildren[0], "idtexture");
+          var wave_map = this.reader.getString(grandChildren[0], "idwavemap");
+          var parts = this.reader.getInteger(grandChildren[0], "parts");
+          var height_scale = this.reader.getFloat(grandChildren[0], "heightscale");
+          var texture_scale = this.reader.getFloat(grandChildren[0], "texscale");
+
+          if (this.textures[texture] == null) {
+            return "Error parsing primitive Water: texture " + texture + " not found!";
+          }
+          if (this.textures[wave_map] == null) {
+            return "Error parsing primitive Water: wavemap " + wave_map + " not found!";
+          }
+          if (parts <= 0) {
+            return "Error parsing primitive Water: invalid value " + parts + " for parts!";
+          }
+          if (height_scale <= 0) {
+            return "Error parsing primitive Water: invalid value " + height_scale + " for height scale!";
+          }
+          if (texture_scale <= 0) {
+            return "Error parsing primitive Water: invalid value " + texture_scale + " for texture scale!";
+          }
+          primitive = {
+            texture: this.textures[texture],
+            wave_map: this.textures[wave_map],
+            parts: parts,
+            height_scale: height_scale,
+            texture_scale: texture_scale
+          };
+          this.primitives[primId] = new Water(this.scene, primitive);
+          break;
         case "vehicle": 
           this.primitives[primId] = new Vehicle(this.scene);
           break;

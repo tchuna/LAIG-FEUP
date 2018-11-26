@@ -8,7 +8,7 @@ function Terrain(scene, terrain) {
     this.height_scale = terrain.height_scale;
     
 
-    this.shader = new CGFshader(this.scene.gl, 'Shaders/Terrain.vert', 'Shaders/Terrain.frag');
+    this.shader = new CGFshader(this.scene.gl, 'Shaders/Plane.vert', 'Shaders/Plane.frag');
     this.shader.setUniformsValues({normScale: this.height_scale, uSampler2: 1});
 
 
