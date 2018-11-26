@@ -85,5 +85,13 @@ Node.prototype.update = function (deltaTime) {
         this.currAnimationId = 0;
       }
     }
+
+    this.children.forEach(element => {
+      if (element.type == "primitive") {
+        if (element.primitive instanceof Water) {
+          element.primitive.update(deltaTime);
+        }
+      }
+    });
   }
 };
