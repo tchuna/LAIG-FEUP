@@ -1,0 +1,633 @@
+<!-- Os comentarios devem ter espacos no inicio e no fim, a -->
+<!-- separar dos hifens -->
+<!-- Nao devem ser usados caracteres especiais (p.ex. acentos) -->
+<!-- Todas as tags e atributos sao obrigatorios, exceto onde for -->
+<!-- referido o contrario -->
+<!-- Na descricao abaixo, os simbolos utilizados tem o seguinte significado: -->
+ <!-- ii: integer value -->
+ <!-- ff: float value -->
+ <!-- ss: string value -->
+ <!-- cc: character "x" or "y" or "z" -->
+ <!-- tt: "0" or "1" with Boolean significance -->
+<yas>
+     <!-- deve definir-se um objeto para raiz da arvore, assim -->
+     <!-- como o comprimento dos tres eixos (cilindros) -->
+     <scene root="root" axis_length="2.5" />
+
+
+     <views default="perspective_geral" >
+       <!-- tem de existir, pelo menos, uma vista de -->
+       <!-- entre as seguintes (perspective ou ortho) -->
+       <perspective id="perspective_geral" near="0.1" far="500" angle="45">
+         <from x="15.0" y="15.0" z="15.0" />
+         <to x="0.0" y="0.0" z="0.0" />
+       </perspective>
+
+       <perspective id="room_overview" near="0.1" far="90" angle="60">
+            <from x="18" y="5" z="5" />
+            <to x="0" y="2" z="5" />
+        </perspective>
+
+       <perspective id="saturn_closeup" near="0.1" far="90" angle="45">
+            <from x="5" y="4.5" z="9" />
+            <to x="5" y="3.5" z="6" />
+        </perspective>
+
+      <ortho id="ortho_geral" near="0.1" far="500"
+       left="-10" right="10" top="10" bottom="-10">
+        <from x="20.0" y="20.0" z="20.0" />
+        <to x="0.0" y="0.0" z="0.0" />
+      </ortho>
+
+      <ortho id="right_side_ortho" near="0.1" far="90"
+       left="-10" right="10" top="10" bottom="-10">
+        <from x="5.0" y="5.0" z="12.0" />
+        <to x="5.0" y="4.0" z="0.0" />
+      </ortho>
+
+      <ortho id="left_side_ortho" near="0.1" far="90"
+       left="-10" right="10" top="10" bottom="-10">
+        <from x="12.0" y="2.0" z="5.0" />
+        <to x="0" y="1.0" z="5.0" />
+      </ortho>
+
+     </views>
+
+     <ambient>
+       <ambient r="0.3" g="0.3" b="0.3" a="1.0" />
+       <background r="0.0" g="0.0" b="0.0" a="1.0" />
+     </ambient>
+
+     <lights>
+         <!-- Deve existir um ou mais blocos "omni" ou "spot" -->
+         <!-- Os identificadores "id" nao podem ser repetidos -->
+         <omni id="omni1" enabled="1" >
+           <location x="4.0" y="6.0" z="1.0" w="1.0" />
+           <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+           <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+           <specular r="1.0" g="1.0" b="0.0" a="1.0" />
+         </omni>
+
+         <omni id="omni2" enabled="1" >
+           <location x="10.5" y="6.0" z="1.0" w="1.0" />
+           <ambient r="0.0" g="0.0" b="0.0" a="1" />
+           <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+           <specular r="1.0" g="1.0" b="0.0" a="1.0" />
+         </omni>
+
+         <omni id="omni3" enabled="1" >
+           <location x="10.5" y="6.0" z="5.0" w="1.0" />
+           <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+           <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+           <specular r="1.0" g="1.0" b="0.0" a="1.0" />
+         </omni>
+
+         <omni id="omni4" enabled="1" >
+           <location x="4.0" y="6.0" z="5.0" w="1.0" />
+           <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+           <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+           <specular r="1.0" g="1.0" b="0.0" a="1.0" />
+         </omni>
+
+         <spot id="spot_sat" enabled="0" angle="90" exponent="4">
+           <!-- atencao, "target" e' diferente de "direction" -->
+           <location x="5.0" y="2.25" z="5.0" w="1.0" />
+           <target x="5.0" y="3.0" z="5.0" />
+           <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+           <diffuse r="0.65" g="0.65" b="0.65" a="1.0" />
+           <specular r="0.65" g="0.65" b="0.65" a="1.0" />
+         </spot>
+
+         <spot id="spot_prof" enabled="1" angle="90" exponent="1">
+           <!-- atencao, "target" e' diferente de "direction" -->
+           <location x="3.0" y="2.25" z="9.0" w="1.0" />
+           <target x="0.0" y="4.0" z="9.0" />
+           <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+           <diffuse r="0.65" g="0.65" b="0.65" a="1.0" />
+           <specular r="0.65" g="0.65" b="0.65" a="1.0" />
+         </spot>
+
+     </lights>
+
+     <textures>
+       <!-- Deve existir um ou mais blocos "texture" -->
+       <!-- Os identificadores "id" nao podem ser repetidos -->
+       <texture id="metal_tex" file="scenes/images/metal.jpg" />
+       <texture id="walls_tex" file="scenes/images/space_ship_walls.jpg"/>
+       <texture id="floor_tex" file="scenes/images/ship_floor.jpg"/>
+       <texture id="prof_tex" file="scenes/images/prof_laig.jpg"/>
+       <texture id="sat_tex" file="scenes/images/saturn.jpg"/>
+       <texture id="sat_ring_tex" file="scenes/images/saturn_ring.png"/>
+       <texture id="analyser_tex" file="scenes/images/analyser_tex.jpg"/>
+
+
+     </textures>
+
+     <materials>
+       <!-- Deve existir um ou mais blocos "material" -->
+       <!-- Os identificadores "id" nao podem ser repetidos -->
+       <material id="glass" shininess = "40.0" >
+         <emission r="0" g="0" b="0" a="1" />
+         <ambient r="0.3" g="0.3" b="0.3" a="1.0" />
+         <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+         <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+       </material>
+
+       <material id="light_grey" shininess="20">
+         <emission r="0" g="0" b="0" a="1" />
+         <ambient r="0" g="0" b="0" a="1" />
+         <diffuse r="0.3" g="0.3" b="0.3" a="1" />
+         <specular r="0.4" g="0.4" b="0.4" a="1" />
+       </material>
+
+       <material id="blue" shininess="50">
+          <emission r="0" g="0" b="0.5" a="1" />
+          <ambient r="0" g="0" b="0.3" a="1" />
+          <diffuse r="0.2" g="0.2" b="0.3" a="1" />
+          <specular r="0.2" g="0.2" b="0.3" a="1" />
+      </material>
+      <material id="orange" shininess="30">
+          <emission r="0" g="0" b="0" a="1" />
+          <ambient r="0.1" g="0" b="0" a="1" />
+          <diffuse r="0.4" g="0.3" b="0.2" a="1" />
+          <specular r="0.4" g="0.3" b="0.2" a="1" />
+      </material>
+      <material id="weak_orange" shininess="30">
+          <emission r="0" g="0" b="0" a="1" />
+          <ambient r="1" g="0.7" b="0.4" a="1" />
+          <diffuse r="1" g="0.7" b="0.4" a="1" />
+          <specular r="0.4" g="0.3" b="0.2" a="1" />
+      </material>
+      <material id="turquoise" shininess="30">
+          <emission r="0" g="0" b="0" a="1" />
+          <ambient r="0" g="0.1" b="0.1" a="1" />
+          <diffuse r="0.13" g="0.28" b="0.25" a="1" />
+          <specular r="0.13" g="0.28" b="0.25" a="1" />
+      </material>
+
+      <material id="metal" shininess="80" >
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.1" g="0.1" b="0.15" a="1" />
+            <diffuse r="0.4" g="0.4" b="0.5" a="1" />
+            <specular r="0.4" g="0.4" b="0.5" a="1" />
+      </material>
+
+      <material id="red" shininess="30">
+            <emission r="0" g="0" b="0" a="1" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1" />
+            <diffuse r="0.2" g="0.05" b="0.05" a="1" />
+            <specular r="0.2" g="0.05" b="0.05" a="1" />
+        </material>
+
+     </materials>
+
+
+     <transformations>
+       <!-- Deve existir um ou mais blocos "transformation" -->
+       <!-- Os identificadores "id" nao podem ser repetidos -->
+       <!-- Os angulos sao expressos em graus -->
+       <transformation id="sphere_t">
+         <!-- instrucoes a usar sem limite nem ordem -->
+         <!-- deve existir pelo menos uma transformacao -->
+         <translate x="0" y="0" z="3.25"/>
+       </transformation>
+
+       <transformation id="triangle_t">
+         <!-- instrucoes a usar sem limite nem ordem -->
+         <!-- deve existir pelo menos uma transformacao -->
+         <rotate axis="y" angle="90"/>
+         <translate x="-9" y="3" z="0.75"/>
+       </transformation>
+
+       <transformation id="chairSeat_t">
+         <rotate axis="x" angle="-90"/>
+         <translate x="1.8" y="-9.15" z="1.01"/>
+         <scale x="0.85" y="0.85" z="1"/>
+       </transformation>
+
+     </transformations>
+
+
+     <primitives>
+
+       <!-- Uma "primitive" e' uma primitiva e pode ser usada em nos folha -->
+       <!-- Deve existir um ou mais blocos "primitive" -->
+       <!-- Os identificadores "id" nao podem ser repetidos -->
+       <primitive id="sphere1">
+
+           <sphere radius="0.65" slices="16" stacks="16" />
+
+       </primitive >
+
+       <primitive id="rect1">
+
+           <rectangle x1="0" y1="0" x2="1" y2="1" />
+
+       </primitive >
+
+       <primitive id="rect2">
+
+           <rectangle x1="2" y1="1.75" x2="8.0" y2="3.0" />
+
+       </primitive >
+
+       <primitive id="triangle1">
+
+         <triangle x1="-0.5" y1="-0.5" z1="0.0"
+         x2="0.5" y2="-0.5" z2="0.0"
+         x3="0.0" y3="0.5" z3="0.0" />
+
+       </primitive >
+
+       <primitive id="cylinder1">
+
+         <cylinder base="1" top="1" height="2.0" slices="10" stacks="10" />
+
+       </primitive >
+
+       <primitive id="cylinder2">
+
+         <cylinder base="1.2" top="0.6" height="2.0" slices="16" stacks="16" />
+
+       </primitive >
+
+       <primitive id="torus1">
+
+         <torus inner="0.1" outer="1" slices="16" loops="10" />
+
+       </primitive >
+
+       <!--<primitive id="sphere1">-->
+
+           <!-- apenas pode existir UMA das seguintes tags: -->
+           <!-- rectangle, triangle, cylinder, sphere, torus -->
+           <!-- os parametros devem ser interpretados, genericamente, -->
+           <!-- como em WebGL; o cilindro deve adicionalmente ter tampas -->
+           <!--<rectangle x1="ff" y1="ff" x2="ff" y2="ff" />-->
+           <!--<triangle x1="ff" y1="ff" z1="ff"-->
+           <!--x2="ff" y2="ff" z2="ff"-->
+           <!--x3="ff" y3="ff" z3="ff" />-->
+           <!--<cylinder base="ff" top="ff" height="ff" slices="ii" stacks="ii" />-->
+           <!--<sphere radius="ff" slices="ii" stacks="ii" />-->
+           <!--<torus inner="ff" outer="ff" slices="ii" loops="ii" />-->
+
+       <!--</primitive >-->
+
+     </primitives >
+
+       <components>
+
+         <!--No parede da esquerda -->
+
+         <component id="left_wall_No">
+             <transformation>
+                 <translate x="0" y="0" z="10"/>
+                 <rotate axis="y" angle="-180"/>
+                 <rotate axis="y" angle="-90"/>
+                 <scale x="10" y="5" z="1"/>
+
+             </transformation>
+
+             <materials>
+                 <material id ="light_grey"/>
+             </materials>
+
+             <texture id="walls_tex" length_s="0.6" length_t="0.6"/>
+
+             <children>
+                 <primitiveref id="rect1"/>
+             </children>
+         </component>
+
+         <!--No parede tras -->
+         <component id="back_wall_No">
+             <transformation>
+                 <scale x="10" y="5" z="1"/>
+             </transformation>
+
+             <materials>
+                 <material id ="light_grey"/>
+             </materials>
+
+             <texture id="walls_tex" length_s="0.6" length_t="0.6"/>
+
+             <children>
+                 <primitiveref id="rect1"/>
+             </children>
+         </component>
+
+         <!--No do chao -->
+         <component id="floor_No">
+             <transformation>
+                 <translate x="0" y="0" z="10"/>
+                 <rotate axis="x" angle="-90"/>
+                 <scale x="10" y="10" z="1"/>
+             </transformation>
+
+             <materials>
+                 <material id ="light_grey"/>
+             </materials>
+
+             <texture id="floor_tex" length_s="0.25" length_t="0.25"/>
+
+             <children>
+                 <primitiveref id="rect1"/>
+             </children>
+         </component>
+
+
+         <!--work desk -->
+
+         <component id="work_tables">
+             <transformation>
+             </transformation>
+
+             <materials>
+                 <material id ="light_grey"/>
+                 <material id ="blue"/>
+                 <material id ="orange"/>
+                 <material id ="turquoise"/>
+             </materials>
+
+             <texture id="none" />
+
+             <children>
+                 <componentref id="d_left_quad"/>
+                 <componentref id="d_right_quad"/>
+                 <componentref id="d_front_quad"/>
+                 <componentref id="d_top"/>
+
+             </children>
+         </component>
+
+         <!--desk left wall -->
+
+         <component id="d_left_quad">
+             <transformation>
+                 <translate x="0" y="0" z="10"/>
+                 <scale x="1.25" y="1.75" z="1"/>
+
+             </transformation>
+
+             <materials>
+                 <material id ="inherit"/>
+             </materials>
+
+             <texture id="inherit" />
+
+             <children>
+                 <primitiveref id="rect1"/>
+             </children>
+         </component>
+
+         <!--desk right wall -->
+
+         <component id="d_right_quad">
+             <transformation>
+                 <rotate axis="y" angle="-180"/>
+                 <translate x="-1.25" y="0" z="-6.5"/>
+                 <scale x="1.25" y="1.75" z="1"/>
+
+             </transformation>
+
+             <materials>
+                 <material id ="inherit"/>
+             </materials>
+
+             <texture id="inherit" />
+
+             <children>
+                 <primitiveref id="rect1"/>
+             </children>
+         </component>
+
+         <!--desk front wall -->
+
+         <component id="d_front_quad">
+             <transformation>
+                 <rotate axis="y" angle="90"/>
+                 <translate x="-10" y="0" z="1.25"/>
+                 <scale x="3.5" y="1.75" z="1"/>
+
+             </transformation>
+
+             <materials>
+                 <material id ="inherit"/>
+             </materials>
+
+             <texture id="inherit" />
+
+             <children>
+                 <primitiveref id="rect1"/>
+             </children>
+         </component>
+
+         <!--desk top -->
+
+         <component id="d_top">
+             <transformation>
+               <rotate axis="y" angle="90"/>
+               <rotate axis="x" angle="-90"/>
+               <translate x="-10" y="-1.25" z="1.75"/>
+               <scale x="3.5" y="1.25" z="1"/>
+             </transformation>
+
+             <materials>
+                 <material id ="inherit"/>
+             </materials>
+
+             <texture id="inherit" />
+
+             <children>
+                <primitiveref id="rect1" />
+             </children>
+         </component>
+
+         <!--triangle screen -->
+
+         <component id="tri_screen">
+             <transformation>
+                 <transformationref id="triangle_t" />
+             </transformation>
+
+             <materials>
+                 <material id="inherit"/>
+             </materials>
+
+             <texture id="prof_tex" length_s="1" length_t="1.2"/>
+
+             <children>
+                 <primitiveref id="triangle1"/>
+             </children>
+         </component>
+
+         <!--chair -->
+
+         <component id="chair">
+             <transformation>
+             </transformation>
+
+             <materials>
+                 <material id ="metal"/>
+                 <material id ="red"/>
+             </materials>
+
+             <texture id="inherit" length_s="1" length_t="1"/>
+
+             <children>
+                 <componentref id="chair_cyl"/>
+                 <componentref id="chair_quad"/>
+
+             </children>
+         </component>
+
+         <!--chair holder -->
+
+         <component id="chair_cyl">
+             <transformation>
+                 <rotate axis="x" angle="-90"/>
+                 <translate x="2.25" y="-8.75" z="0"/>
+                 <scale x="0.25" y="0.25" z="0.5"/>
+
+
+             </transformation>
+
+             <materials>
+                 <material id="inherit"/>
+             </materials>
+
+             <texture id="inherit" length_s="1" length_t="1"/>
+
+             <children>
+                 <primitiveref id="cylinder1"/>
+             </children>
+         </component>
+
+         <!--chair seat -->
+
+         <component id="chair_quad">
+             <transformation>
+                <transformationref id="chairSeat_t" />
+
+             </transformation>
+
+             <materials>
+                 <material id="inherit"/>
+             </materials>
+
+             <texture id="inherit" length_s="0.25" length_t="0.25"/>
+
+             <children>
+                 <primitiveref id="rect1"/>
+             </children>
+         </component>
+
+         <!--planet analyser -->
+
+         <component id="p_analyser">
+             <transformation>
+               <rotate axis="x" angle="-90"/>
+               <translate x="5" y="-5" z="0"/>
+             </transformation>
+
+             <materials>
+                 <material id ="metal"/>
+                 <material id ="blue"/>
+             </materials>
+
+             <texture id="none" />
+
+             <children>
+                 <componentref id="levitator"/>
+                 <componentref id="p_saturn"/>
+                 <componentref id="p_saturn_ring"/>
+             </children>
+         </component>
+
+         <!--levitator -->
+
+         <component id="levitator">
+             <transformation>
+             </transformation>
+
+             <materials>
+                 <material id="inherit"/>
+             </materials>
+
+             <texture id="analyser_tex" length_s="1" length_t="1"/>
+
+             <children>
+                 <primitiveref id="cylinder2"/>
+             </children>
+         </component>
+
+         <!--planet saturn -->
+
+         <component id="p_saturn">
+             <transformation>
+               <transformationref id="sphere_t" />
+             </transformation>
+
+             <materials>
+                 <material id ="weak_orange"/>
+                 <material id ="metal"/>
+             </materials>
+
+             <texture id="sat_tex" length_s="1" length_t="1"/>
+
+             <children>
+               <primitiveref id="sphere1"/>
+             </children>
+         </component>
+
+         <!-- saturn ring -->
+
+         <component id="p_saturn_ring">
+             <transformation>
+               <translate x="0" y="0" z="3.25"/>
+             </transformation>
+
+             <materials>
+                 <material id ="weak_orange"/>
+                 <material id ="metal"/>
+             </materials>
+
+             <texture id="sat_ring_tex" length_s="1" length_t="1"/>
+
+             <children>
+               <primitiveref id="torus1"/>
+             </children>
+         </component>
+
+         <!--root -->
+         <component id="root">
+
+           <transformation>
+
+           </transformation>
+
+           <materials>
+
+             <material id="glass" />
+
+           </materials>
+
+           <texture id="metal_tex" length_s="1" length_t="1" />
+
+           <!-- bloco "children" obrigatorio num "component" -->
+             <children>
+
+               <componentref id="left_wall_No" />
+               <componentref id="back_wall_No" />
+               <componentref id="floor_No" />
+               <componentref id="work_tables" />
+               <componentref id="tri_screen" />
+               <componentref id="chair" />
+               <componentref id="p_analyser" />
+
+             </children>
+
+         </component>
+
+       </components>
+</yas>
