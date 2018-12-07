@@ -897,7 +897,20 @@
 
       <children>
         <componentref id="ex_vehicle"/>
+        <componentref id="ex_vehicle_1"/>
+        <!-- <componentref id="floor"/>
+        <componentref id="floor_1"/>
+        <componentref id="full_river"/>
+        <componentref id="ex_plane"/> -->
+        <!-- <componentref id="floor_full"/> -->
+        <componentref id="terrain" />
+        <componentref id="water" />
+        <componentref id="ex_cy" />
+
+
+
       </children>
     </component>
   </components>
 </yas>
+   
