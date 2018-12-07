@@ -48,6 +48,8 @@ class MySceneGraph {
     */
 
     this.reader.open('scenes/' + filename, this);
+
+    this.boardCell = new BoardCell(this.scene);
   }
 
   /*
@@ -1491,7 +1493,8 @@ class MySceneGraph {
   displayScene() {
     // entry point for graph rendering
     this.scene.pushMatrix();
-    this.rendering(this.scene, this.rootNode);
+    // this.rendering(this.scene, this.rootNode);
+    this.boardCell.display();
     this.scene.popMatrix();
   }
 }
