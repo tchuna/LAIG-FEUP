@@ -181,7 +181,7 @@ class MySceneGraph {
 
     // <animations>
     if ((index = nodeNames.indexOf("animations")) == -1) {
-      return "tag <animations> missing";
+      //return "tag <animations> missing";
     }
     else {
       if (index != ANIMATION_INDEX)
@@ -1083,7 +1083,7 @@ class MySceneGraph {
           };
           this.primitives[primId] = new Water(this.scene, primitive);
           break;
-        case "vehicle": 
+        case "vehicle":
           this.primitives[primId] = new Vehicle(this.scene);
           break;
 
