@@ -22,7 +22,7 @@
 
   <ambient>
     <ambient r="0" g="0" b="0" a="1"/>
-    <background r="0" g="0.5" b="0.3" a="1" />
+    <background r="0.4" g="0.2" b="0.3" a="1" />
   </ambient>
 
   <lights>
@@ -2193,24 +2193,7 @@
       <texture id="trunk" length_s="1" length_t="1"/>
 
       <children>
-        <componentref id="ex_vehicle"/>
-        <componentref id="nurb_patch"/>
-        <componentref id="cubo_test"/>
-      <!--  <componentref id="ex_vehicle"/>
-        <componentref id="nurb_patch"/>
-        <componentref id="floor_right"/>
         <componentref id="floor_left"/>
-        <componentref id="floor_right"/>
-        <componentref id="floor_left"/>
-
-        <componentref id="ponte"/>
-        <componentref id="turbina_1"/>
-        <componentref id="turbina_2"/>
-        <componentref id="turbina_3"/>
-        <componentref id="torre"/>
-        <componentref id="cerca"/>
-        <componentref id="cubo_test"/>-->
-
       </children>
     </component>
   </components>
