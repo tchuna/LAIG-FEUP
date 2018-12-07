@@ -86,12 +86,10 @@ Node.prototype.update = function (deltaTime) {
       }
     }
 
-    this.children.forEach(element => {
-      if (element.type == "primitive") {
-        if (element.primitive instanceof Water) {
-          element.primitive.update(deltaTime);
-        }
-      }
-    });
+    // this.children.forEach(element => {
+    //   if (element.type == "primitive") {
+    //     element.primitive.update(deltaTime);
+    //   }
+    // });
   }
 };
