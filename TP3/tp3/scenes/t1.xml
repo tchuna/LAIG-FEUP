@@ -80,9 +80,6 @@
     </lights>
 
     <textures>
-        <texture id="vidral" file="scenes/images/vidral.jpg"/>
-        <texture id="big_lamp" file="scenes/images/lamp.jpeg"/>
-        <texture id="small_lamp" file="scenes/images/small_lamp.jpg"/>
         <texture id="white_wall" file="scenes/images/white_wall.jpg"/>
         <texture id="floor" file="scenes/images/floor.jpg"/>
         <texture id="brick_wall" file="scenes/images/brick_wall.jpg"/>
@@ -207,6 +204,28 @@
             </children>
         </component>
 
+
+        <component id="right_wall">
+            <transformation>
+                <translate x="8" y="0" z="8"/>
+                <rotate axis="y" angle="-180"/>
+                <rotate axis="y" angle="-90"/>
+                <scale x="8" y="5" z="1"/>
+            </transformation>
+
+            <materials>
+                <material id ="full_white"/>
+            </materials>
+
+            <texture id="white_wall" length_s="1" length_t="1"/>
+
+            <children>
+                <primitiveref id="square_at_zero"/>
+            </children>
+        </component>
+
+
+
         <component id="back_wall">
             <transformation>
                 <scale x="8" y="5" z="1"/>
@@ -216,7 +235,7 @@
                 <material id ="beige"/>
             </materials>
 
-            <texture id="brick_wall" length_s="0.5" length_t="0.5"/>
+            <texture id="white_wall" length_s="0.5" length_t="0.5"/>
 
             <children>
                 <primitiveref id="square_at_zero"/>
@@ -489,7 +508,7 @@
         <component id="desk">
             <transformation>
                 <translate x="4.2" y="0" z="4"/>
-                <scale x="0.7" y="0.5" z="0.7"/>
+                <scale x="0.5" y="0.5" z="0.7"/>
             </transformation>
 
             <materials>
@@ -505,8 +524,8 @@
 
         <component id="chair_top">
             <transformation>
-                <translate x="0" y="1" z="0"/>
-                <scale x="1" y="0.3" z="0.1"/>
+                <translate x="0" y="0.9" z="0"/>
+                <scale x="1" y="0.89" z="0.09"/>
                 <translate x="0.5" y="0.5" z="0.5"/>
             </transformation>
 
@@ -600,7 +619,7 @@
             <transformation>
                 <scale x="1.1" y="1.2" z="1.1"/>
                 <rotate axis="y" angle="180"/>
-                <translate x="3.4" y="0" z="-8"/>
+                <translate x="-4.4" y="0" z="-5.2"/>
             </transformation>
 
             <materials>
