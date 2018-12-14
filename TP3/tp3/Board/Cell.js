@@ -60,14 +60,20 @@ Cell.prototype.display = function(){
 /**
  * enable arrows identified indexes passed by argument
  */
-Cell.prototype.enableArrow = function () {
-    if (arguments.length > 8) {
-        console.warn("Warning: arguments of function enableArrow with length higher than 8. " +
-            "Extra arguments will be ignored!");
-        arguments.length = 8;
+Cell.prototype.enableArrow = function (indexes) {
+    if (indexes instanceof Array) {
+        for (let i = 0; i < indexes.length; i++) {
+            if (indexes[i] >= 0 && indexes[i] < 8) {
+                this.activeArrows[indexes[i]] = true;
+            }
+            else {
+                console.warn('Warning: passing argument indexes to function enableArrow in Cell ' +
+                            'contains an invalid index');
+            }
+        }
     }
-    for (let i = 0; i < arguments.length; i++) {
-        this.activeArrows[i] = true;
+    else {
+        console.warn("Warning: passing argument indexes to function enableArrow in Cell is invalid");
     }
 };
 
@@ -109,4 +115,12 @@ Cell.prototype.enableDot = function () {
  */
 Cell.prototype.disableDot = function () {
     this.dotEnabled = false;
+};
+
+/**
+ * Return true if cell has a dot enabled and false otherwise
+ * @returns {boolean}
+ */
+Cell.prototype.hasDot = function () {
+    return this.dotEnabled;
 };
