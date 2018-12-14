@@ -7,11 +7,7 @@ function Dot(scene, material){
     if (material instanceof CGFappearance) {
         this.material = material;
     } else {
-        this.material = new CGFappearance(this.scene);
-        this.material.setAmbient(1.0, 1.0, 1.0, 1.0);
-        this.material.setDiffuse(1.0, 1.0, 1.0, 1.0);
-        this.material.setSpecular(1.0, 1.0, 1.0, 1.0);
-        this.material.setShininess(10.0);
+        this.material = new Color(this.scene, 'white');
     }
 
     this.circle = new MyCircle(this.scene, {

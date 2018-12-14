@@ -23,11 +23,7 @@ function Cell(scene){
     // Active Arrows (Arrows displayed in the scene)
     this.activeArrows = [false, false, false, false, false, false, false, false];
 
-    this.cellMaterial = new CGFappearance(this.scene);
-    this.cellMaterial.setAmbient(1.0, 1.0, 1.0, 1.0);
-    this.cellMaterial.setDiffuse(1.0, 1.0, 1.0, 1.0);
-    this.cellMaterial.setSpecular(1.0, 1.0, 1.0, 1.0);
-    this.cellMaterial.setShininess(10.0);
+    this.cellMaterial = new Color(this.scene, 'white');
     this.cellMaterial.loadTexture("/tp3/scenes/images/wood_grain.png");
 }
 Cell.prototype = Object.create(CGFobject.prototype);
@@ -95,7 +91,7 @@ Cell.prototype.disableArrow = function () {
  */
 Cell.prototype.setDotMaterial = function (material) {
     if (material instanceof CGFappearance) {
-        this.dotMaterial = material;
+        this.dot.setMaterial(material);
     } else {
         console.warn("Warning: passing argument of function setDotMaterial is not an instance of CGFappearance!");
     }

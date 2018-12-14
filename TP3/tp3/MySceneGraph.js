@@ -1359,6 +1359,7 @@ class MySceneGraph {
         // this.rendering(this.scene, this.rootNode);
         this.board.display();
         this.board.enableDot(50);
+        this.board.setDotColor(50, 'blue');
         this.scene.popMatrix();
     }
 }

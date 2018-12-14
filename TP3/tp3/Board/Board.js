@@ -52,8 +52,20 @@ Board.prototype.display = function(){
 
 Board.prototype.enableDot = function (index) {
     if (index < 0 || index >= 64) {
-        console.warn("Warning: invalid index for function enableDot")
+        console.warn("Warning: invalid index for function enableDot");
     } else {
         this.cells[index].enableDot();
+    }
+};
+
+Board.prototype.setDotColor = function (index, color) {
+    if (index < 0 || index >= 64) {
+        console.warn("Warning: passing argument index to function setDotColor in Board is invalid");
+    }
+    else if (['red', 'green', 'blue', 'white', 'black'].includes(color)) {
+        this.cells[index].setDotMaterial(new Color(this.scene, color));
+    }
+    else {
+        console.warn("Warning: passing argument color to function setDotColor in Board is invalid");
     }
 };
