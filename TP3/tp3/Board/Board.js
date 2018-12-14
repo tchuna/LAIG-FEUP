@@ -15,9 +15,8 @@ function Board(scene){
     // Board Cell
     this.cells = [];
     for (let i = 0; i < 64; i++) {
-        this.cells[i] = new Cell(this.scene);
+        this.cells.push(new Cell(this.scene));
     }
-
 
     this.boardMaterial = new CGFappearance(this.scene);
     this.boardMaterial.setAmbient(0.5, 0.5, 0.5, 1.0);
@@ -39,20 +38,22 @@ Board.prototype.display = function(){
     this.board.display();
     this.scene.popMatrix();
 
-    for (let i = 0; i < 64; i++) {
-        for (let j = -3.5; j < 4.5; j++) {
-            for (let k = -3.5; k < 4.5; k++) {
-                this.scene.pushMatrix();
-                this.scene.scale(0.5, 1.0, 0.5);
-                this.scene.translate(j*3.5, 0.01, k*3.5);
-                this.cells[i].display();
-                this.scene.popMatrix();
-            }
+    for (let i = -3.5, k = 0; i < 4.5; i++) {
+        for (let j = -3.5; j < 4.5; j++, k++) {
+            this.scene.pushMatrix();
+            this.scene.scale(0.5, 1.0, 0.5);
+            this.scene.translate(j*3.5, 0.01, i*3.5);
+            this.cells[k].display();
+            this.scene.popMatrix();
         }
     }
+
 };
 
-// TODO: check why independently of the index, all dots are being displayed!
 Board.prototype.enableDot = function (index) {
-    this.cells[index].enableDot();
+    if (index < 0 || index >= 64) {
+        console.warn("Warning: invalid index for function enableDot")
+    } else {
+        this.cells[index].enableDot();
+    }
 };
