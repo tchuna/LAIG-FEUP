@@ -50,6 +50,7 @@ class MySceneGraph {
         this.reader.open('scenes/' + filename, this);
 
         this.board = new Board(this.scene);
+        this.piece = new Piece(this.scene, new Color(this.scene, 'red'));
     }
 
     /*
@@ -1349,17 +1350,21 @@ class MySceneGraph {
         }
     }
 
+
     /**
      * Displays the scene, processing each node, starting in the root node.
      *
      */
     displayScene() {
+
         // entry point for graph rendering
         this.scene.pushMatrix();
         // this.rendering(this.scene, this.rootNode);
         this.board.display();
         this.board.enableDot(50);
         this.board.setDotColor(50, 'blue');
+        this.board.enableArrows(50, 'N');
+        this.piece.display();
         this.scene.popMatrix();
     }
 }

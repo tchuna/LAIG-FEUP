@@ -39,7 +39,6 @@ class XMLscene extends CGFscene {
     this.axis = new CGFaxis(this);
 
     this.setUpdatePeriod(20);
-
   }
 
   /**
@@ -161,7 +160,6 @@ class XMLscene extends CGFscene {
       }
     }
   }
-
 
   /**
   * Displays the scene.
