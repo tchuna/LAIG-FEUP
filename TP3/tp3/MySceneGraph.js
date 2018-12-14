@@ -1358,6 +1358,7 @@ class MySceneGraph {
         this.scene.pushMatrix();
         // this.rendering(this.scene, this.rootNode);
         this.board.display();
+        this.board.enableDot(8);
         this.scene.popMatrix();
     }
 }
