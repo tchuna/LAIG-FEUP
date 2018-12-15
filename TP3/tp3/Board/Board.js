@@ -4,6 +4,7 @@ function Board(scene){
     CGFobject.call(this, scene);
     this.scene = scene;
 
+    // Enable picking
     this.scene.setPickEnabled(true);
 
     // Board Base
@@ -16,20 +17,36 @@ function Board(scene){
 
     // Board Cell
     this.cells = [];
-    for (let i = 0; i < 64; i++) {
+    for (let i = 0; i < 81; i++) {
         this.cells.push(new Cell(this.scene));
     }
 
-    this.directionMap = [];
-    this.directionMap['N'] = [7, 0, 1];
-    this.directionMap['NE'] = [0, 1, 2];
-    this.directionMap['E'] = [1, 2, 3];
-    this.directionMap['SE'] = [2, 3, 4];
-    this.directionMap['S'] = [3, 4, 5];
-    this.directionMap['SW'] = [4, 5, 6];
-    this.directionMap['W'] = [5, 6, 7];
-    this.directionMap['NW'] = [6, 7, 0];
+    // Possible directions
+    this.directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
 
+    // Possible colors
+    this.colors = ['red', 'green', 'blue', 'white', 'black'];
+
+    // Maps piece directions to possible movement directions
+    this.directionMap = [];
+    this.directionMap[this.directions[0]] = [7, 0, 1];
+    this.directionMap[this.directions[1]] = [0, 1, 2];
+    this.directionMap[this.directions[2]] = [1, 2, 3];
+    this.directionMap[this.directions[3]] = [2, 3, 4];
+    this.directionMap[this.directions[4]] = [3, 4, 5];
+    this.directionMap[this.directions[5]] = [4, 5, 6];
+    this.directionMap[this.directions[6]] = [5, 6, 7];
+    this.directionMap[this.directions[7]] = [6, 7, 0];
+
+    // Array of pieces
+    this.pieces = [];
+    this.pieces[this.colors[0]] = new Piece(this.scene, new Color(this.scene, this.colors[0]));
+    this.pieces[this.colors[1]] = new Piece(this.scene, new Color(this.scene, this.colors[1]));
+    this.pieces[this.colors[2]] = new Piece(this.scene, new Color(this.scene, this.colors[2]));
+    this.pieces[this.colors[3]] = new Piece(this.scene, new Color(this.scene, this.colors[3]));
+    this.pieces[this.colors[4]] = new Piece(this.scene, new Color(this.scene, this.colors[4]));
+
+    // Material of the board base
     this.boardMaterial = new CGFappearance(this.scene);
     this.boardMaterial.setAmbient(0.5, 0.5, 0.5, 1.0);
     this.boardMaterial.setDiffuse(0.5, 0.5, 0.5, 1.0);
@@ -37,22 +54,26 @@ function Board(scene){
     this.boardMaterial.setShininess(10.0);
     this.boardMaterial.loadTexture("/tp3/scenes/images/wood.jpg");
 }
+
 Board.prototype = Object.create(CGFobject.prototype);
 Board.prototype.constructor = Board;
 
-Board.prototype.display = function(){
+/**
+ * Display board
+ */
+Board.prototype.display = function() {
     this.logPicking();
     this.scene.clearPickRegistration();
 
     this.scene.pushMatrix();
-    this.scene.scale(15.0, 1.0, 15.0);
+    this.scene.scale(20.0, 1.0, 20.0);
     this.scene.rotate(-90 * DEGREE_TO_RAD, 1, 0, 0);
     this.boardMaterial.apply();
     this.board.display();
     this.scene.popMatrix();
 
-    for (let i = -3.5, k = 0; i < 4.5; i++) {
-        for (let j = -3.5; j < 4.5; j++, k++) {
+    for (let i = -4, k = 0; i < 5; i++) {
+        for (let j = -4; j < 5; j++, k++) {
             this.scene.pushMatrix();
             this.scene.registerForPick(k+1, this.cells[k]);
             this.scene.scale(0.5, 1.0, 0.5);
@@ -63,6 +84,9 @@ Board.prototype.display = function(){
     }
 };
 
+/**
+ * Log the picking of a cell
+ */
 Board.prototype.logPicking = function () {
     if (this.scene.pickMode === false) {
         if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
@@ -71,6 +95,7 @@ Board.prototype.logPicking = function () {
                 if (obj) {
                     let customId = this.scene.pickResults[i][1];
                     console.log('Picked object: ' + obj + ', with pick id ' + customId);
+                    this.setDotColor(customId - 1, 'blue');
                     if (this.cells[customId -1].hasDot()) {
                         this.cells[customId - 1].disableDot();
                     }
@@ -84,34 +109,69 @@ Board.prototype.logPicking = function () {
     }
 };
 
+/**
+ * Enable the display of a dot in the cell given by index <Index>
+ * @param index
+ */
 Board.prototype.enableDot = function (index) {
-    if (index < 0 || index >= 64) {
+    if (index < 0 || index >= 81) {
         console.warn("Warning: invalid index for function enableDot");
     } else {
         this.cells[index].enableDot();
     }
 };
 
+/**
+ * Set the color of the dot to be placed in cell given by index <Index>
+ * @param index
+ * @param color
+ */
 Board.prototype.setDotColor = function (index, color) {
-    if (index < 0 || index >= 64) {
+    if (index < 0 || index >= 81) {
         console.warn("Warning: passing argument index to function setDotColor in Board is invalid");
     }
-    else if (['red', 'green', 'blue', 'white', 'black'].includes(color)) {
-        this.cells[index].setDotMaterial(new Color(this.scene, color));
+    else if (!(this.colors.includes(color))) {
+        console.warn("Warning: passing argument color to function setDotColor in Board is invalid");
     }
     else {
-        console.warn("Warning: passing argument color to function setDotColor in Board is invalid");
+        this.cells[index].setDotMaterial(new Color(this.scene, color));
     }
 };
 
+/**
+ * Show direction arrows in cell given by index <Index> facing directions (<Direction> +- 45) degrees
+ * @param index
+ * @param direction
+ */
 Board.prototype.enableArrows = function (index, direction) {
-    if (index < 0 || index >= 64) {
+    if (index < 0 || index >= 81) {
         console.warn('Warning: passing argument index to function enableArrows in Board is invalid');
     }
-    else if (['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'].includes(direction)) {
-        this.cells[index].enableArrow(this.directionMap[direction]);
+    else if (!(this.directions.includes(direction))) {
+        console.warn('Warning: passing argument direction to function enableArrows in Board is invalid');
     }
     else {
-        console.warn('Warning: passing argument direction to function enableArrows in Board is invalid');
+        this.cells[index].enableArrow(this.directionMap[direction]);
+    }
+};
+
+/**
+ * Place piece of color <Color>, facing direction <Direction>, in cell with index <Index>
+ * @param index
+ * @param color
+ * @param direction
+ */
+Board.prototype.placePiece = function(index, color, direction) {
+    if (index < 0 || index >= 81) {
+        console.warn('Warning: passing argument index to function placePiece in Board is invalid');
+    }
+    else if(!(this.directions.includes(direction))) {
+        console.warn('Warning: passing argument direction to function placePiece in Board is invalid');
+    }
+    else if (!(this.colors.includes(color))) {
+        console.warn('Warning: passing argument color to function placePiece in Board is invalid');
+    }
+    else {
+        this.cells[index].setPiece(this.pieces[color], direction);
     }
 };

@@ -21,7 +21,7 @@ Piece.prototype.constructor = Piece;
 Piece.prototype.display = function(){
     this.scene.pushMatrix();
     this.scene.translate(0.0, 0.2, 0.0);
-    this.scene.scale(0.5, 1.0, 0.5);
+    this.scene.scale(0.6, 0.5, 1.1);
     this.scene.rotate(-90 * DEGREE_TO_RAD, 0, 1, 0);
     this.material.apply();
     this.piece.display();

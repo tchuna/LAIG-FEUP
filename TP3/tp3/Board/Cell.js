@@ -23,6 +23,18 @@ function Cell(scene){
     // Active Arrows (Arrows displayed in the scene)
     this.activeArrows = [false, false, false, false, false, false, false, false];
 
+    this.piece = null;
+
+    this.directionMap = [];
+    this.directionMap['N'] = 0;
+    this.directionMap['NE'] = 1;
+    this.directionMap['E'] = 2;
+    this.directionMap['SE'] = 3;
+    this.directionMap['S'] = 4;
+    this.directionMap['SW'] = 5;
+    this.directionMap['W'] = 6;
+    this.directionMap['NW'] = 7;
+
     this.cellMaterial = new Color(this.scene, 'white');
     this.cellMaterial.loadTexture("/tp3/scenes/images/wood_grain.png");
 }
@@ -47,6 +59,13 @@ Cell.prototype.display = function(){
             this.boardArrow[i].display();
             this.scene.popMatrix();
         }
+    }
+
+    if (this.piece !== null) {
+        this.scene.pushMatrix();
+        this.scene.rotate(-45 * this.directionMap[this.piece.direction] * DEGREE_TO_RAD, 0, 1, 0);
+        this.piece.object.display();
+        this.scene.popMatrix();
     }
 
     this.scene.pushMatrix();
@@ -123,4 +142,25 @@ Cell.prototype.disableDot = function () {
  */
 Cell.prototype.hasDot = function () {
     return this.dotEnabled;
+};
+
+/**
+ * Place piece in cell
+ * @param piece
+ * @param direction
+ */
+Cell.prototype.setPiece = function (piece, direction) {
+    this.piece = {
+        object: piece,
+        direction: direction,
+        ableToMove: true
+    }
+};
+
+/**
+ * Get piece placed in cell
+ * @returns {*}
+ */
+Cell.prototype.getPiece = function () {
+    return this.piece;
 };

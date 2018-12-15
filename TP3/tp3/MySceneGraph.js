@@ -50,7 +50,6 @@ class MySceneGraph {
         this.reader.open('scenes/' + filename, this);
 
         this.board = new Board(this.scene);
-        this.piece = new Piece(this.scene, new Color(this.scene, 'red'));
     }
 
     /*
@@ -1364,7 +1363,14 @@ class MySceneGraph {
         this.board.enableDot(50);
         this.board.setDotColor(50, 'blue');
         this.board.enableArrows(50, 'N');
-        this.piece.display();
+        this.board.placePiece(0, 'red', 'NW');
+        this.board.placePiece(2, 'black', 'N');
+        this.board.placePiece(6, 'red', 'N');
+        this.board.placePiece(36, 'black', 'W');
+        this.board.placePiece(44, 'red', 'E');
+        this.board.placePiece(74, 'black', 'S');
+        this.board.placePiece(78, 'red', 'S');
+        this.board.placePiece(80, 'black', 'SE');
         this.scene.popMatrix();
     }
 }
