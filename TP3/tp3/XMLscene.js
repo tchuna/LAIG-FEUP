@@ -39,6 +39,12 @@ class XMLscene extends CGFscene {
     this.axis = new CGFaxis(this);
 
     this.setUpdatePeriod(20);
+
+    // Index to control pick objects
+    this.index = 1;
+
+    // Enable picking
+    this.setPickEnabled(true);
   }
 
   /**
@@ -161,11 +167,42 @@ class XMLscene extends CGFscene {
     }
   }
 
+
+  /**
+   * Log the picking of a cell
+   */
+  logPicking () {
+    if (this.pickMode === false) {
+      if (this.pickResults != null && this.pickResults.length > 0) {
+        for (let i = 0; i < this.pickResults.length; i++) {
+          let obj = this.pickResults[i][0];
+          if (obj) {
+            let customId = this.pickResults[i][1];
+            console.log('Picked object: ' + obj + ', with pick id ' + customId);
+
+
+            // this.setDotColor(customId - 1, 'blue');
+            // if (this.cells[customId -1].hasDot()) {
+            //   this.cells[customId - 1].disableDot();
+            // }
+            // else {
+            //   this.cells[customId - 1].enableDot();
+            // }
+          }
+        }
+        this.pickResults.splice(0, this.pickResults.length);
+      }
+    }
+  }
+
   /**
   * Displays the scene.
   */
   display() {
     // ---- BEGIN Background, camera and axis setup
+
+    this.logPicking();
+    this.clearPickRegistration();
 
     // Clear image and depth buffer everytime we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
@@ -203,7 +240,6 @@ class XMLscene extends CGFscene {
 
       // Displays the scene (MySceneGraph function).
       this.graph.displayScene();
-
     }
     else {
       // Draw axis

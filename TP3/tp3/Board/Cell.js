@@ -45,6 +45,7 @@ Cell.prototype.constructor = Cell;
  * Display Cell
  */
 Cell.prototype.display = function(){
+
     if (this.dotEnabled) {
         this.scene.pushMatrix();
         this.dot.display();
@@ -61,9 +62,10 @@ Cell.prototype.display = function(){
         }
     }
 
-    if (this.piece !== null) {
+    if (this.piece !== null && this.piece.object instanceof Piece) {
         this.scene.pushMatrix();
         this.scene.rotate(-45 * this.directionMap[this.piece.direction] * DEGREE_TO_RAD, 0, 1, 0);
+        this.scene.registerForPick(this.piece.id, this.piece.object);
         this.piece.object.display();
         this.scene.popMatrix();
     }
@@ -74,6 +76,9 @@ Cell.prototype.display = function(){
     this.cellMaterial.apply();
     this.cell.display();
     this.scene.popMatrix();
+
+    this.scene.clearPickRegistration();
+
 };
 
 /**
@@ -151,10 +156,11 @@ Cell.prototype.hasDot = function () {
  */
 Cell.prototype.setPiece = function (piece, direction) {
     this.piece = {
+        id: this.scene.index++,
         object: piece,
         direction: direction,
         ableToMove: true
-    }
+    };
 };
 
 /**

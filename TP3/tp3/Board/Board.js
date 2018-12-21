@@ -4,8 +4,6 @@ function Board(scene){
     CGFobject.call(this, scene);
     this.scene = scene;
 
-    // Enable picking
-    this.scene.setPickEnabled(true);
 
     // Board Base
     this.board = new MyRectangle(this.scene, {
@@ -62,9 +60,6 @@ Board.prototype.constructor = Board;
  * Display board
  */
 Board.prototype.display = function() {
-    this.logPicking();
-    this.scene.clearPickRegistration();
-
     this.scene.pushMatrix();
     this.scene.scale(20.0, 1.0, 20.0);
     this.scene.rotate(-90 * DEGREE_TO_RAD, 1, 0, 0);
@@ -75,36 +70,10 @@ Board.prototype.display = function() {
     for (let i = -4, k = 0; i < 5; i++) {
         for (let j = -4; j < 5; j++, k++) {
             this.scene.pushMatrix();
-            this.scene.registerForPick(k+1, this.cells[k]);
             this.scene.scale(0.5, 1.0, 0.5);
             this.scene.translate(j*3.5, 0.01, i*3.5);
             this.cells[k].display();
             this.scene.popMatrix();
-        }
-    }
-};
-
-/**
- * Log the picking of a cell
- */
-Board.prototype.logPicking = function () {
-    if (this.scene.pickMode === false) {
-        if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
-            for (let i = 0; i < this.scene.pickResults.length; i++) {
-                let obj = this.scene.pickResults[i][0];
-                if (obj) {
-                    let customId = this.scene.pickResults[i][1];
-                    console.log('Picked object: ' + obj + ', with pick id ' + customId);
-                    this.setDotColor(customId - 1, 'blue');
-                    if (this.cells[customId -1].hasDot()) {
-                        this.cells[customId - 1].disableDot();
-                    }
-                    else {
-                        this.cells[customId - 1].enableDot();
-                    }
-                }
-            }
-            this.scene.pickResults.splice(0, this.scene.pickResults.length);
         }
     }
 };
