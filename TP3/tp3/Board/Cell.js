@@ -1,8 +1,10 @@
 DEGREE_TO_RAD = Math.PI/180;
 
-function Cell(scene){
+function Cell(id, scene){
     CGFobject.call(this, scene);
     this.scene = scene;
+
+    this.id = id;
 
     this.cell = new MyRectangle(this.scene, {
         x1: -0.5,

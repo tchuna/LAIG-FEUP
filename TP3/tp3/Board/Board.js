@@ -16,7 +16,7 @@ function Board(scene){
     // Board Cell
     this.cells = [];
     for (let i = 0; i < 81; i++) {
-        this.cells.push(new Cell(this.scene));
+        this.cells.push(new Cell(this.scene.index++, this.scene));
     }
 
     // Possible directions
@@ -37,12 +37,14 @@ function Board(scene){
     this.directionMap[this.directions[7]] = [6, 7, 0];
 
     // Array of pieces
-    this.pieces = [];
-    this.pieces[this.colors[0]] = new Piece(this.scene, new Color(this.scene, this.colors[0]));
-    this.pieces[this.colors[1]] = new Piece(this.scene, new Color(this.scene, this.colors[1]));
-    this.pieces[this.colors[2]] = new Piece(this.scene, new Color(this.scene, this.colors[2]));
-    this.pieces[this.colors[3]] = new Piece(this.scene, new Color(this.scene, this.colors[3]));
-    this.pieces[this.colors[4]] = new Piece(this.scene, new Color(this.scene, this.colors[4]));
+    // this.pieces = [];
+    // this.pieces[this.colors[0]] = new Piece(this.scene, new Color(this.scene, this.colors[0]));
+    // this.pieces[this.colors[1]] = new Piece(this.scene, new Color(this.scene, this.colors[1]));
+    // this.pieces[this.colors[2]] = new Piece(this.scene, new Color(this.scene, this.colors[2]));
+    // this.pieces[this.colors[3]] = new Piece(this.scene, new Color(this.scene, this.colors[3]));
+    // this.pieces[this.colors[4]] = new Piece(this.scene, new Color(this.scene, this.colors[4]));
+
+    this.pieceID = 1;
 
     // Material of the board base
     this.boardMaterial = new CGFappearance(this.scene);
@@ -72,10 +74,13 @@ Board.prototype.display = function() {
             this.scene.pushMatrix();
             this.scene.scale(0.5, 1.0, 0.5);
             this.scene.translate(j*3.5, 0.01, i*3.5);
+            this.scene.registerForPick(this.cells[k].id, this.cells[k]);
             this.cells[k].display();
             this.scene.popMatrix();
         }
     }
+
+    this.scene.clearPickRegistration();
 };
 
 /**
@@ -141,6 +146,6 @@ Board.prototype.placePiece = function(index, color, direction) {
         console.warn('Warning: passing argument color to function placePiece in Board is invalid');
     }
     else {
-        this.cells[index].setPiece(this.pieces[color], direction);
+        this.cells[index].setPiece(new Piece(this.scene.index, this.scene, new Color(this.scene, color)), direction);
     }
 };

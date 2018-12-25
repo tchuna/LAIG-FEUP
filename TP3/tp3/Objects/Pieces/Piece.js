@@ -1,8 +1,10 @@
 DEGREE_TO_RAD = Math.PI/180;
 
-function Piece(scene, material){
+function Piece(id, scene, material){
     CGFobject.call(this, scene);
     this.scene = scene;
+
+    this.id = id;
 
     if (material instanceof CGFappearance) {
         this.material = material;

@@ -68,7 +68,7 @@ class XMLscene extends CGFscene {
       if (this.graph.lights.hasOwnProperty(key)) {
         var light = this.graph.lights[key];
 
-        if(light.type=="spot"){
+        if(light.type === "spot"){
           var xDirct;
           var yDirct;
           var zDirct;
@@ -149,7 +149,7 @@ class XMLscene extends CGFscene {
   }
 
   changeCamera() {
-    if(this.chaneViews == this.graph.viewsId.length-1) {
+    if(this.chaneViews === this.graph.viewsId.length-1) {
       this.chaneViews=0;
     }
     else {
@@ -179,7 +179,7 @@ class XMLscene extends CGFscene {
           if (obj) {
             let customId = this.pickResults[i][1];
             console.log('Picked object: ' + obj + ', with pick id ' + customId);
-
+            console.log(obj);
 
             // this.setDotColor(customId - 1, 'blue');
             // if (this.cells[customId -1].hasDot()) {
