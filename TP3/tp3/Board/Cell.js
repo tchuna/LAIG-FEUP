@@ -117,6 +117,12 @@ Cell.prototype.disableArrow = function () {
     }
 };
 
+Cell.prototype.disableAllArrows = function () {
+    for (let i = 0; i < this.activeArrows.length; i++) {
+        this.activeArrows[i] = false;
+    }
+};
+
 /**
  * Set dot material
  * @param material

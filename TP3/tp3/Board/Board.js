@@ -44,7 +44,7 @@ function Board(scene){
     // this.pieces[this.colors[3]] = new Piece(this.scene, new Color(this.scene, this.colors[3]));
     // this.pieces[this.colors[4]] = new Piece(this.scene, new Color(this.scene, this.colors[4]));
 
-    this.pieceID = 1;
+    this.selectedPieceID = -1;
 
     // Material of the board base
     this.boardMaterial = new CGFappearance(this.scene);
@@ -129,6 +129,15 @@ Board.prototype.enableArrows = function (index, direction) {
     }
 };
 
+Board.prototype.disableAllArrows = function(index) {
+    if (index < 0 || index >= 81) {
+        console.warn('Warning: passing argument index to function enableArrows in Board is invalid');
+    }
+    else {
+        this.cells[index].disableAllArrows();
+    }
+};
+
 /**
  * Place piece of color <Color>, facing direction <Direction>, in cell with index <Index>
  * @param index
@@ -148,4 +157,37 @@ Board.prototype.placePiece = function(index, color, direction) {
     else {
         this.cells[index].setPiece(new Piece(this.scene.index, this.scene, new Color(this.scene, color)), direction);
     }
+};
+
+Board.prototype.highlightPiece = function (id) {
+    for (let i = 0; i < 81; i++) {
+        if (this.cells[i].piece !== null && this.cells[i].piece.id === id) {
+            this.enableArrows(i, this.cells[i].piece.direction);
+        }
+    }
+};
+
+Board.prototype.clearAllPiecesHighlight = function () {
+    for (let i = 0; i < 81; i++) {
+        this.disableAllArrows(i);
+    }
+};
+
+Board.prototype.setSelectedPieceID = function (id) {
+    this.selectedPieceID = id;
+};
+
+
+/*
+* TODO: Send animation info to cell and make piece in specified cell move (with animation) to the passed coordinates, than, remove piece from previous cell and add to the new cell
+* */
+Board.prototype.movePiece = function (cellID) {
+    for (let i = 0; i < 81; i++) {
+        if (this.cells[i].piece !== null && this.cells[i].piece.id === this.selectedPieceID) {
+            this.cells[cellID - 1].piece = this.cells[i].piece;
+            this.cells[i].piece = null;
+            return;
+        }
+    }
+    console.warn('Warning: Can not find selected piece (ID = '+ this.selectedPieceID || 'null' +')');
 };

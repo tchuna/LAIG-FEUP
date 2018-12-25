@@ -180,7 +180,16 @@ class XMLscene extends CGFscene {
             let customId = this.pickResults[i][1];
             console.log('Picked object: ' + obj + ', with pick id ' + customId);
             console.log(obj);
-
+            if (obj instanceof Piece) {
+              this.graph.board.clearAllPiecesHighlight();
+              this.graph.board.highlightPiece(customId);
+              this.graph.board.setSelectedPieceID(customId);
+            }
+            else if (this.graph.board.selectedPieceID !== null) {
+              this.graph.board.movePiece(customId);
+              this.graph.board.setSelectedPieceID(null);
+              this.graph.board.clearAllPiecesHighlight();
+            }
             // this.setDotColor(customId - 1, 'blue');
             // if (this.cells[customId -1].hasDot()) {
             //   this.cells[customId - 1].disableDot();
@@ -204,7 +213,7 @@ class XMLscene extends CGFscene {
     this.logPicking();
     this.clearPickRegistration();
 
-    // Clear image and depth buffer everytime we update the scene
+    // Clear image and depth buffer every time we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
