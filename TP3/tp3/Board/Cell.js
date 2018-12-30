@@ -105,6 +105,7 @@ Cell.prototype.enableArrow = function (indexes) {
 
 /**
  * Disable arrows identified indexes passed by argument
+ *
  */
 Cell.prototype.disableArrow = function () {
     if (arguments.length > 8) {
@@ -117,6 +118,9 @@ Cell.prototype.disableArrow = function () {
     }
 };
 
+/**
+ * Disable all arrows
+ */
 Cell.prototype.disableAllArrows = function () {
     for (let i = 0; i < this.activeArrows.length; i++) {
         this.activeArrows[i] = false;
@@ -124,15 +128,19 @@ Cell.prototype.disableAllArrows = function () {
 };
 
 /**
- * Set dot material
- * @param material
+ * Set dot color
+ * @param color
  */
-Cell.prototype.setDotMaterial = function (material) {
-    if (material instanceof CGFappearance) {
-        this.dot.setMaterial(material);
-    } else {
-        console.warn("Warning: passing argument of function setDotMaterial is not an instance of CGFappearance!");
-    }
+Cell.prototype.setDotColor = function (color) {
+    this.dot.setColor(color);
+};
+
+/**
+ * Get dot color
+ * @returns {color}
+ */
+Cell.prototype.getDotColor = function () {
+    return this.dot.getColor();
 };
 
 /**
@@ -159,16 +167,43 @@ Cell.prototype.hasDot = function () {
 
 /**
  * Place piece in cell
- * @param piece
+ * @param color
  * @param direction
  */
-Cell.prototype.setPiece = function (piece, direction) {
+Cell.prototype.setPiece = function (color, direction) {
     this.piece = {
         id: this.scene.index++,
-        object: piece,
+        object: new Piece(this.scene.index, this.scene, new Color(this.scene, color)),
+        color: color,
         direction: direction,
         ableToMove: true
     };
+
+    switch (color) {
+        case 'red':
+            this.piece.dotColor = 'dark_red';
+            break;
+        case 'green':
+            this.piece.dotColor = 'dark_green';
+            break;
+        case 'blue':
+            this.piece.dotColor = 'dark_blue';
+            break;
+        case 'white':
+            this.piece.dotColor = 'light_gray';
+            break;
+        case 'black':
+            this.piece.dotColor = 'dark_gray';
+            break;
+    }
+};
+
+/**
+ * Set Piece
+ * @param piece
+ */
+Cell.prototype.setPiece2 = function (piece) {
+    this.piece = piece;
 };
 
 /**
@@ -177,4 +212,12 @@ Cell.prototype.setPiece = function (piece, direction) {
  */
 Cell.prototype.getPiece = function () {
     return this.piece;
+};
+
+Cell.prototype.setPieceDirection = function (direction) {
+    if (['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'].includes(direction)) {
+        this.piece.direction = direction;
+    } else {
+        console.warn('Warning: passing argument direction to function setPieceDirection in Cell is invalid');
+    }
 };

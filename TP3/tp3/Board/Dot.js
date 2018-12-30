@@ -10,6 +10,8 @@ function Dot(scene, material){
         this.material = new Color(this.scene, 'white');
     }
 
+    this.color = null;
+
     this.circle = new MyCircle(this.scene, {
         slices: 8
     });
@@ -32,13 +34,18 @@ Dot.prototype.display = function(){
 };
 
 /**
- * Set dot material
- * @param material
+ * Set dot color
+ * @param color
  */
-Dot.prototype.setMaterial = function (material) {
-    if (material instanceof CGFappearance) {
-        this.material = material;
-    } else {
-        console.warn("Warning: passing argument of function setMaterial is not an instance of CGFappearance!");
-    }
+Dot.prototype.setColor = function (color) {
+    this.color = color;
+    this.material = new Color(this.scene, color);
+};
+
+/**
+ * Get dot color
+ * @returns {color}
+ */
+Dot.prototype.getColor = function () {
+    return this.color;
 };

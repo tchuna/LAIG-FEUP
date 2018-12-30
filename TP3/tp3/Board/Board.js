@@ -129,11 +129,14 @@ Board.prototype.enableArrows = function (index, direction) {
     }
 };
 
+/**
+ * Disable all arrows in cell given by index <index>
+ * @param index
+ */
 Board.prototype.disableAllArrows = function(index) {
     if (index < 0 || index >= 81) {
         console.warn('Warning: passing argument index to function enableArrows in Board is invalid');
-    }
-    else {
+    } else {
         this.cells[index].disableAllArrows();
     }
 };
@@ -155,10 +158,14 @@ Board.prototype.placePiece = function(index, color, direction) {
         console.warn('Warning: passing argument color to function placePiece in Board is invalid');
     }
     else {
-        this.cells[index].setPiece(new Piece(this.scene.index, this.scene, new Color(this.scene, color)), direction);
+        this.cells[index].setPiece(color, direction);
     }
 };
 
+/**
+ * Highlight piece given by <id>
+ * @param id
+ */
 Board.prototype.highlightPiece = function (id) {
     for (let i = 0; i < 81; i++) {
         if (this.cells[i].piece !== null && this.cells[i].piece.id === id) {
@@ -167,25 +174,206 @@ Board.prototype.highlightPiece = function (id) {
     }
 };
 
+/**
+ * Clear highlight of all pieces
+ */
 Board.prototype.clearAllPiecesHighlight = function () {
     for (let i = 0; i < 81; i++) {
         this.disableAllArrows(i);
     }
 };
 
+/**
+ * Set selected piece ID
+ * @param id
+ */
 Board.prototype.setSelectedPieceID = function (id) {
     this.selectedPieceID = id;
 };
 
-
 /*
-* TODO: Send animation info to cell and make piece in specified cell move (with animation) to the passed coordinates, than, remove piece from previous cell and add to the new cell
+* TODO: Send animation info to cell and make piece in specified cell move (with animation) to the passed coordinates
+* TODO: Fix two-way movement when there are dots in cells (check movement without dots for example)
 * */
 Board.prototype.movePiece = function (cellID) {
+
+    let cellid = cellID - 1;
+
     for (let i = 0; i < 81; i++) {
-        if (this.cells[i].piece !== null && this.cells[i].piece.id === this.selectedPieceID) {
-            this.cells[cellID - 1].piece = this.cells[i].piece;
-            this.cells[i].piece = null;
+        let piece = this.cells[i].getPiece();
+        /* Check if cell has any piece and if this piece is the selected one */
+        if (piece !== null && piece.id === this.selectedPieceID) {
+            /* Check if piece is able to move */
+            if (piece.ableToMove) {
+                /* Check if cell has any dot */
+                if (this.cells[cellid].hasDot()) {
+                    /* Check if dot has the same color as the piece (connected movement) */
+                    if (this.cells[cellid].getDotColor() === piece.dotColor) {
+                        /* Movement in the North | South direction */
+                        if ((Math.abs(i - cellid) % 9) === 0) {
+                            if (['N', 'NW', 'NE'].includes(piece.direction) && cellid > i) {
+                                this.cells[cellid].setPiece2(piece);
+                                this.cells[i].setPiece2(null);
+                                for (let j = i; j <= cellid; j += 9) {
+                                    this.cells[j].setDotColor(piece.dotColor);
+                                    this.cells[j].enableDot();
+                                }
+                                this.cells[cellid].setPieceDirection('N');
+                            } else if (['S', 'SW', 'SE'].includes(piece.direction) && cellid < i) {
+                                this.cells[cellid].setPiece2(piece);
+                                this.cells[i].setPiece2(null);
+                                for (let j = i; j >= cellid; j -= 9) {
+                                    this.cells[j].setDotColor(piece.dotColor);
+                                    this.cells[j].enableDot();
+                                }
+                                this.cells[cellid].setPieceDirection('S');
+                            } else {
+                                console.warn('Warning: Invalid position');
+                            }
+                        }
+                        /* Movement in the Northwest | Southeast direction */
+                        else if ((Math.abs(i - cellid) % 10) === 0) {
+                            if (['N', 'NW', 'W'].includes(piece.direction) && cellid > i) {
+                                this.cells[cellid].setPiece2(piece);
+                                this.cells[i].setPiece2(null);
+                                for (let j = i; j <= cellid; j += 10) {
+                                    this.cells[j].setDotColor(piece.dotColor);
+                                    this.cells[j].enableDot();
+                                }
+                                this.cells[cellid].setPieceDirection('NW');
+                            } else if (['E', 'SE', 'S'].includes(piece.direction) && cellid < i) {
+                                this.cells[cellid].setPiece2(piece);
+                                this.cells[i].setPiece2(null);
+                                for (let j = i; j >= cellid; j -= 10) {
+                                    this.cells[j].setDotColor(piece.dotColor);
+                                    this.cells[j].enableDot();
+                                }
+                                this.cells[cellid].setPieceDirection('SE');
+                            } else {
+                                console.warn('Warning: Invalid position');
+                            }
+                        }
+                        /* Movement in the Northeast | Southwest direction */
+                        else if ((Math.abs(i - cellid) % 8) === 0) {
+                            if (['N', 'NE', 'E'].includes(piece.direction) && cellid > i) {
+                                this.cells[cellid].setPiece2(piece);
+                                this.cells[i].setPiece2(null);
+                                for (let j = i; j <= cellid; j += 8) {
+                                    this.cells[j].setDotColor(piece.dotColor);
+                                    this.cells[j].enableDot();
+                                }
+                                this.cells[cellid].setPieceDirection('NE');
+                            } else if (['S', 'SW', 'W'].includes(piece.direction) && cellid < i) {
+                                this.cells[cellid].setPiece2(piece);
+                                this.cells[i].setPiece2(null);
+                                for (let j = i; j >= cellid; j -= 8) {
+                                    this.cells[j].setDotColor(piece.dotColor);
+                                    this.cells[j].enableDot();
+                                }
+                                this.cells[cellid].setPieceDirection('SW');
+                            } else {
+                                console.warn('Warning: Invalid position');
+                            }
+                        }
+                        /* Movement in the East | West direction */
+                        else if (Math.abs(i - cellid) < 9) {
+                            if (['NW', 'W', 'SW'].includes(piece.direction) && cellid > i) {
+                                this.cells[cellid].setPiece2(piece);
+                                this.cells[i].setPiece2(null);
+                                for (let j = 1; j < cellid - i; j++) {
+                                    this.cells[i + j].setDotColor(piece.dotColor);
+                                    this.cells[i + j].enableDot();
+                                }
+                                this.cells[cellid].setPieceDirection('W');
+                            } else if (['NE', 'E', 'SE'].includes(piece.direction) && cellid < i) {
+                                this.cells[cellid].setPiece2(piece);
+                                this.cells[i].setPiece2(null);
+                                for (let j = -1; j > cellid - i; j--) {
+                                    this.cells[i + j].setDotColor(piece.dotColor);
+                                    this.cells[i + j].enableDot();
+                                }
+                                this.cells[cellid].setPieceDirection('E');
+                            } else {
+                                console.warn('Warning: Invalid position');
+                            }
+                        } else {
+                            console.warn('Warning: Invalid direction');
+                        }
+                    } else {
+                        console.warn('Warning: Can not move to this cell!');
+                    }
+                } else {
+                    if ((Math.abs(i - cellid) % 9) === 0) {
+                        if (['N', 'NW', 'NE'].includes(piece.direction) && cellid > i) {
+                            this.cells[cellid].setPiece2(piece);
+                            this.cells[cellid].setPieceDirection('N');
+                            this.cells[cellid].setDotColor(piece.dotColor);
+                            this.cells[cellid].enableDot();
+                            this.cells[i].setPiece2(null);
+                        } else if (['S', 'SW', 'SE'].includes(piece.direction) && cellid < i) {
+                            this.cells[cellid].setPiece2(piece);
+                            this.cells[cellid].setPieceDirection('S');
+                            this.cells[cellid].setDotColor(piece.dotColor);
+                            this.cells[cellid].enableDot();
+                            this.cells[i].setPiece2(null);
+                        } else {
+                            console.warn('Warning: Invalid position');
+                        }
+                    } else if ((Math.abs(i - cellid) % 10) === 0) {
+                        if (['N', 'NW', 'W'].includes(piece.direction) && cellid > i) {
+                            this.cells[cellid].setPiece2(piece);
+                            this.cells[cellid].setPieceDirection('NW');
+                            this.cells[cellid].setDotColor(piece.dotColor);
+                            this.cells[cellid].enableDot();
+                            this.cells[i].setPiece2(null);
+                        } else if (['E', 'SE', 'S'].includes(piece.direction) && cellid < i) {
+                            this.cells[cellid].setPiece2(piece);
+                            this.cells[cellid].setPieceDirection('SE');
+                            this.cells[cellid].setDotColor(piece.dotColor);
+                            this.cells[cellid].enableDot();
+                            this.cells[i].setPiece2(null);
+                        } else {
+                            console.warn('Warning: Invalid position');
+                        }
+                    } else if ((Math.abs(i - cellid) % 8) === 0) {
+                        if (['N', 'NE', 'E'].includes(piece.direction) && cellid > i) {
+                            this.cells[cellid].setPiece2(piece);
+                            this.cells[cellid].setPieceDirection('NE');
+                            this.cells[cellid].setDotColor(piece.dotColor);
+                            this.cells[cellid].enableDot();
+                            this.cells[i].setPiece2(null);
+                        } else if (['S', 'SW', 'W'].includes(piece.direction) && cellid < i) {
+                            this.cells[cellid].setPiece2(piece);
+                            this.cells[cellid].setPieceDirection('SW');
+                            this.cells[cellid].setDotColor(piece.dotColor);
+                            this.cells[cellid].enableDot();
+                            this.cells[i].setPiece2(null);
+                        } else {
+                            console.warn('Warning: Invalid position');
+                        }
+                    } else if (Math.abs(i - cellid) < 9) {
+                        if (['NW', 'W', 'SW'].includes(piece.direction)) {
+                            this.cells[cellid].setPiece2(piece);
+                            this.cells[cellid].setPieceDirection('W');
+                            this.cells[cellid].setDotColor(piece.dotColor);
+                            this.cells[cellid].enableDot();
+                            this.cells[i].setPiece2(null);
+                        } else if (['NE', 'E', 'SE'].includes(piece.direction)) {
+                            this.cells[cellid].setPiece2(piece);
+                            this.cells[cellid].setPieceDirection('E');
+                            this.cells[cellid].setDotColor(piece.dotColor);
+                            this.cells[cellid].enableDot();
+                            this.cells[i].setPiece2(null);
+                        } else {
+                            console.warn('Warning: Invalid position');
+                        }
+                    } else {
+                        console.warn('Warning: Invalid direction');
+                    }
+                }
+            } else {
+                console.warn('Warning: Selected piece (ID = ' + this.selectedPieceID + ') is unable to move');
+            }
             return;
         }
     }
