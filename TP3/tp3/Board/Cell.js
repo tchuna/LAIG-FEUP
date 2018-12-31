@@ -104,21 +104,6 @@ Cell.prototype.enableArrow = function (indexes) {
 };
 
 /**
- * Disable arrows identified indexes passed by argument
- *
- */
-Cell.prototype.disableArrow = function () {
-    if (arguments.length > 8) {
-        console.warn("Warning: arguments of function disableArrow with length higher than 8. " +
-            "Extra arguments will be ignored!");
-        arguments.length = 8;
-    }
-    for (let i = 0; i < arguments.length; i++) {
-        this.activeArrows[i] = false;
-    }
-};
-
-/**
  * Disable all arrows
  */
 Cell.prototype.disableAllArrows = function () {
@@ -148,13 +133,6 @@ Cell.prototype.getDotColor = function () {
  */
 Cell.prototype.enableDot = function () {
     this.dotEnabled = true;
-};
-
-/**
- * Disable dot display
- */
-Cell.prototype.disableDot = function () {
-    this.dotEnabled = false;
 };
 
 /**
@@ -214,10 +192,34 @@ Cell.prototype.getPiece = function () {
     return this.piece;
 };
 
+/**
+ * Set piece direction to <direction>
+ * @param direction
+ */
 Cell.prototype.setPieceDirection = function (direction) {
     if (['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'].includes(direction)) {
         this.piece.direction = direction;
     } else {
         console.warn('Warning: passing argument direction to function setPieceDirection in Cell is invalid');
+    }
+};
+
+/**
+ * Return true if cell has a piece and false otherwise
+ * @returns {boolean}
+ */
+Cell.prototype.hasPiece = function () {
+    return this.piece !== null;
+};
+
+/**
+ * Set the cell material
+ * @param material
+ */
+Cell.prototype.setCellMaterial = function (material) {
+    if (material instanceof CGFappearance) {
+        this.cellMaterial = material;
+    } else {
+        console.warn('Warning: passing argument material to function setCellMaterial on Cell is invalid');
     }
 };

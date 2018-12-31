@@ -1,261 +1,254 @@
 var DEGREE_TO_RAD = Math.PI / 180;
 
 /**
-* XMLscene class, representing the scene that is to be rendered.
-*/
+ * XMLscene class, representing the scene that is to be rendered.
+ */
 class XMLscene extends CGFscene {
-  /**
-  * @constructor
-  * @param {MyInterface} myinterface
-  */
-  constructor(myinterface) {
-    super();
+    /**
+     * @constructor
+     * @param {MyInterface} myinterface
+     */
+    constructor(myinterface) {
+        super();
 
-    this.interface = myinterface;
-    this.lightValues = {};
-    this.ex=[];
-    this.chaneViews=0;
+        this.interface = myinterface;
+        this.lightValues = {};
+        this.ex = [];
+        this.chaneViews = 0;
 
-  }
-
-  /**
-  * Initializes the scene, setting some WebGL defaults, initializing the camera and the axis.
-  * @param {CGFApplication} application
-  */
-  init(application) {
-    super.init(application);
-
-    this.sceneInited = false;
-
-    this.initCameras();
-
-    this.enableTextures(true);
-
-    this.gl.clearDepth(100.0);
-    this.gl.enable(this.gl.DEPTH_TEST);
-    this.gl.enable(this.gl.CULL_FACE);
-    this.gl.depthFunc(this.gl.LEQUAL);
-
-    this.axis = new CGFaxis(this);
-
-    this.setUpdatePeriod(20);
-
-    // Index to control pick objects
-    this.index = 1;
-
-    // Enable picking
-    this.setPickEnabled(true);
-  }
-
-  /**
-  * Initializes the scene cameras.
-  */
-  initCameras() {
-    this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(30, 80, 70), vec3.fromValues(25, 5, 10));
-    //this.camera= new CGFcamera(0.4, 0.1, 500, vec3.fromValues(40, 5, 30), vec3.fromValues(10,0, 0));
-  }
-  /**
-  * Initializes the scene lights with the values read from the XML file.
-  */
-  initLights() {
-    var i = 0;
-    // Lights index.
-    for (var key in this.graph.lights) {
-      if(i >= 8){
-        break;
-      }
-
-      if (this.graph.lights.hasOwnProperty(key)) {
-        var light = this.graph.lights[key];
-
-        if(light.type === "spot"){
-          var xDirct;
-          var yDirct;
-          var zDirct;
-
-          this.lights[i].setSpotCutOff(light.angle);
-          this.lights[i].setSpotExponent(light.exponent);
-
-          xDirct=light.target.x-light.location.x;
-          yDirct=light.target.y-light.location.y;
-          zDirct=light.target.z-light.location.z;
-
-          this.lights[i].setSpotDirection(xDirct,yDirct,zDirct);
-        }
-
-        this.lights[i].setPosition(light.location.x, light.location.y, light.location.z, light.location.w);
-        this.lights[i].setAmbient(light.ambient.red, light.ambient.green, light.ambient.blue, light.ambient.alpha);
-        this.lights[i].setDiffuse(light.diffuse.red, light.diffuse.green, light.diffuse.blue, light.diffuse.alpha);
-        this.lights[i].setSpecular(light.specular.red, light.specular.green, light.specular.blue, light.specular.alpha);
-        this.lights[i].setVisible(true);
-
-        if (light.enabled) {
-          this.lights[i].enable();
-        }
-        else {
-          this.lights[i].disable();
-        }
-
-        this.lights[i].update();
-        i++;
-      }
     }
-  }
 
+    /**
+     * Initializes the scene, setting some WebGL defaults, initializing the camera and the axis.
+     * @param {CGFApplication} application
+     */
+    init(application) {
+        super.init(application);
 
-  /* Handler called when the graph is finally loaded.
-  * As loading is asynchronous, this may be called already after the application has started the run loop
-  */
-  onGraphLoaded() {
-    //this.camera.near =this.graph.views[this.graph.default_view].near;
-    //this.camera.far =this.graph.views[this.graph.default_view].far;
-    this.camera=this.graph.views[this.graph.default_view];
-    this.interface.setActiveCamera(this.camera);
+        this.sceneInited = false;
 
+        this.initCameras();
 
-    // Change reference length according to parsed graph
-    this.axis = new CGFaxis(this, this.graph.axis_length);
+        this.enableTextures(true);
 
-    // Change ambient and background details according to parsed graph
-    this.setGlobalAmbientLight(this.graph.ambient.ambient.red,
-                              this.graph.ambient.ambient.green,
-                              this.graph.ambient.ambient.blue,
-                              this.graph.ambient.ambient.alpha);
-    this.gl.clearColor(this.graph.ambient.background.red,
-                       this.graph.ambient.background.green,
-                       this.graph.ambient.background.blue,
-                       this.graph.ambient.background.alpha);
+        this.gl.clearDepth(100.0);
+        this.gl.enable(this.gl.DEPTH_TEST);
+        this.gl.enable(this.gl.CULL_FACE);
+        this.gl.depthFunc(this.gl.LEQUAL);
 
-    this.initLights();
+        this.axis = new CGFaxis(this);
 
-    // Adds lights group.
-    this.interface.addLightsGroup(this.graph.lights);
+        this.setUpdatePeriod(20);
 
-    //this.interface.addViewssGroup(this.graph.views);
+        // Index to control pick objects
+        this.index = 1;
 
-    this.sceneInited = true;
-  }
-
-  update(currTime) {
-    this.lastTime = this.lastTime || 0.0;
-    var deltaTime = (currTime - this.lastTime)/1000;
-    this.lastTime = currTime;
-
-    for (var id in this.graph.nodes) {
-      if (this.graph.nodes.hasOwnProperty(id)) {
-        this.graph.nodes[id].update(deltaTime);
-      }
+        // Enable picking
+        this.setPickEnabled(true);
     }
-  }
 
-  changeCamera() {
-    if(this.chaneViews === this.graph.viewsId.length-1) {
-      this.chaneViews=0;
+    /**
+     * Initializes the scene cameras.
+     */
+    initCameras() {
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(30, 80, 70), vec3.fromValues(25, 5, 10));
+        //this.camera= new CGFcamera(0.4, 0.1, 500, vec3.fromValues(40, 5, 30), vec3.fromValues(10,0, 0));
     }
-    else {
-      this.chaneViews++;
-    }
-    this.camera=this.graph.views[this.graph.viewsId[this.chaneViews]];
-    this.interface.setActiveCamera(this.camera);
-  }
 
-  changeMaterial(){
-    for (var node in this.graph.currMaterial) {
-      if (this.graph.currMaterial.hasOwnProperty(node)) {
-        this.graph.currMaterial[node].current++;
-      }
-    }
-  }
-
-
-  /**
-   * Log the picking of a cell
-   */
-  logPicking () {
-    if (this.pickMode === false) {
-      if (this.pickResults != null && this.pickResults.length > 0) {
-        for (let i = 0; i < this.pickResults.length; i++) {
-          let obj = this.pickResults[i][0];
-          if (obj) {
-            let customId = this.pickResults[i][1];
-            console.log('Picked object: ' + obj + ', with pick id ' + customId);
-            console.log(obj);
-            if (obj instanceof Piece) {
-              this.graph.board.clearAllPiecesHighlight();
-              this.graph.board.highlightPiece(customId);
-              this.graph.board.setSelectedPieceID(customId);
+    /**
+     * Initializes the scene lights with the values read from the XML file.
+     */
+    initLights() {
+        var i = 0;
+        // Lights index.
+        for (var key in this.graph.lights) {
+            if (i >= 8) {
+                break;
             }
-            else if (this.graph.board.selectedPieceID !== null) {
-              this.graph.board.movePiece(customId);
-              this.graph.board.setSelectedPieceID(null);
-              this.graph.board.clearAllPiecesHighlight();
+
+            if (this.graph.lights.hasOwnProperty(key)) {
+                var light = this.graph.lights[key];
+
+                if (light.type === "spot") {
+                    var xDirct;
+                    var yDirct;
+                    var zDirct;
+
+                    this.lights[i].setSpotCutOff(light.angle);
+                    this.lights[i].setSpotExponent(light.exponent);
+
+                    xDirct = light.target.x - light.location.x;
+                    yDirct = light.target.y - light.location.y;
+                    zDirct = light.target.z - light.location.z;
+
+                    this.lights[i].setSpotDirection(xDirct, yDirct, zDirct);
+                }
+
+                this.lights[i].setPosition(light.location.x, light.location.y, light.location.z, light.location.w);
+                this.lights[i].setAmbient(light.ambient.red, light.ambient.green, light.ambient.blue, light.ambient.alpha);
+                this.lights[i].setDiffuse(light.diffuse.red, light.diffuse.green, light.diffuse.blue, light.diffuse.alpha);
+                this.lights[i].setSpecular(light.specular.red, light.specular.green, light.specular.blue, light.specular.alpha);
+                this.lights[i].setVisible(true);
+
+                if (light.enabled) {
+                    this.lights[i].enable();
+                } else {
+                    this.lights[i].disable();
+                }
+
+                this.lights[i].update();
+                i++;
             }
-            // this.setDotColor(customId - 1, 'blue');
-            // if (this.cells[customId -1].hasDot()) {
-            //   this.cells[customId - 1].disableDot();
-            // }
-            // else {
-            //   this.cells[customId - 1].enableDot();
-            // }
-          }
         }
-        this.pickResults.splice(0, this.pickResults.length);
-      }
     }
-  }
 
-  /**
-  * Displays the scene.
-  */
-  display() {
-    // ---- BEGIN Background, camera and axis setup
 
-    this.logPicking();
-    this.clearPickRegistration();
+    /* Handler called when the graph is finally loaded.
+    * As loading is asynchronous, this may be called already after the application has started the run loop
+    */
+    onGraphLoaded() {
+        //this.camera.near =this.graph.views[this.graph.default_view].near;
+        //this.camera.far =this.graph.views[this.graph.default_view].far;
+        this.camera = this.graph.views[this.graph.default_view];
+        this.interface.setActiveCamera(this.camera);
 
-    // Clear image and depth buffer every time we update the scene
-    this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
-    this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
-    // Initialize Model-View matrix as identity (no transformation
-    this.updateProjectionMatrix();
-    this.loadIdentity();
+        // Change reference length according to parsed graph
+        this.axis = new CGFaxis(this, this.graph.axis_length);
 
-    // Apply transformations corresponding to the camera position relative to the origin
-    this.applyViewMatrix();
+        // Change ambient and background details according to parsed graph
+        this.setGlobalAmbientLight(this.graph.ambient.ambient.red,
+            this.graph.ambient.ambient.green,
+            this.graph.ambient.ambient.blue,
+            this.graph.ambient.ambient.alpha);
+        this.gl.clearColor(this.graph.ambient.background.red,
+            this.graph.ambient.background.green,
+            this.graph.ambient.background.blue,
+            this.graph.ambient.background.alpha);
 
-    this.pushMatrix();
+        this.initLights();
 
-    if (this.graph.loadedOk) {
-      // Draw axis
+        // Adds lights group.
+        this.interface.addLightsGroup(this.graph.lights);
 
-      this.axis.display();
+        //this.interface.addViewssGroup(this.graph.views);
 
-      var i = 0;
-      for (var key in this.lightValues) {
-        if (this.lightValues.hasOwnProperty(key)) {
-          if (this.lightValues[key]) {
-            this.lights[i].setVisible(true);
-            this.lights[i].enable();
-          }
-          else {
-            this.lights[i].setVisible(false);
-            this.lights[i].disable();
-          }
-          this.lights[i].update();
-          i++;
+        this.sceneInited = true;
+    }
+
+    update(currTime) {
+        this.lastTime = this.lastTime || 0.0;
+        var deltaTime = (currTime - this.lastTime) / 1000;
+        this.lastTime = currTime;
+
+        for (var id in this.graph.nodes) {
+            if (this.graph.nodes.hasOwnProperty(id)) {
+                this.graph.nodes[id].update(deltaTime);
+            }
         }
-      }
-
-      // Displays the scene (MySceneGraph function).
-      this.graph.displayScene();
-    }
-    else {
-      // Draw axis
-      this.axis.display();
     }
 
-    this.popMatrix();
-    // ---- END Background, camera and axis setup
-  }
+    changeCamera() {
+        if (this.chaneViews === this.graph.viewsId.length - 1) {
+            this.chaneViews = 0;
+        } else {
+            this.chaneViews++;
+        }
+        this.camera = this.graph.views[this.graph.viewsId[this.chaneViews]];
+        this.interface.setActiveCamera(this.camera);
+    }
+
+    changeMaterial() {
+        for (var node in this.graph.currMaterial) {
+            if (this.graph.currMaterial.hasOwnProperty(node)) {
+                this.graph.currMaterial[node].current++;
+            }
+        }
+    }
+
+
+    /**
+     * Log the picking of a cell
+     */
+    logPicking() {
+        if (this.pickMode === false) {
+            if (this.pickResults != null && this.pickResults.length > 0) {
+                for (let i = 0; i < this.pickResults.length; i++) {
+                    let obj = this.pickResults[i][0];
+                    if (obj) {
+                        let customId = this.pickResults[i][1];
+                        console.log('Picked object: ' + obj + ', with pick id ' + customId);
+                        if (obj instanceof Piece) {
+                            this.graph.board.clearAllPiecesHighlight();
+
+                            if (customId !== this.graph.board.getSelectedPieceID()) {
+                                this.graph.board.highlightPiece(customId);
+                                this.graph.board.setSelectedPieceID(customId);
+                            } else {
+                                this.graph.board.setSelectedPieceID(null);
+                            }
+                        } else if (this.graph.board.selectedPieceID !== null) {
+                            this.graph.board.movePiece(customId);
+                            this.graph.board.setSelectedPieceID(null);
+                            this.graph.board.clearAllPiecesHighlight();
+                        }
+                    }
+                }
+                this.pickResults.splice(0, this.pickResults.length);
+            }
+        }
+    }
+
+    /**
+     * Displays the scene.
+     */
+    display() {
+        // ---- BEGIN Background, camera and axis setup
+
+        this.logPicking();
+        this.clearPickRegistration();
+
+        // Clear image and depth buffer every time we update the scene
+        this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
+        this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+
+        // Initialize Model-View matrix as identity (no transformation
+        this.updateProjectionMatrix();
+        this.loadIdentity();
+
+        // Apply transformations corresponding to the camera position relative to the origin
+        this.applyViewMatrix();
+
+        this.pushMatrix();
+
+        if (this.graph.loadedOk) {
+            // Draw axis
+
+            this.axis.display();
+
+            var i = 0;
+            for (var key in this.lightValues) {
+                if (this.lightValues.hasOwnProperty(key)) {
+                    if (this.lightValues[key]) {
+                        this.lights[i].setVisible(true);
+                        this.lights[i].enable();
+                    } else {
+                        this.lights[i].setVisible(false);
+                        this.lights[i].disable();
+                    }
+                    this.lights[i].update();
+                    i++;
+                }
+            }
+
+            // Displays the scene (MySceneGraph function).
+            this.graph.displayScene();
+        } else {
+            // Draw axis
+            this.axis.display();
+        }
+
+        this.popMatrix();
+        // ---- END Background, camera and axis setup
+    }
 }

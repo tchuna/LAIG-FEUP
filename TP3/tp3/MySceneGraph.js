@@ -1,5 +1,3 @@
-const DEGREE_TO_RAD = Math.PI / 180;
-
 // Order of the groups in the XML document.
 const SCENE_INDEX = 0;
 const VIEWS_INDEX = 1;
@@ -1340,7 +1338,6 @@ class MySceneGraph {
             }
         }
     }
-
 
     /**
      * Displays the scene, processing each node, starting in the root node.
