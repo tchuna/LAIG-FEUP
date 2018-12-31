@@ -25,6 +25,9 @@ function Arrow(scene){
 Arrow.prototype = Object.create(CGFobject.prototype);
 Arrow.prototype.constructor = Arrow;
 
+/**
+ * Display a arrow
+ */
 Arrow.prototype.display = function(){
     this.scene.pushMatrix();
     this.scene.translate(0.0, 0.01, 1.2);

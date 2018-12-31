@@ -23,6 +23,7 @@ function Board(scene){
 
     /* Possible colors */
     this.colors = ['red', 'green', 'blue', 'white', 'black'];
+    this.dotsColor = ['dark_red', 'dark_green', 'dark_blue', 'light_gray', 'dark_gray'];
 
     /* Maps piece directions to possible movement directions */
     this.directionMap = [];
@@ -61,44 +62,9 @@ function Board(scene){
         }
     }
 
-    this.areaMaterial = [];
-    // this.areaMaterial[0] = new CGFappearance(this.scene);
-    // this.areaMaterial[0].setAmbient(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[0].setSpecular(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[0].setDiffuse(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[1] = new CGFappearance(this.scene);
-    // this.areaMaterial[1].setAmbient(0.5, 1.0, 0.3, 1.0);
-    // this.areaMaterial[1].setSpecular(0.5, 1.0, 0.3, 1.0);
-    // this.areaMaterial[1].setDiffuse(0.5, 1.0, 0.3, 1.0);
-    // this.areaMaterial[2] = new CGFappearance(this.scene);
-    // this.areaMaterial[2].setAmbient(0.3, 0.5, 1.0, 1.0);
-    // this.areaMaterial[2].setSpecular(0.3, 0.5, 1.0, 1.0);
-    // this.areaMaterial[2].setDiffuse(0.3, 0.5, 1.0, 1.0);
-    // this.areaMaterial[3] = new CGFappearance(this.scene);
-    // this.areaMaterial[3].setAmbient(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[3].setSpecular(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[3].setDiffuse(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[4] = new CGFappearance(this.scene);
-    // this.areaMaterial[4].setAmbient(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[4].setSpecular(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[4].setDiffuse(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[5] = new CGFappearance(this.scene);
-    // this.areaMaterial[5].setAmbient(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[5].setSpecular(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[5].setDiffuse(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[6] = new CGFappearance(this.scene);
-    // this.areaMaterial[6].setAmbient(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[6].setSpecular(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[6].setDiffuse(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[7] = new CGFappearance(this.scene);
-    // this.areaMaterial[7].setAmbient(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[7].setSpecular(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[7].setDiffuse(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[8] = new CGFappearance(this.scene);
-    // this.areaMaterial[8].setAmbient(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[8].setSpecular(1.0, 0.5, 0.3, 1.0);
-    // this.areaMaterial[8].setDiffuse(1.0, 0.5, 0.3, 1.0);
+    console.log(this.boardArea);
 
+    this.areaMaterial = [];
     let random = [];
     for (let i = 0; i < 27; i++) {
         random[i] = Math.random();
@@ -121,7 +87,7 @@ Board.prototype.constructor = Board;
  */
 Board.prototype.initializeDotsCounter = function () {
     let array = [];
-    this.colors.forEach(function (value) {
+    this.dotsColor.forEach(function (value) {
         array[value] = 0;
     });
     return array;
@@ -278,8 +244,8 @@ Board.prototype.getSelectedPieceID = function () {
  * @returns {Array} Cells ID
  */
 Board.prototype.getCellsIdFromArea = function (id) {
-    if (0 < id && id <= 9) {
-        return this.boardArea[id - 1].cells;
+    if (0 <= id && id < 9) {
+        return this.boardArea[id].cells;
     } else {
         console.warn('Warning: passing argument id to function getCellsIdFromArea on Board is invalid');
         return null;
@@ -300,8 +266,47 @@ Board.prototype.determineAreaByCellID = function (id) {
     return null;
 };
 
+/**
+ * Get the number of cells a piece of color <pieceColor> can move inside the area given by ID <areaID>
+ * @param areaID
+ * @param pieceColor
+ * @returns {number}
+ */
 Board.prototype.getMaximumCellsToMove = function (areaID, pieceColor) {
+    if (areaID < 0 || areaID > 8) {
+        console.warn('Warning: passing argument areaID to function getMaximumCellsToMove on Board is invalid');
+    } else if (!(this.colors.includes(pieceColor))) {
+        console.warn('Warning: passing argument pieceColor to function getMaximumCellsToMove on Board is invalid');
+    } else {
+        let index = this.colors.indexOf(pieceColor);
+        let dots = this.boardArea[areaID].dots[this.dotsColor[index]];
+        return (dots === 0) ? 1 : dots;
+    }
+    return 0;
+};
 
+/**
+ * Update the number of dots of each color in each area;
+ */
+Board.prototype.updateDotsCounter = function () {
+    let ids = [];
+    let count = [];
+
+    for (let i = 0; i < 9; i++) {
+        ids = this.getCellsIdFromArea(i);
+
+        this.dotsColor.forEach(function (value) {
+            count[value] = 0;
+        });
+        for (let j = 0; j < ids.length; j++) {
+            if (this.cells[ids[j]].hasDot()) {
+                count[this.cells[ids[j]].getDotColor()]++;
+            }
+        }
+        for (let j = 0; j < this.dotsColor.length; j++) {
+            this.boardArea[i].dots[this.dotsColor[j]] = count[this.dotsColor[j]];
+        }
+    }
 };
 
 /*
@@ -319,13 +324,14 @@ Board.prototype.movePiece = function (cellID) {
             /* Check if piece is able to move */
             if (piece.ableToMove) {
                 if (!this.cells[cellid].hasPiece()) {
+                    const cellsToMove = this.getMaximumCellsToMove(this.determineAreaByCellID(i), piece.color);
                     /* Check if cell has any dot */
                     if (this.cells[cellid].hasDot()) {
                         /* Check if dot has the same color as the piece (connected movement) */
                         if (this.cells[cellid].getDotColor() === piece.dotColor) {
                             /* Movement in the North | South direction */
                             if ((Math.abs(i - cellid) % 9) === 0) {
-                                if (['N', 'NW', 'NE'].includes(piece.direction) && cellid > i) {
+                                if (['N', 'NW', 'NE'].includes(piece.direction) && cellid > i && (cellid - i) / 9 <= cellsToMove) {
                                     this.cells[cellid].setPiece2(piece);
                                     this.cells[i].setPiece2(null);
                                     for (let j = i; j <= cellid; j += 9) {
@@ -333,7 +339,7 @@ Board.prototype.movePiece = function (cellID) {
                                         this.cells[j].enableDot();
                                     }
                                     this.cells[cellid].setPieceDirection('N');
-                                } else if (['S', 'SW', 'SE'].includes(piece.direction) && cellid < i) {
+                                } else if (['S', 'SW', 'SE'].includes(piece.direction) && cellid < i && (i - cellid) / 9 <= cellsToMove) {
                                     this.cells[cellid].setPiece2(piece);
                                     this.cells[i].setPiece2(null);
                                     for (let j = i; j >= cellid; j -= 9) {
@@ -347,7 +353,7 @@ Board.prototype.movePiece = function (cellID) {
                             }
                             /* Movement in the Northwest | Southeast direction */
                             else if ((Math.abs(i - cellid) % 10) === 0) {
-                                if (['N', 'NW', 'W'].includes(piece.direction) && cellid > i) {
+                                if (['N', 'NW', 'W'].includes(piece.direction) && cellid > i && (cellid - i) / 10 <= cellsToMove) {
                                     this.cells[cellid].setPiece2(piece);
                                     this.cells[i].setPiece2(null);
                                     for (let j = i; j <= cellid; j += 10) {
@@ -355,7 +361,7 @@ Board.prototype.movePiece = function (cellID) {
                                         this.cells[j].enableDot();
                                     }
                                     this.cells[cellid].setPieceDirection('NW');
-                                } else if (['E', 'SE', 'S'].includes(piece.direction) && cellid < i) {
+                                } else if (['E', 'SE', 'S'].includes(piece.direction) && cellid < i && (i - cellid) / 10 <= cellsToMove) {
                                     this.cells[cellid].setPiece2(piece);
                                     this.cells[i].setPiece2(null);
                                     for (let j = i; j >= cellid; j -= 10) {
@@ -369,7 +375,7 @@ Board.prototype.movePiece = function (cellID) {
                             }
                             /* Movement in the Northeast | Southwest direction */
                             else if ((Math.abs(i - cellid) % 8) === 0) {
-                                if (['N', 'NE', 'E'].includes(piece.direction) && cellid > i) {
+                                if (['N', 'NE', 'E'].includes(piece.direction) && cellid > i && (cellid - i) / 8 <= cellsToMove) {
                                     this.cells[cellid].setPiece2(piece);
                                     this.cells[i].setPiece2(null);
                                     for (let j = i; j <= cellid; j += 8) {
@@ -377,7 +383,7 @@ Board.prototype.movePiece = function (cellID) {
                                         this.cells[j].enableDot();
                                     }
                                     this.cells[cellid].setPieceDirection('NE');
-                                } else if (['S', 'SW', 'W'].includes(piece.direction) && cellid < i) {
+                                } else if (['S', 'SW', 'W'].includes(piece.direction) && cellid < i && (i - cellid) / 8 <= cellsToMove) {
                                     this.cells[cellid].setPiece2(piece);
                                     this.cells[i].setPiece2(null);
                                     for (let j = i; j >= cellid; j -= 8) {
@@ -391,7 +397,7 @@ Board.prototype.movePiece = function (cellID) {
                             }
                             /* Movement in the East | West direction */
                             else if (Math.abs(i - cellid) < 9) {
-                                if (['NW', 'W', 'SW'].includes(piece.direction) && cellid > i) {
+                                if (['NW', 'W', 'SW'].includes(piece.direction) && cellid > i && (cellid - i) <= cellsToMove) {
                                     this.cells[cellid].setPiece2(piece);
                                     this.cells[i].setPiece2(null);
                                     for (let j = 1; j < cellid - i; j++) {
@@ -399,7 +405,7 @@ Board.prototype.movePiece = function (cellID) {
                                         this.cells[i + j].enableDot();
                                     }
                                     this.cells[cellid].setPieceDirection('W');
-                                } else if (['NE', 'E', 'SE'].includes(piece.direction) && cellid < i) {
+                                } else if (['NE', 'E', 'SE'].includes(piece.direction) && cellid < i && (i - cellid) <= cellsToMove) {
                                     this.cells[cellid].setPiece2(piece);
                                     this.cells[i].setPiece2(null);
                                     for (let j = -1; j > cellid - i; j--) {
@@ -418,13 +424,13 @@ Board.prototype.movePiece = function (cellID) {
                         }
                     } else {
                         if ((Math.abs(i - cellid) % 9) === 0) {
-                            if (['N', 'NW', 'NE'].includes(piece.direction) && cellid > i) {
+                            if (['N', 'NW', 'NE'].includes(piece.direction) && cellid > i && (cellid - i) / 9 <= cellsToMove) {
                                 this.cells[cellid].setPiece2(piece);
                                 this.cells[cellid].setPieceDirection('N');
                                 this.cells[cellid].setDotColor(piece.dotColor);
                                 this.cells[cellid].enableDot();
                                 this.cells[i].setPiece2(null);
-                            } else if (['S', 'SW', 'SE'].includes(piece.direction) && cellid < i) {
+                            } else if (['S', 'SW', 'SE'].includes(piece.direction) && cellid < i && (i - cellid) / 9 <= cellsToMove) {
                                 this.cells[cellid].setPiece2(piece);
                                 this.cells[cellid].setPieceDirection('S');
                                 this.cells[cellid].setDotColor(piece.dotColor);
@@ -434,13 +440,13 @@ Board.prototype.movePiece = function (cellID) {
                                 console.warn('Warning: Invalid position');
                             }
                         } else if ((Math.abs(i - cellid) % 10) === 0) {
-                            if (['N', 'NW', 'W'].includes(piece.direction) && cellid > i) {
+                            if (['N', 'NW', 'W'].includes(piece.direction) && cellid > i && (cellid - i) / 10 <= cellsToMove) {
                                 this.cells[cellid].setPiece2(piece);
                                 this.cells[cellid].setPieceDirection('NW');
                                 this.cells[cellid].setDotColor(piece.dotColor);
                                 this.cells[cellid].enableDot();
                                 this.cells[i].setPiece2(null);
-                            } else if (['E', 'SE', 'S'].includes(piece.direction) && cellid < i) {
+                            } else if (['E', 'SE', 'S'].includes(piece.direction) && cellid < i && (i - cellid) / 10 <= cellsToMove) {
                                 this.cells[cellid].setPiece2(piece);
                                 this.cells[cellid].setPieceDirection('SE');
                                 this.cells[cellid].setDotColor(piece.dotColor);
@@ -450,13 +456,13 @@ Board.prototype.movePiece = function (cellID) {
                                 console.warn('Warning: Invalid position');
                             }
                         } else if ((Math.abs(i - cellid) % 8) === 0) {
-                            if (['N', 'NE', 'E'].includes(piece.direction) && cellid > i) {
+                            if (['N', 'NE', 'E'].includes(piece.direction) && cellid > i && (cellid - i) / 8 <= cellsToMove) {
                                 this.cells[cellid].setPiece2(piece);
                                 this.cells[cellid].setPieceDirection('NE');
                                 this.cells[cellid].setDotColor(piece.dotColor);
                                 this.cells[cellid].enableDot();
                                 this.cells[i].setPiece2(null);
-                            } else if (['S', 'SW', 'W'].includes(piece.direction) && cellid < i) {
+                            } else if (['S', 'SW', 'W'].includes(piece.direction) && cellid < i && (i - cellid) / 8 <= cellsToMove) {
                                 this.cells[cellid].setPiece2(piece);
                                 this.cells[cellid].setPieceDirection('SW');
                                 this.cells[cellid].setDotColor(piece.dotColor);
@@ -466,13 +472,13 @@ Board.prototype.movePiece = function (cellID) {
                                 console.warn('Warning: Invalid position');
                             }
                         } else if (Math.abs(i - cellid) < 9) {
-                            if (['NW', 'W', 'SW'].includes(piece.direction) && cellid > i) {
+                            if (['NW', 'W', 'SW'].includes(piece.direction) && cellid > i && (cellid - i) <= cellsToMove) {
                                 this.cells[cellid].setPiece2(piece);
                                 this.cells[cellid].setPieceDirection('W');
                                 this.cells[cellid].setDotColor(piece.dotColor);
                                 this.cells[cellid].enableDot();
                                 this.cells[i].setPiece2(null);
-                            } else if (['NE', 'E', 'SE'].includes(piece.direction) && cellid < i) {
+                            } else if (['NE', 'E', 'SE'].includes(piece.direction) && cellid < i && (i - cellid) <= cellsToMove) {
                                 this.cells[cellid].setPiece2(piece);
                                 this.cells[cellid].setPieceDirection('E');
                                 this.cells[cellid].setDotColor(piece.dotColor);
@@ -491,6 +497,7 @@ Board.prototype.movePiece = function (cellID) {
             } else {
                 console.warn('Warning: Selected piece (ID = ' + this.selectedPieceID + ') is unable to move');
             }
+            this.updateDotsCounter();
             return;
         }
     }
