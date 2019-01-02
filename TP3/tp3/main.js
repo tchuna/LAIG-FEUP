@@ -47,10 +47,27 @@ function getUrlVars() {
     return vars;
 }
 //Include additional files here
-serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.js', 'Node.js','Primitives/MyTriangle.js','Primitives/MyRectangle.js',
-               'Primitives/MyCircle.js',
-               'Animations/Animation.js', 'Animations/CircularAnimation.js', 'Animations/LinearAnimation.js',
-    'Board/Cell.js', 'Board/Board.js', 'Board/Arrow.js', 'Board/Dot.js', 'Utils/Color.js', 'Objects/Pieces/Piece.js', 'Objects/CGFOBJModel.js', 'Objects/CGFResourceReader.js',
+serialInclude([
+    '../lib/CGF.js',
+    'XMLscene.js',
+    'MySceneGraph.js',
+    'MyInterface.js',
+    'Node.js',
+    'Game.js',
+    'Primitives/MyTriangle.js',
+    'Primitives/MyRectangle.js',
+    'Primitives/MyCircle.js',
+    'Animations/Animation.js',
+    'Animations/CircularAnimation.js',
+    'Animations/LinearAnimation.js',
+    'Board/Cell.js',
+    'Board/Board.js',
+    'Board/Arrow.js',
+    'Board/Dot.js',
+    'Utils/Color.js',
+    'Objects/Pieces/Piece.js',
+    'Objects/CGFOBJModel.js',
+    'Objects/CGFResourceReader.js',
 
 main=function()
 {

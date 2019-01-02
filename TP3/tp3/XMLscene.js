@@ -102,7 +102,6 @@ class XMLscene extends CGFscene {
         }
     }
 
-
     /* Handler called when the graph is finally loaded.
     * As loading is asynchronous, this may be called already after the application has started the run loop
     */
@@ -166,7 +165,6 @@ class XMLscene extends CGFscene {
         }
     }
 
-
     /**
      * Log the picking of a cell
      */
@@ -177,20 +175,17 @@ class XMLscene extends CGFscene {
                     let obj = this.pickResults[i][0];
                     if (obj) {
                         let customId = this.pickResults[i][1];
-                        console.log('Picked object: ' + obj + ', with pick id ' + customId);
+                        this.graph.game.clearAllPiecesHighlight();
                         if (obj instanceof Piece) {
-                            this.graph.board.clearAllPiecesHighlight();
-
-                            if (customId !== this.graph.board.getSelectedPieceID()) {
-                                this.graph.board.highlightPiece(customId);
-                                this.graph.board.setSelectedPieceID(customId);
+                            if (customId !== this.graph.game.getSelectedPiece()) {
+                                this.graph.game.setSelectedPiece(customId);
+                                this.graph.game.highlightPiece(customId);
                             } else {
-                                this.graph.board.setSelectedPieceID(null);
+                                this.graph.game.setSelectedPiece(-1);
                             }
-                        } else if (this.graph.board.selectedPieceID !== null) {
-                            this.graph.board.movePiece(customId);
-                            this.graph.board.setSelectedPieceID(null);
-                            this.graph.board.clearAllPiecesHighlight();
+                        } else if (this.graph.game.getSelectedPiece() !== -1) {
+                            this.graph.game.move(customId);
+                            this.graph.game.setSelectedPiece(-1);
                         }
                     }
                 }

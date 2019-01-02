@@ -26,18 +26,28 @@ function Board(scene){
     this.dotsColor = ['dark_red', 'dark_green', 'dark_blue', 'light_gray', 'dark_gray'];
 
     /* Maps piece directions to possible movement directions */
-    this.directionMap = [];
-    this.directionMap[this.directions[0]] = [7, 0, 1];
-    this.directionMap[this.directions[1]] = [0, 1, 2];
-    this.directionMap[this.directions[2]] = [1, 2, 3];
-    this.directionMap[this.directions[3]] = [2, 3, 4];
-    this.directionMap[this.directions[4]] = [3, 4, 5];
-    this.directionMap[this.directions[5]] = [4, 5, 6];
-    this.directionMap[this.directions[6]] = [5, 6, 7];
-    this.directionMap[this.directions[7]] = [6, 7, 0];
+    this.directionToIndex = [];
+    this.directionToIndex[this.directions[0]] = [7, 0, 1];
+    this.directionToIndex[this.directions[1]] = [0, 1, 2];
+    this.directionToIndex[this.directions[2]] = [1, 2, 3];
+    this.directionToIndex[this.directions[3]] = [2, 3, 4];
+    this.directionToIndex[this.directions[4]] = [3, 4, 5];
+    this.directionToIndex[this.directions[5]] = [4, 5, 6];
+    this.directionToIndex[this.directions[6]] = [5, 6, 7];
+    this.directionToIndex[this.directions[7]] = [6, 7, 0];
+
+    this.directionToRange = [];
+    this.directionToRange[this.directions[0]] = ['NW', 'N', 'NE'];
+    this.directionToRange[this.directions[1]] = ['N', 'NE', 'E'];
+    this.directionToRange[this.directions[2]] = ['NE', 'E', 'SE'];
+    this.directionToRange[this.directions[3]] = ['E', 'SE', 'S'];
+    this.directionToRange[this.directions[4]] = ['SE', 'S', 'SW'];
+    this.directionToRange[this.directions[5]] = ['S', 'SW', 'W'];
+    this.directionToRange[this.directions[6]] = ['SW', 'W', 'NW'];
+    this.directionToRange[this.directions[7]] = ['W', 'NW', 'N'];
 
     /* ID of the selected piece */
-    this.selectedPieceID = null;
+    this.selectedPieceID = -1;
 
     /* Material of the board base */
     this.boardMaterial = new CGFappearance(this.scene);
@@ -62,36 +72,64 @@ function Board(scene){
         }
     }
 
-    console.log(this.boardArea);
-
     this.areaMaterial = [];
-    let random = [];
-    for (let i = 0; i < 27; i++) {
-        random[i] = Math.random();
-    }
-    for (let i = 0, j = 0; i < 9; i++, j += 3) {
-        this.areaMaterial[i] = new CGFappearance(this.scene);
-        this.areaMaterial[i].setAmbient(random[j], random[j + 1], random[j + 2], 1.0);
-        this.areaMaterial[i].setDiffuse(random[j], random[j + 1], random[j + 2], 1.0);
-        this.areaMaterial[i].setSpecular(random[j], random[j + 1], random[j + 2], 1.0);
-        this.areaMaterial[i].setShininess(10.0);
-        this.areaMaterial[i].loadTexture("/tp3/scenes/images/wood_grain.png");
-    }
+    this.areaMaterial[0] = new CGFappearance(this.scene);
+    this.areaMaterial[0].setAmbient(0.288, 0.678, 0.145, 1.0);
+    this.areaMaterial[0].setDiffuse(0.288, 0.678, 0.145, 1.0);
+    this.areaMaterial[0].setSpecular(0.288, 0.678, 0.145, 1.0);
+    this.areaMaterial[0].setShininess(10.0);
+    this.areaMaterial[0].loadTexture("/tp3/scenes/images/wood_grain.png");
+    this.areaMaterial[1] = new CGFappearance(this.scene);
+    this.areaMaterial[1].setAmbient(0.614, 0.174, 0.774, 1.0);
+    this.areaMaterial[1].setDiffuse(0.614, 0.174, 0.774, 1.0);
+    this.areaMaterial[1].setSpecular(0.614, 0.174, 0.774, 1.0);
+    this.areaMaterial[1].setShininess(10.0);
+    this.areaMaterial[1].loadTexture("/tp3/scenes/images/wood_grain.png");
+    this.areaMaterial[2] = new CGFappearance(this.scene);
+    this.areaMaterial[2].setAmbient(0.258, 0.286, 0.927, 1.0);
+    this.areaMaterial[2].setDiffuse(0.258, 0.286, 0.927, 1.0);
+    this.areaMaterial[2].setSpecular(0.258, 0.286, 0.927, 1.0);
+    this.areaMaterial[2].setShininess(10.0);
+    this.areaMaterial[2].loadTexture("/tp3/scenes/images/wood_grain.png");
+    this.areaMaterial[3] = new CGFappearance(this.scene);
+    this.areaMaterial[3].setAmbient(0.663, 0.894, 0.413, 1.0);
+    this.areaMaterial[3].setDiffuse(0.663, 0.894, 0.413, 1.0);
+    this.areaMaterial[3].setSpecular(0.663, 0.894, 0.413, 1.0);
+    this.areaMaterial[3].setShininess(10.0);
+    this.areaMaterial[3].loadTexture("/tp3/scenes/images/wood_grain.png");
+    this.areaMaterial[4] = new CGFappearance(this.scene);
+    this.areaMaterial[4].setAmbient(0.335, 0.025, 0.940, 1.0);
+    this.areaMaterial[4].setDiffuse(0.335, 0.025, 0.940, 1.0);
+    this.areaMaterial[4].setSpecular(0.335, 0.025, 0.940, 1.0);
+    this.areaMaterial[4].setShininess(10.0);
+    this.areaMaterial[4].loadTexture("/tp3/scenes/images/wood_grain.png");
+    this.areaMaterial[5] = new CGFappearance(this.scene);
+    this.areaMaterial[5].setAmbient(0.489, 0.749, 0.672, 1.0);
+    this.areaMaterial[5].setDiffuse(0.489, 0.749, 0.672, 1.0);
+    this.areaMaterial[5].setSpecular(0.489, 0.749, 0.672, 1.0);
+    this.areaMaterial[5].setShininess(10.0);
+    this.areaMaterial[5].loadTexture("/tp3/scenes/images/wood_grain.png");
+    this.areaMaterial[6] = new CGFappearance(this.scene);
+    this.areaMaterial[6].setAmbient(0.141, 0.174, 0.655, 1.0);
+    this.areaMaterial[6].setDiffuse(0.141, 0.174, 0.655, 1.0);
+    this.areaMaterial[6].setSpecular(0.141, 0.174, 0.655, 1.0);
+    this.areaMaterial[6].setShininess(10.0);
+    this.areaMaterial[6].loadTexture("/tp3/scenes/images/wood_grain.png");
+    this.areaMaterial[7] = new CGFappearance(this.scene);
+    this.areaMaterial[7].setAmbient(0.181, 0.531, 0.630, 1.0);
+    this.areaMaterial[7].setDiffuse(0.181, 0.531, 0.630, 1.0);
+    this.areaMaterial[7].setSpecular(0.181, 0.531, 0.630, 1.0);
+    this.areaMaterial[7].setShininess(10.0);
+    this.areaMaterial[7].loadTexture("/tp3/scenes/images/wood_grain.png");
+    this.areaMaterial[8] = new CGFappearance(this.scene);
+    this.areaMaterial[8].setAmbient(0.834, 0.726, 0.724, 1.0);
+    this.areaMaterial[8].setDiffuse(0.834, 0.726, 0.724, 1.0);
+    this.areaMaterial[8].setSpecular(0.834, 0.726, 0.724, 1.0);
+    this.areaMaterial[8].setShininess(10.0);
+    this.areaMaterial[8].loadTexture("/tp3/scenes/images/wood_grain.png");
 }
 Board.prototype = Object.create(CGFobject.prototype);
 Board.prototype.constructor = Board;
-
-/**
- * Initialize the dots counter
- * @returns {Array}
- */
-Board.prototype.initializeDotsCounter = function () {
-    let array = [];
-    this.dotsColor.forEach(function (value) {
-        array[value] = 0;
-    });
-    return array;
-};
 
 /**
  * Display board
@@ -120,6 +158,18 @@ Board.prototype.display = function() {
     }
 
     this.scene.clearPickRegistration();
+};
+
+/**
+ * Initialize the dots counter
+ * @returns {Array}
+ */
+Board.prototype.initializeDotsCounter = function () {
+    let array = [];
+    this.dotsColor.forEach(function (value) {
+        array[value] = 0;
+    });
+    return array;
 };
 
 /**
@@ -152,6 +202,39 @@ Board.prototype.setDotColor = function (index, color) {
 };
 
 /**
+ * Returns the color of the dot located in the cell given by index
+ * @param index
+ * @returns {color}
+ */
+Board.prototype.getDotColor = function (index) {
+    if (index > 0 && index < 81) {
+        return this.cells[index].getDotColor()
+    } else {
+        console.warn('Warning: passing argument index to function getDotColor on board is invalid');
+        return null;
+    }
+};
+
+/**
+ * Count the number of dots of each color
+ * @returns {Array}
+ */
+Board.prototype.countAllDots = function () {
+    let dots = [];
+    this.dotsColor.forEach(function (value) {
+        dots[value] = 0;
+    });
+
+    for (let i = 0; i < this.cells.length; i++) {
+        if (this.cells[i].hasDot()) {
+            dots[this.cells[i].getDotColor()]++;
+        }
+    }
+
+    return dots;
+};
+
+/**
  * Show direction arrows in cell given by index <Index> facing directions (<Direction> +- 45) degrees
  * @param index
  * @param direction
@@ -164,7 +247,7 @@ Board.prototype.enableArrows = function (index, direction) {
         console.warn('Warning: passing argument direction to function enableArrows in Board is invalid');
     }
     else {
-        this.cells[index].enableArrow(this.directionMap[direction]);
+        this.cells[index].enableArrow(this.directionToIndex[direction]);
     }
 };
 
@@ -198,6 +281,34 @@ Board.prototype.placePiece = function(index, color, direction) {
     }
     else {
         this.cells[index].setPiece(color, direction);
+    }
+};
+
+/**
+ * Returns the piece given by index
+ * @param index
+ * @returns {piece}
+ */
+Board.prototype.getPiece = function (index) {
+    for (let i = 0; i < this.cells.length; i++) {
+        if (this.cells[i].hasPiece() && this.cells[i].getPiece().id === index) {
+            return this.cells[i].getPiece();
+        }
+    }
+    return null;
+};
+
+/**
+ * Returns the piece located in the cell given by index
+ * @param index
+ * @returns {piece}
+ */
+Board.prototype.getPieceByCellId = function (index) {
+    if (index >= 0 && index < 81) {
+        return this.cells[index].getPiece();
+    } else {
+        console.warn('Warning: passing argument index to function getPiece on Board is invalid');
+        return null;
     }
 };
 
@@ -236,6 +347,89 @@ Board.prototype.setSelectedPieceID = function (id) {
  */
 Board.prototype.getSelectedPieceID = function () {
     return this.selectedPieceID;
+};
+
+/**
+ * Update all pieces to set if it is able to move or not
+ */
+Board.prototype.updatePieces = function () {
+    let piece = null;
+    for (let i = 0; i < this.cells.length; i++) {
+        if (this.cells[i].hasPiece()) {
+            piece = this.cells[i].getPiece();
+            if ((i >= 0 && i <= 8 && piece.direction === 'S') ||
+                (i % 9 === 0 && piece.direction === 'E') ||
+                ((i + 1) % 9 === 0 && piece.direction === 'W') ||
+                (i >= 72 && i <= 80 && piece.direction === 'N') ||
+                (i === 0 && piece.direction === 'SE') ||
+                (i === 8 && piece.direction === 'SW') ||
+                (i === 72 && piece.direction === 'NE') ||
+                (i === 80 && piece.direction === 'NW')) {
+                piece.ableToMove = false;
+            }
+            this.cells[i].setPiece2(piece);
+        }
+    }
+};
+
+/**
+ * Return the mobility of all pieces of each color
+ * @returns {Array}
+ */
+Board.prototype.checkPiecesMobility = function () {
+    let mobility = [];
+
+    this.colors.forEach(function (value) {
+        mobility[value] = false;
+    });
+
+    for (let i = 0; i < this.cells.length; i++) {
+        if (this.cells[i].hasPiece() && this.cells[i].getPiece().ableToMove && !mobility[this.cells[i].getPiece().color]) {
+            mobility[this.cells[i].getPiece().color] = true;
+        }
+    }
+
+    return mobility;
+};
+
+/**
+ * Check if any piece exists
+ * @returns {Array}
+ */
+Board.prototype.checkPieceExistence = function () {
+    let existence = [];
+    let piece;
+
+    this.colors.forEach(function (value) {
+        existence[value] = false;
+    });
+    for (let i = 0; i < this.cells.length; i++) {
+        if ((piece = this.getPieceByCellId(i)) !== null) {
+            existence[piece.color] = true;
+        }
+    }
+    return existence;
+};
+
+/**
+ * Updated piece direction when it moves to a different area
+ * @param piece
+ * @param area_i
+ * @param area_f
+ */
+Board.prototype.updatePieceDirectionOnAreaChange = function (piece, area_i, area_f) {
+    if (area_i !== area_f && confirm('Would you like to change piece direction?')) {
+        let direction;
+        while (true) {
+            direction = prompt('New direction (' + this.directionToRange[piece.direction] + ')');
+            if (direction === null || this.directionToRange[piece.direction].includes(direction.toUpperCase())) {
+                break;
+            }
+        }
+        if (direction !== null) {
+            piece.direction = direction
+        }
+    }
 };
 
 /**
@@ -309,10 +503,10 @@ Board.prototype.updateDotsCounter = function () {
     }
 };
 
-/*
-* TODO: Send animation info to cell and make piece in specified cell move (with animation) to the passed coordinates
-* TODO: Deal with "areas" and limit number of cells to move depending on the number of dots in the current area
-* */
+/**
+ * Move a piece from current cell to cell given by cellID
+ * @param cellID
+ */
 Board.prototype.movePiece = function (cellID) {
 
     let cellid = cellID - 1;
@@ -323,96 +517,230 @@ Board.prototype.movePiece = function (cellID) {
         if (piece !== null && piece.id === this.selectedPieceID) {
             /* Check if piece is able to move */
             if (piece.ableToMove) {
+                /* Check if cell has any piece */
                 if (!this.cells[cellid].hasPiece()) {
                     const cellsToMove = this.getMaximumCellsToMove(this.determineAreaByCellID(i), piece.color);
+                    const area_i = this.determineAreaByCellID(i);
+                    const area_f = this.determineAreaByCellID(cellid);
+                    let dotInTheWay = false;
+                    let pieceInTheWay = false;
+
                     /* Check if cell has any dot */
                     if (this.cells[cellid].hasDot()) {
                         /* Check if dot has the same color as the piece (connected movement) */
                         if (this.cells[cellid].getDotColor() === piece.dotColor) {
                             /* Movement in the North | South direction */
                             if ((Math.abs(i - cellid) % 9) === 0) {
-                                if (['N', 'NW', 'NE'].includes(piece.direction) && cellid > i && (cellid - i) / 9 <= cellsToMove) {
-                                    this.cells[cellid].setPiece2(piece);
-                                    this.cells[i].setPiece2(null);
+                                if (this.directionToRange['N'].includes(piece.direction) && cellid > i && (cellid - i) / 9 <= cellsToMove) {
                                     for (let j = i; j <= cellid; j += 9) {
-                                        this.cells[j].setDotColor(piece.dotColor);
-                                        this.cells[j].enableDot();
+                                        if (j !== i && this.cells[j].hasPiece()) {
+                                            pieceInTheWay = true;
+                                        }
                                     }
-                                    this.cells[cellid].setPieceDirection('N');
-                                } else if (['S', 'SW', 'SE'].includes(piece.direction) && cellid < i && (i - cellid) / 9 <= cellsToMove) {
-                                    this.cells[cellid].setPiece2(piece);
+                                    if (!pieceInTheWay) {
+                                        for (let j = i; j <= cellid; j += 9) {
+                                            if (this.cells[j].hasDot() && this.cells[j].getDotColor() !== piece.dotColor) {
+                                                dotInTheWay = true;
+                                            }
+                                            this.cells[j].setDotColor(piece.dotColor);
+                                            this.cells[j].enableDot();
+                                        }
+                                    } else {
+                                        this.cells[cellid].setDotColor(piece.dotColor);
+                                        this.cells[cellid].enableDot();
+                                    }
                                     this.cells[i].setPiece2(null);
-                                    for (let j = i; j >= cellid; j -= 9) {
-                                        this.cells[j].setDotColor(piece.dotColor);
-                                        this.cells[j].enableDot();
+                                    if (!dotInTheWay) {
+                                        this.cells[cellid].setPiece2(piece);
+                                        this.cells[cellid].setPieceDirection('N');
+                                        this.updatePieceDirectionOnAreaChange(piece, area_i, area_f);
                                     }
-                                    this.cells[cellid].setPieceDirection('S');
+                                } else if (this.directionToRange['S'].includes(piece.direction) && cellid < i && (i - cellid) / 9 <= cellsToMove) {
+                                    for (let j = i; j >= cellid; j -= 9) {
+                                        if (j !== i && this.cells[j].hasPiece()) {
+                                            pieceInTheWay = true;
+                                        }
+                                    }
+                                    if (!pieceInTheWay) {
+                                        for (let j = i; j >= cellid; j -= 9) {
+                                            if (this.cells[j].hasDot() && this.cells[j].getDotColor() !== piece.dotColor) {
+                                                dotInTheWay = true;
+                                            }
+                                            this.cells[j].setDotColor(piece.dotColor);
+                                            this.cells[j].enableDot();
+                                        }
+                                    } else {
+                                        this.cells[cellid].setDotColor(piece.dotColor);
+                                        this.cells[cellid].enableDot();
+                                    }
+                                    this.cells[i].setPiece2(null);
+                                    if (!dotInTheWay) {
+                                        this.cells[cellid].setPiece2(piece);
+                                        this.cells[cellid].setPieceDirection('S');
+                                        this.updatePieceDirectionOnAreaChange(piece, area_i, area_f);
+                                    }
                                 } else {
                                     console.warn('Warning: Invalid position');
                                 }
                             }
                             /* Movement in the Northwest | Southeast direction */
                             else if ((Math.abs(i - cellid) % 10) === 0) {
-                                if (['N', 'NW', 'W'].includes(piece.direction) && cellid > i && (cellid - i) / 10 <= cellsToMove) {
-                                    this.cells[cellid].setPiece2(piece);
-                                    this.cells[i].setPiece2(null);
+                                if (this.directionToRange['NW'].includes(piece.direction) && cellid > i && (cellid - i) / 10 <= cellsToMove) {
                                     for (let j = i; j <= cellid; j += 10) {
-                                        this.cells[j].setDotColor(piece.dotColor);
-                                        this.cells[j].enableDot();
+                                        if (j !== i && this.cells[j].hasPiece()) {
+                                            pieceInTheWay = true;
+                                        }
                                     }
-                                    this.cells[cellid].setPieceDirection('NW');
-                                } else if (['E', 'SE', 'S'].includes(piece.direction) && cellid < i && (i - cellid) / 10 <= cellsToMove) {
-                                    this.cells[cellid].setPiece2(piece);
+                                    if (!pieceInTheWay) {
+                                        for (let j = i; j <= cellid; j += 10) {
+                                            if (this.cells[j].hasDot() && this.cells[j].getDotColor() !== piece.dotColor) {
+                                                dotInTheWay = true;
+                                            }
+                                            this.cells[j].setDotColor(piece.dotColor);
+                                            this.cells[j].enableDot();
+                                        }
+                                    } else {
+                                        this.cells[cellid].setDotColor(piece.dotColor);
+                                        this.cells[cellid].enableDot();
+                                    }
                                     this.cells[i].setPiece2(null);
-                                    for (let j = i; j >= cellid; j -= 10) {
-                                        this.cells[j].setDotColor(piece.dotColor);
-                                        this.cells[j].enableDot();
+                                    if (!dotInTheWay) {
+                                        this.cells[cellid].setPiece2(piece);
+                                        this.cells[cellid].setPieceDirection('NW');
+                                        this.updatePieceDirectionOnAreaChange(piece, area_i, area_f);
                                     }
-                                    this.cells[cellid].setPieceDirection('SE');
+                                } else if (this.directionToRange['SE'].includes(piece.direction) && cellid < i && (i - cellid) / 10 <= cellsToMove) {
+                                    for (let j = i; j >= cellid; j -= 10) {
+                                        if (j !== i && this.cells[j].hasPiece()) {
+                                            pieceInTheWay = true;
+                                        }
+                                    }
+                                    if (!pieceInTheWay) {
+                                        for (let j = i; j >= cellid; j -= 10) {
+                                            if (this.cells[j].hasDot() && this.cells[j].getDotColor() !== piece.dotColor) {
+                                                dotInTheWay = true;
+                                            }
+                                            this.cells[j].setDotColor(piece.dotColor);
+                                            this.cells[j].enableDot();
+                                        }
+                                    } else {
+                                        this.cells[cellid].setDotColor(piece.dotColor);
+                                        this.cells[cellid].enableDot();
+                                    }
+                                    this.cells[i].setPiece2(null);
+                                    if (!dotInTheWay) {
+                                        this.cells[cellid].setPiece2(piece);
+                                        this.cells[cellid].setPieceDirection('SE');
+                                        this.updatePieceDirectionOnAreaChange(piece, area_i, area_f);
+                                    }
                                 } else {
                                     console.warn('Warning: Invalid position');
                                 }
                             }
                             /* Movement in the Northeast | Southwest direction */
                             else if ((Math.abs(i - cellid) % 8) === 0) {
-                                if (['N', 'NE', 'E'].includes(piece.direction) && cellid > i && (cellid - i) / 8 <= cellsToMove) {
-                                    this.cells[cellid].setPiece2(piece);
-                                    this.cells[i].setPiece2(null);
+                                if (this.directionToRange['NE'].includes(piece.direction) && cellid > i && (cellid - i) / 8 <= cellsToMove) {
                                     for (let j = i; j <= cellid; j += 8) {
-                                        this.cells[j].setDotColor(piece.dotColor);
-                                        this.cells[j].enableDot();
+                                        if (j !== i && this.cells[j].hasPiece()) {
+                                            pieceInTheWay = true;
+                                        }
                                     }
-                                    this.cells[cellid].setPieceDirection('NE');
-                                } else if (['S', 'SW', 'W'].includes(piece.direction) && cellid < i && (i - cellid) / 8 <= cellsToMove) {
-                                    this.cells[cellid].setPiece2(piece);
+                                    if (!pieceInTheWay) {
+                                        for (let j = i; j <= cellid; j += 8) {
+                                            if (this.cells[j].hasDot() && this.cells[j].getDotColor() !== piece.dotColor) {
+                                                dotInTheWay = true;
+                                            }
+                                            this.cells[j].setDotColor(piece.dotColor);
+                                            this.cells[j].enableDot();
+                                        }
+                                    } else {
+                                        this.cells[cellid].setDotColor(piece.dotColor);
+                                        this.cells[cellid].enableDot();
+                                    }
                                     this.cells[i].setPiece2(null);
-                                    for (let j = i; j >= cellid; j -= 8) {
-                                        this.cells[j].setDotColor(piece.dotColor);
-                                        this.cells[j].enableDot();
+                                    if (!dotInTheWay) {
+                                        this.cells[cellid].setPiece2(piece);
+                                        this.cells[cellid].setPieceDirection('NE');
+                                        this.updatePieceDirectionOnAreaChange(piece, area_i, area_f);
                                     }
-                                    this.cells[cellid].setPieceDirection('SW');
+                                } else if (this.directionToRange['SW'].includes(piece.direction) && cellid < i && (i - cellid) / 8 <= cellsToMove) {
+                                    for (let j = i; j >= cellid; j -= 8) {
+                                        if (j !== i && this.cells[j].hasPiece()) {
+                                            pieceInTheWay = true;
+                                        }
+                                    }
+                                    if (!pieceInTheWay) {
+                                        for (let j = i; j >= cellid; j -= 8) {
+                                            if (this.cells[j].hasDot() && this.cells[j].getDotColor() !== piece.dotColor) {
+                                                dotInTheWay = true;
+                                            }
+                                            this.cells[j].setDotColor(piece.dotColor);
+                                            this.cells[j].enableDot();
+                                        }
+                                    } else {
+                                        this.cells[cellid].setDotColor(piece.dotColor);
+                                        this.cells[cellid].enableDot();
+                                    }
+                                    this.cells[i].setPiece2(null);
+                                    if (!dotInTheWay) {
+                                        this.cells[cellid].setPiece2(piece);
+                                        this.cells[cellid].setPieceDirection('SW');
+                                        this.updatePieceDirectionOnAreaChange(piece, area_i, area_f);
+                                    }
                                 } else {
                                     console.warn('Warning: Invalid position');
                                 }
                             }
                             /* Movement in the East | West direction */
                             else if (Math.abs(i - cellid) < 9) {
-                                if (['NW', 'W', 'SW'].includes(piece.direction) && cellid > i && (cellid - i) <= cellsToMove) {
-                                    this.cells[cellid].setPiece2(piece);
-                                    this.cells[i].setPiece2(null);
+                                if (this.directionToRange['W'].includes(piece.direction) && cellid > i && (cellid - i) <= cellsToMove) {
                                     for (let j = 1; j < cellid - i; j++) {
-                                        this.cells[i + j].setDotColor(piece.dotColor);
-                                        this.cells[i + j].enableDot();
+                                        if (j !== i && this.cells[j].hasPiece()) {
+                                            pieceInTheWay = true;
+                                        }
                                     }
-                                    this.cells[cellid].setPieceDirection('W');
-                                } else if (['NE', 'E', 'SE'].includes(piece.direction) && cellid < i && (i - cellid) <= cellsToMove) {
-                                    this.cells[cellid].setPiece2(piece);
+                                    if (!pieceInTheWay) {
+                                        for (let j = 1; j < cellid - i; j++) {
+                                            if (this.cells[j].hasDot() && this.cells[j].getDotColor() !== piece.dotColor) {
+                                                dotInTheWay = true;
+                                            }
+                                            this.cells[i + j].setDotColor(piece.dotColor);
+                                            this.cells[i + j].enableDot();
+                                        }
+                                    } else {
+                                        this.cells[cellid].setDotColor(piece.dotColor);
+                                        this.cells[cellid].enableDot();
+                                    }
                                     this.cells[i].setPiece2(null);
-                                    for (let j = -1; j > cellid - i; j--) {
-                                        this.cells[i + j].setDotColor(piece.dotColor);
-                                        this.cells[i + j].enableDot();
+                                    if (!dotInTheWay) {
+                                        this.cells[cellid].setPiece2(piece);
+                                        this.cells[cellid].setPieceDirection('W');
+                                        this.updatePieceDirectionOnAreaChange(piece, area_i, area_f);
                                     }
-                                    this.cells[cellid].setPieceDirection('E');
+                                } else if (this.directionToRange['E'].includes(piece.direction) && cellid < i && (i - cellid) <= cellsToMove) {
+                                    for (let j = -1; j > cellid - i; j--) {
+                                        if (j !== i && this.cells[j].hasPiece()) {
+                                            pieceInTheWay = true;
+                                        }
+                                    }
+                                    if (!pieceInTheWay) {
+                                        for (let j = -1; j > cellid - i; j--) {
+                                            if (this.cells[j].hasDot() && this.cells[j].getDotColor() !== piece.dotColor) {
+                                                dotInTheWay = true;
+                                            }
+                                            this.cells[i + j].setDotColor(piece.dotColor);
+                                            this.cells[i + j].enableDot();
+                                        }
+                                    } else {
+                                        this.cells[cellid].setDotColor(piece.dotColor);
+                                        this.cells[cellid].enableDot();
+                                    }
+                                    this.cells[i].setPiece2(null);
+                                    if (!dotInTheWay) {
+                                        this.cells[cellid].setPiece2(piece);
+                                        this.cells[cellid].setPieceDirection('E');
+                                        this.updatePieceDirectionOnAreaChange(piece, area_i, area_f);
+                                    }
                                 } else {
                                     console.warn('Warning: Invalid position');
                                 }
@@ -424,66 +752,74 @@ Board.prototype.movePiece = function (cellID) {
                         }
                     } else {
                         if ((Math.abs(i - cellid) % 9) === 0) {
-                            if (['N', 'NW', 'NE'].includes(piece.direction) && cellid > i && (cellid - i) / 9 <= cellsToMove) {
+                            if (this.directionToRange['N'].includes(piece.direction) && cellid > i && (cellid - i) / 9 <= cellsToMove) {
                                 this.cells[cellid].setPiece2(piece);
                                 this.cells[cellid].setPieceDirection('N');
                                 this.cells[cellid].setDotColor(piece.dotColor);
                                 this.cells[cellid].enableDot();
                                 this.cells[i].setPiece2(null);
-                            } else if (['S', 'SW', 'SE'].includes(piece.direction) && cellid < i && (i - cellid) / 9 <= cellsToMove) {
+                                this.updatePieceDirectionOnAreaChange(piece, area_i, area_f);
+                            } else if (this.directionToRange['S'].includes(piece.direction) && cellid < i && (i - cellid) / 9 <= cellsToMove) {
                                 this.cells[cellid].setPiece2(piece);
                                 this.cells[cellid].setPieceDirection('S');
                                 this.cells[cellid].setDotColor(piece.dotColor);
                                 this.cells[cellid].enableDot();
                                 this.cells[i].setPiece2(null);
+                                this.updatePieceDirectionOnAreaChange(piece, area_i, area_f);
                             } else {
                                 console.warn('Warning: Invalid position');
                             }
                         } else if ((Math.abs(i - cellid) % 10) === 0) {
-                            if (['N', 'NW', 'W'].includes(piece.direction) && cellid > i && (cellid - i) / 10 <= cellsToMove) {
+                            if (this.directionToRange['NW'].includes(piece.direction) && cellid > i && (cellid - i) / 10 <= cellsToMove) {
                                 this.cells[cellid].setPiece2(piece);
                                 this.cells[cellid].setPieceDirection('NW');
                                 this.cells[cellid].setDotColor(piece.dotColor);
                                 this.cells[cellid].enableDot();
                                 this.cells[i].setPiece2(null);
-                            } else if (['E', 'SE', 'S'].includes(piece.direction) && cellid < i && (i - cellid) / 10 <= cellsToMove) {
+                                this.updatePieceDirectionOnAreaChange(piece, area_i, area_f);
+                            } else if (this.directionToRange['SE'].includes(piece.direction) && cellid < i && (i - cellid) / 10 <= cellsToMove) {
                                 this.cells[cellid].setPiece2(piece);
                                 this.cells[cellid].setPieceDirection('SE');
                                 this.cells[cellid].setDotColor(piece.dotColor);
                                 this.cells[cellid].enableDot();
                                 this.cells[i].setPiece2(null);
+                                this.updatePieceDirectionOnAreaChange(piece, area_i, area_f);
                             } else {
                                 console.warn('Warning: Invalid position');
                             }
                         } else if ((Math.abs(i - cellid) % 8) === 0) {
-                            if (['N', 'NE', 'E'].includes(piece.direction) && cellid > i && (cellid - i) / 8 <= cellsToMove) {
+                            if (this.directionToRange['NE'].includes(piece.direction) && cellid > i && (cellid - i) / 8 <= cellsToMove) {
                                 this.cells[cellid].setPiece2(piece);
                                 this.cells[cellid].setPieceDirection('NE');
                                 this.cells[cellid].setDotColor(piece.dotColor);
                                 this.cells[cellid].enableDot();
                                 this.cells[i].setPiece2(null);
-                            } else if (['S', 'SW', 'W'].includes(piece.direction) && cellid < i && (i - cellid) / 8 <= cellsToMove) {
+                                this.updatePieceDirectionOnAreaChange(piece, area_i, area_f);
+                            } else if (this.directionToRange['SW'].includes(piece.direction) && cellid < i && (i - cellid) / 8 <= cellsToMove) {
                                 this.cells[cellid].setPiece2(piece);
                                 this.cells[cellid].setPieceDirection('SW');
                                 this.cells[cellid].setDotColor(piece.dotColor);
                                 this.cells[cellid].enableDot();
                                 this.cells[i].setPiece2(null);
+                                this.updatePieceDirectionOnAreaChange(piece, area_i, area_f);
                             } else {
                                 console.warn('Warning: Invalid position');
                             }
                         } else if (Math.abs(i - cellid) < 9) {
-                            if (['NW', 'W', 'SW'].includes(piece.direction) && cellid > i && (cellid - i) <= cellsToMove) {
+                            if (this.directionToRange['W'].includes(piece.direction) && cellid > i && (cellid - i) <= cellsToMove) {
                                 this.cells[cellid].setPiece2(piece);
                                 this.cells[cellid].setPieceDirection('W');
                                 this.cells[cellid].setDotColor(piece.dotColor);
                                 this.cells[cellid].enableDot();
                                 this.cells[i].setPiece2(null);
-                            } else if (['NE', 'E', 'SE'].includes(piece.direction) && cellid < i && (i - cellid) <= cellsToMove) {
+                                this.updatePieceDirectionOnAreaChange(piece, area_i, area_f);
+                            } else if (this.directionToRange['E'].includes(piece.direction) && cellid < i && (i - cellid) <= cellsToMove) {
                                 this.cells[cellid].setPiece2(piece);
                                 this.cells[cellid].setPieceDirection('E');
                                 this.cells[cellid].setDotColor(piece.dotColor);
                                 this.cells[cellid].enableDot();
                                 this.cells[i].setPiece2(null);
+                                this.updatePieceDirectionOnAreaChange(piece, area_i, area_f);
                             } else {
                                 console.warn('Warning: Invalid position');
                             }
@@ -498,8 +834,9 @@ Board.prototype.movePiece = function (cellID) {
                 console.warn('Warning: Selected piece (ID = ' + this.selectedPieceID + ') is unable to move');
             }
             this.updateDotsCounter();
+            this.updatePieces();
             return;
         }
     }
-    console.warn('Warning: Can not find selected piece (ID = '+ this.selectedPieceID || 'null' +')');
+    console.warn('Warning: Can not find selected piece (ID = ' + this.selectedPieceID + ')');
 };

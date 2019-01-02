@@ -44,20 +44,9 @@ class MySceneGraph {
         * After the file is read, the reader calls onXMLReady on this object.
         * If any error occurs, the reader calls onXMLError on this object, with an error message
         */
-
         this.reader.open('scenes/' + filename, this);
 
-        this.board = new Board(this.scene);
-
-
-        this.board.placePiece(0, 'red', 'NW');
-        this.board.placePiece(2, 'black', 'N');
-        this.board.placePiece(6, 'red', 'N');
-        this.board.placePiece(36, 'black', 'W');
-        this.board.placePiece(44, 'red', 'E');
-        this.board.placePiece(74, 'black', 'S');
-        this.board.placePiece(78, 'red', 'S');
-        this.board.placePiece(80, 'black', 'SE');
+        this.game = new Game(this.scene, 2);
     }
 
     //Validate COLOR
@@ -1344,11 +1333,10 @@ class MySceneGraph {
      *
      */
     displayScene() {
-
         // entry point for graph rendering
         this.scene.pushMatrix();
         // this.rendering(this.scene, this.rootNode);
-        this.board.display();
+        this.game.display();
         this.scene.popMatrix();
     }
 }

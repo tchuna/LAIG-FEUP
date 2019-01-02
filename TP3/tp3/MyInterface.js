@@ -26,6 +26,9 @@ class MyInterface extends CGFinterface {
 
         // add a group of controls (and open/expand by defult)
 
+        this.playerGroup = this.gui.addFolder('Players Turn');
+        this.playerGroup.open();
+
         return true;
     }
 
@@ -67,6 +70,15 @@ class MyInterface extends CGFinterface {
                 group.add(this.scene.lightValues, key);
             }
         }
+    }
+
+    addPlayerTurnGroup(player) {
+        this.item = this.playerGroup.add({Player: player}, 'Player');
+    }
+
+    updatePlayerTurn(player) {
+        this.playerGroup.remove(this.item);
+        this.item = this.playerGroup.add({Player: player}, 'Player');
     }
 
     addViewsGroup(views) {
