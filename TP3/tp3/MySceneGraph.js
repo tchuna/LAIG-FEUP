@@ -928,6 +928,19 @@ class MySceneGraph {
             }
             let primitive;
             switch (grandChildren[0].nodeName) {
+
+
+              case "cylinder":
+                  primitive={
+                  base: this.reader.getFloat(grandChildren[0], 'base'),
+                  top: this.reader.getFloat(grandChildren[0], 'top'),
+                  height: this.reader.getFloat(grandChildren[0], 'height'),
+                  slices: this.reader.getInteger(grandChildren[0], 'slices'),
+                  stacks: this.reader.getInteger(grandChildren[0], 'stacks')
+                };
+                this.primitives[primId] = new MyCylinder(this.scene, primitive);
+                break;
+
                 case "rectangle":
                     primitive = {
                         x1: this.reader.getFloat(grandChildren[0], 'x1'),
@@ -1335,8 +1348,8 @@ class MySceneGraph {
     displayScene() {
         // entry point for graph rendering
         this.scene.pushMatrix();
-        // this.rendering(this.scene, this.rootNode);
-        this.game.display();
+        this.rendering(this.scene, this.rootNode);
+        //this.game.display();
         this.scene.popMatrix();
     }
 }

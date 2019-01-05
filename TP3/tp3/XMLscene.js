@@ -102,6 +102,11 @@ class XMLscene extends CGFscene {
         }
     }
 
+
+    changeGraph(filename){
+        this.graph = new MySceneGraph(filename, this);
+      }
+
     /* Handler called when the graph is finally loaded.
     * As loading is asynchronous, this may be called already after the application has started the run loop
     */

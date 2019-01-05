@@ -26,8 +26,25 @@ class MyInterface extends CGFinterface {
 
         // add a group of controls (and open/expand by defult)
 
-        this.playerGroup = this.gui.addFolder('Players Turn');
-        this.playerGroup.open();
+
+
+
+        this.scenes = this.gui.addFolder("Scenes");
+        this.scenes.open();
+      	this.gui.scene = 'Scene_1';
+
+
+        this.gui.sceneList = this.scenes.add(this.gui, 'scene', ['Scene_1', 'Scene_2']);
+
+        this.gui.sceneList.onFinishChange(function(){
+            this.removeFolder("Lights",this.gui);
+            this.removeFolder("Players Turn",this.gui);
+            //this.scene.changeView(this.gui.view);
+            this.scene.changeGraph(this.gui.scene + '.xml');
+
+
+          }.bind(this))
+
 
         return true;
     }
@@ -52,6 +69,27 @@ class MyInterface extends CGFinterface {
 
     }
 
+
+removeFolder(name,parent) {
+  if(!parent)
+  parent = this.gui;
+  var folder = parent.__folders[name];
+
+
+  if (!folder) {
+    return;
+  }
+
+  folder.close();
+
+  parent.__ul.removeChild(folder.domElement.parentNode);
+  delete parent.__folders[name];
+
+  parent.onResize();
+};
+
+
+
     /**
      * Adds a folder containing the IDs of the lights passed as parameter.
      * @param {array} lights
@@ -72,8 +110,13 @@ class MyInterface extends CGFinterface {
         }
     }
 
+
+
     addPlayerTurnGroup(player) {
-        this.item = this.playerGroup.add({Player: player}, 'Player');
+      this.playerGroup = this.gui.addFolder('Players Turn');
+      this.playerGroup.open();
+
+      this.item = this.playerGroup.add({Player: player}, 'Player');
     }
 
     updatePlayerTurn(player) {
