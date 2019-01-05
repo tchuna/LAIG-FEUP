@@ -44,7 +44,7 @@
 
     <ambient>
         <ambient r="0" g="0" b="0" a="1"/>
-        <background r="0.53" g="0.81" b="0.92" a="1" />
+        <background r="0" g="0" b="0" a="1" />
     </ambient>
 
     <lights>
@@ -558,7 +558,7 @@
                 <componentref id="table"/>
             </children>
         </component>
-        
+
         <component id="canvas">
            <transformation>
                <scale x="3" y="2" z="0.15"/>
