@@ -174,27 +174,29 @@ class XMLscene extends CGFscene {
      * Log the picking of a cell
      */
     logPicking() {
-        if (this.pickMode === false) {
-            if (this.pickResults != null && this.pickResults.length > 0) {
-                for (let i = 0; i < this.pickResults.length; i++) {
-                    let obj = this.pickResults[i][0];
-                    if (obj) {
-                        let customId = this.pickResults[i][1];
-                        this.graph.game.clearAllPiecesHighlight();
-                        if (obj instanceof Piece) {
-                            if (customId !== this.graph.game.getSelectedPiece()) {
-                                this.graph.game.setSelectedPiece(customId);
-                                this.graph.game.highlightPiece(customId);
-                            } else {
+        if (['PvP', 'PvC'].includes(this.graph.game.gameMode)) {
+            if (this.pickMode === false) {
+                if (this.pickResults != null && this.pickResults.length > 0) {
+                    for (let i = 0; i < this.pickResults.length; i++) {
+                        let obj = this.pickResults[i][0];
+                        if (obj) {
+                            let customId = this.pickResults[i][1];
+                            this.graph.game.clearAllPiecesHighlight();
+                            if (obj instanceof Piece) {
+                                if (customId !== this.graph.game.getSelectedPiece()) {
+                                    this.graph.game.setSelectedPiece(customId);
+                                    this.graph.game.highlightPiece(customId);
+                                } else {
+                                    this.graph.game.setSelectedPiece(-1);
+                                }
+                            } else if (this.graph.game.getSelectedPiece() !== -1) {
+                                this.graph.game.move(customId);
                                 this.graph.game.setSelectedPiece(-1);
                             }
-                        } else if (this.graph.game.getSelectedPiece() !== -1) {
-                            this.graph.game.move(customId);
-                            this.graph.game.setSelectedPiece(-1);
                         }
                     }
+                    this.pickResults.splice(0, this.pickResults.length);
                 }
-                this.pickResults.splice(0, this.pickResults.length);
             }
         }
     }

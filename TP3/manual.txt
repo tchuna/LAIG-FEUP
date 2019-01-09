@@ -1,0 +1,18 @@
+Initialization Guide
+
+1 - download .zip folder containing all files needed for execution.
+2 - open a terminal in the root folder of the project
+3 - start a http server (either using mongose or python)
+4 - open a browser and navigate to localhost:8000
+
+Game rules
+	This game called Azacru can be playbed by 2 to 4 players. Each player has a finite number of pieces and dots. Pieces are movable game pieces, and dots are fixed game pieces.
+	If 2 players are playing, each player has 4 pieces, otherwise, each player has 3 pieces. The first player is decided randomly (in this pratical work, the first player is chosen following the color definitions on the source code - first is red, second is green, third is blue, and last is white).
+	A piece has a direction to where it points to. This direction determines the possible directions a piece can move. Each piece can move to its direction +- 45 degrees, e.g., if a piece is pointing to North, it can move to Northwest, North, and Northeast.
+	The board contains 81 cells divided in 9 areas, each identified by a distinct color. The number of cells a piece can move is determined by the amount of dots of the same color as the piece a player has in that area. If no dot is presented, the number of cells a piece can move is 1. If a piece moves from an area to another, it is given an option for the player to change the piece's direction in 45 degrees.
+	Every movement leaves a dot in the cell which the piece moved to. There are one special movement that leave a dot in every cell between the origi cell to the destination cell of the movement. This movement is called a Connection move. Connections move occurr when a piece is moving to a cell where there is already a dot of the same color as the piece. Than, every cell between these two cells will receive a dot of the piece's color. However, if there is a piece in the way, the connection move act as a standard move and only the destination cell receives a dot; Also, if there is a dot of another color in the way, the connection movement is concluded, but the moving piece is removed of the game after concluding the movement.
+	The game is over either when all the cells contains a dot or the a player is unable to move its pieces. If the second condition is meet, a final round occurs normally. The winner is the player with the highest number of dots in the board.
+
+	The player turn can be seen in the top right menu, under "Players Turn" group. The surronding scene can be changed by selection one of the scenes in the dropdown menu under the "Scenes" group. Lights can be turned on or off by checking or unchecking each checkbox under the "Ligths" group.
+
+	The camera can be changed by pressing key "c".

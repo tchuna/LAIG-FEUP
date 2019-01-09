@@ -193,7 +193,7 @@ Board.prototype.setDotColor = function (index, color) {
     if (index < 0 || index >= 81) {
         console.warn("Warning: passing argument index to function setDotColor in Board is invalid");
     }
-    else if (!(this.colors.includes(color))) {
+    else if (!(this.dotsColor.includes(color))) {
         console.warn("Warning: passing argument color to function setDotColor in Board is invalid");
     }
     else {
@@ -207,7 +207,7 @@ Board.prototype.setDotColor = function (index, color) {
  * @returns {color}
  */
 Board.prototype.getDotColor = function (index) {
-    if (index > 0 && index < 81) {
+    if (index >= 0 && index < 81) {
         return this.cells[index].getDotColor()
     } else {
         console.warn('Warning: passing argument index to function getDotColor on board is invalid');

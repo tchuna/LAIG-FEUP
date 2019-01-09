@@ -23,29 +23,13 @@ class MyInterface extends CGFinterface {
         //  http://workshop.chromeexperiments.com/examples/gui
 
         this.gui = new dat.GUI();
-
-        // add a group of controls (and open/expand by defult)
-
-
-
-
         this.scenes = this.gui.addFolder("Scenes");
         this.scenes.open();
-      	this.gui.scene = 'Scene_1';
-
-
-        this.gui.sceneList = this.scenes.add(this.gui, 'scene', ['Scene_1', 'Scene_2']);
-
-        this.gui.sceneList.onFinishChange(function(){
-            this.removeFolder("Lights",this.gui);
-            this.removeFolder("Players Turn",this.gui);
-            //this.scene.changeView(this.gui.view);
-            this.scene.changeGraph(this.gui.scene + '.xml');
-
-
-          }.bind(this))
-
-
+        this.scenesList = this.scenes.add({Scene: "Scene_1.xml"}, 'Scene', {Scene_1: 'Scene_1.xml', Scene_2: 'Scene_2.xml'});
+        this.scenesList.onFinishChange(function (value) {
+            this.removeFolder("Lights");
+            this.scene.graph.reader.open('scenes/'+value, this.scene.graph);
+        }.bind(this));
         return true;
     }
 
@@ -69,26 +53,23 @@ class MyInterface extends CGFinterface {
 
     }
 
-
-removeFolder(name,parent) {
-  if(!parent)
-  parent = this.gui;
-  var folder = parent.__folders[name];
-
-
-  if (!folder) {
-    return;
-  }
-
-  folder.close();
-
-  parent.__ul.removeChild(folder.domElement.parentNode);
-  delete parent.__folders[name];
-
-  parent.onResize();
-};
+    removeFolder(name,parent) {
+        if(!parent)
+            parent = this.gui;
+        var folder = parent.__folders[name];
 
 
+        if (!folder) {
+            return;
+        }
+
+        folder.close();
+
+        parent.__ul.removeChild(folder.domElement.parentNode);
+        delete parent.__folders[name];
+
+        parent.onResize();
+    };
 
     /**
      * Adds a folder containing the IDs of the lights passed as parameter.
@@ -110,8 +91,6 @@ removeFolder(name,parent) {
         }
     }
 
-
-
     addPlayerTurnGroup(player) {
       this.playerGroup = this.gui.addFolder('Players Turn');
       this.playerGroup.open();
@@ -122,6 +101,24 @@ removeFolder(name,parent) {
     updatePlayerTurn(player) {
         this.playerGroup.remove(this.item);
         this.item = this.playerGroup.add({Player: player}, 'Player');
+    }
+
+    addGameModeGroup() {
+        this.gameModeGroup = this.gui.addFolder('Game Mode');
+        this.gameModeGroup.open();
+
+        this.gameMode = this.gameModeGroup.add({Mode: 'PvP'}, 'Mode', ['PvP', 'PvC', 'CvC']);
+        this.gameMode.onFinishChange(function (value) {
+            this.scene.graph.game.gameMode = value;
+        }.bind(this));
+    }
+
+    updateGameModeGroup() {
+        this.gameModeGroup.remove(this.gameMode);
+        this.gameMode = this.gameModeGroup.add({Mode: 'PvP'}, 'Mode', ['PvP', 'PvC', 'CvC']);
+        this.gameMode.onFinishChange(function (value) {
+            this.scene.graph.game.gameMode = value;
+        }.bind(this));
     }
 
     addViewsGroup(views) {

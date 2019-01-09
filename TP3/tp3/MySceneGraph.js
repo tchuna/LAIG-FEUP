@@ -46,7 +46,18 @@ class MySceneGraph {
         */
         this.reader.open('scenes/' + filename, this);
 
-        this.game = new Game(this.scene, 2);
+        let numberOfPlayers;
+        while (true) {
+            numberOfPlayers = parseInt(prompt("Set number of players"));
+
+            if (numberOfPlayers >= 2 && numberOfPlayers <= 4) {
+                break;
+            } else {
+                alert('invalid number of players (min: 2 | max: 4)');
+            }
+        }
+
+        this.game = new Game(this.scene, numberOfPlayers);
     }
 
     //Validate COLOR
@@ -1252,7 +1263,7 @@ class MySceneGraph {
         if (isNaN(elements.to.z)) {
             this.onXMLError('Perspective Views expected a float number o to(z)');
         }
-        return new CGFcamera(elements.angle * DEGREE_TO_RAD, elements.near, elements.far, vec3.fromValues(elements.from.x, elements.from.y, elements.from.z), vec3.fromValues(elements.to.x, elements.to.y, elements.to.y));
+        return new CGFcamera(elements.angle * DEGREE_TO_RAD, elements.near, elements.far, vec3.fromValues(elements.from.x, elements.from.y, elements.from.z), vec3.fromValues(elements.to.x, elements.to.y, elements.to.z));
 
     }
 
@@ -1348,8 +1359,15 @@ class MySceneGraph {
     displayScene() {
         // entry point for graph rendering
         this.scene.pushMatrix();
+        this.scene.scale(2, 1, 2);
         this.rendering(this.scene, this.rootNode);
-        //this.game.display();
         this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.scale(0.25, 0.25, 0.25);
+        this.scene.translate(33.5, 8, 32);
+        this.game.start();
+        this.scene.popMatrix();
+
     }
 }

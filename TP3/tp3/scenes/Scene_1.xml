@@ -1,29 +1,30 @@
 <yas>
     <scene root="living_room" axis_length="5"/>
-    <views default="south_view">
-      <perspective id="south_view" near="0.1" far="40" angle="25">
-          <from x="20" y="20" z="20"/>
-          <to x="0" y="0" z="0"/>
-      </perspective>
 
-        <perspective id="east_view" near="0.1" far="40" angle="45">
-            <from x="-20" y="20" z="0"/>
-            <to x="0" y="0" z="0"/>
+    <views default="south_view">
+        <perspective id="south_view" near="0.1" far="500" angle="45">
+            <from x="8" y="15" z="-7.5"/>
+            <to x="8.26" y="1.5" z="8.255"/>
         </perspective>
 
-        <perspective id="north_view" near="0.1" far="40" angle="45">
-            <from x="0" y="20" z="20"/>
-            <to x="0" y="0" z="0"/>
+        <perspective id="east_view" near="0.1" far="500" angle="45">
+            <from x="-7.5" y="15" z="8.255"/>
+            <to x="8.255" y="1.5" z="8.255"/>
+        </perspective>
+
+        <perspective id="north_view" near="0.1" far="500" angle="45">
+            <from x="8.255" y="15" z="22.5"/>
+            <to x="8.255" y="1.5" z="8.255"/>
         </perspective>
 
         <perspective id="west_view" near="0.1" far="40" angle="45">
-            <from x="20" y="20" z="0"/>
-            <to x="0" y="0" z="0"/>
+            <from x="22.5" y="15" z="8.255"/>
+            <to x="8.255" y="1.5" z="8.255"/>
         </perspective>
 
-        <perspective id="top_view" near="0.1" far="40" angle="90">
-            <from x="0" y="10" z="-0.1"/>
-            <to x="0" y="0" z="0"/>
+        <perspective id="top_view" near="0.1" far="500" angle="90">
+            <from x="8.25501" y="7.5" z="8.255"/>
+            <to x="8.26" y="0" z="8.255"/>
         </perspective>
 
         <!--<ortho id="ortho_view" near="0.1" far="5" left="-2" right="2" top="2" bottom="-2">-->
@@ -171,7 +172,6 @@
         </material>
     </materials>
 
-
     <transformations >
         <transformation id="floor_trans">
             <translate x="0" y="0" z="8"/>
@@ -179,6 +179,9 @@
             <scale x="8" y="8" z="1"/>
         </transformation>
     </transformations>
+
+    <animations>
+    </animations>
 
     <primitives>
         <primitive id="square">
@@ -218,7 +221,6 @@
             </children>
         </component>
 
-
         <component id="right_wall">
             <transformation>
                 <translate x="8" y="0" z="8"/>
@@ -237,8 +239,6 @@
                 <primitiveref id="square_at_zero"/>
             </children>
         </component>
-
-
 
         <component id="back_wall">
             <transformation>
@@ -375,7 +375,6 @@
             </children>
         </component>
 
-
         <component id="left_face">
             <transformation>
                 <rotate axis="y" angle="-90"/>
@@ -413,11 +412,10 @@
             </children>
         </component>
 
-
         <component id="table_top">
             <transformation>
                 <translate x="0" y="3.65" z="0.0"/>
-                <scale x="5" y="0.3" z="3"/>
+                <scale x="5" y="0.3" z="5"/>
             </transformation>
 
             <materials>
@@ -517,11 +515,8 @@
             </children>
         </component>
 
-
         <component id="table">
             <transformation>
-
-
             </transformation>
 
             <materials>
@@ -540,7 +535,7 @@
         <component id="desk">
             <transformation>
                 <translate x="4.2" y="0" z="4"/>
-                <scale x="0.5" y="0.5" z="0.7"/>
+                <scale x="0.5" y="0.5" z="0.5"/>
             </transformation>
 
             <materials>
@@ -760,7 +755,7 @@
         <component id="chair">
             <transformation>
                 <scale x="1.1" y="1.2" z="1.1"/>
-                <translate x="3.4" y="0" z="2"/>
+                <translate x="3.25" y="0" z="2"/>
             </transformation>
 
             <materials>
@@ -781,7 +776,7 @@
             <transformation>
                 <scale x="1.1" y="1.2" z="1.1"/>
                 <rotate axis="y" angle="180"/>
-                <translate x="-4.4" y="0" z="-5.2"/>
+                <translate x="-4.25" y="0" z="-5.4"/>
             </transformation>
 
             <materials>
@@ -819,8 +814,6 @@
                 <componentref id="starry_night"/>
             </children>
         </component>
-
-
 
     </components>
 
